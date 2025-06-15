@@ -1,0 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Merriweather:wght@400;700&family=DM+Sans:wght@400;500;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    @apply bg-storyteller-cream text-vintage-ink font-body;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display font-bold text-vintage-ink;
+  }
+
+  p {
+    @apply font-body;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-bodega-brick text-storyteller-cream px-6 py-3 rounded-lg font-accent font-medium 
+           hover:bg-community-teal hover:text-storyteller-cream transition-all duration-200 shadow;
+  }
+
+  .btn-secondary {
+    @apply bg-community-teal text-storyteller-cream px-6 py-3 rounded-lg font-accent font-medium 
+           hover:bg-bodega-brick hover:text-storyteller-cream transition-all duration-200 shadow;
+  }
+
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .card {
+    @apply bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-200;
+  }
+}
