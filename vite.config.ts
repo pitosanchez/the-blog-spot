@@ -7,6 +7,5 @@ export default defineConfig({
   css: {
     postcss: "./postcss.config.js",
   },
-
-  base: process.env.NODE_ENV === "production" ? "/the-blog-spot/" : "/",
+  base: "/the-blog-spot/",
 });

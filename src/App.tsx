@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+git import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Header } from "./components/Layout/Header";
 import { Hero } from "./components/Home/Hero";
 import { Categories } from "./components/Home/Categories";
@@ -29,7 +29,7 @@ function App() {
           <div className="container-custom">
             <div className="grid md:grid-cols-4 gap-8">
               <div>
-                <h3 className="text-xl font-bold mb-4">La Blogdega</h3>
+                <h3 className="text-xl font-bold mb-4">The Blog Spot</h3>
                 <p className="text-cream text-opacity-80">
                   Where every story finds its home.
                 </p>
@@ -130,7 +130,7 @@ function App() {
             </div>
             <div className="mt-12 pt-8 border-t border-cream border-opacity-20 text-center">
               <p className="text-cream text-opacity-60">
-                © {new Date().getFullYear()} La Blogdega. All rights reserved.
+                © {new Date().getFullYear()} The Blog Spot. All rights reserved.
               </p>
             </div>
           </div>
