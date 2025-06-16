@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const storiesMenu = [
   { label: "Cornerstore Confessions", href: "/cornerstore-confessions" },
@@ -26,33 +27,33 @@ export const Header = () => {
     <header className="bg-storyteller-cream border-b border-community-teal sticky top-0 z-50">
       <nav className="container-custom flex items-center justify-between py-4">
         {/* Logo */}
-        <a
-          href="/"
+        <Link
+          to="/"
           className="text-2xl font-display font-bold text-vintage-ink tracking-tight"
         >
           The Blog Spot
-        </a>
+        </Link>
         {/* Desktop Navigation */}
         <ul className="hidden md:flex space-x-8 font-accent text-lg items-center">
           <li>
-            <a
-              href="/"
+            <Link
+              to="/"
               className="hover:text-bodega-brick text-community-teal transition"
             >
               Home
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              href="/about"
+            <Link
+              to="/about"
               className="hover:text-bodega-brick text-community-teal transition"
             >
               About Us
-            </a>
+            </Link>
           </li>
           <li className="relative group">
-            <a
-              href="/our-stories"
+            <Link
+              to="/our-stories"
               className="hover:text-bodega-brick text-community-teal transition flex items-center gap-1"
               onMouseEnter={() => setIsStoriesOpen(true)}
               onMouseLeave={() => setIsStoriesOpen(false)}
@@ -73,7 +74,7 @@ export const Header = () => {
                   d="M19 9l-7 7-7-7"
                 />
               </svg>
-            </a>
+            </Link>
             {/* Dropdown */}
             <div
               className={`absolute left-0 mt-2 w-64 bg-storyteller-cream shadow-lg rounded-lg border border-community-teal transition-opacity duration-200 z-20 ${
@@ -85,54 +86,54 @@ export const Header = () => {
               <ul className="py-2">
                 {storiesMenu.map((item) => (
                   <li key={item.href}>
-                    <a
-                      href={item.href}
+                    <Link
+                      to={item.href}
                       className="block px-4 py-2 hover:bg-community-teal hover:text-storyteller-cream rounded transition"
                     >
                       {item.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
             </div>
           </li>
           <li>
-            <a
-              href="/community"
+            <Link
+              to="/community"
               className="hover:text-bodega-brick text-community-teal transition"
             >
               Community
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              href="/support"
+            <Link
+              to="/support"
               className="hover:text-bodega-brick text-community-teal transition"
             >
               Support
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              href="/shop"
+            <Link
+              to="/shop"
               className="hover:text-bodega-brick text-community-teal transition"
             >
               Shop
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              href="/contact"
+            <Link
+              to="/contact"
               className="hover:text-bodega-brick text-community-teal transition"
             >
               Contact
-            </a>
+            </Link>
           </li>
         </ul>
         {/* Submit a Story Button */}
-        <a href="/submit" className="btn-primary ml-4 hidden md:inline-block">
+        <Link to="/submit" className="btn-primary ml-4 hidden md:inline-block">
           Submit a Story
-        </a>
+        </Link>
         {/* Mobile Menu Button */}
         <div className="md:hidden">
           <button
@@ -169,81 +170,81 @@ export const Header = () => {
         <div className="md:hidden bg-storyteller-cream border-t border-community-teal pb-6">
           <ul className="flex flex-col space-y-2 font-accent text-lg px-6 pt-4">
             <li>
-              <a
-                href="/"
+              <Link
+                to="/"
                 className="hover:text-bodega-brick text-community-teal transition"
               >
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/about"
+              <Link
+                to="/about"
                 className="hover:text-bodega-brick text-community-teal transition"
               >
                 About Us
-              </a>
+              </Link>
             </li>
             <li>
               <details>
                 <summary>
-                  <a
-                    href="/our-stories"
+                  <Link
+                    to="/our-stories"
                     className="hover:text-bodega-brick text-community-teal transition cursor-pointer"
                   >
                     Our Stories
-                  </a>
+                  </Link>
                 </summary>
                 <ul className="pl-4 mt-2">
                   {storiesMenu.map((item) => (
                     <li key={item.href}>
-                      <a
-                        href={item.href}
+                      <Link
+                        to={item.href}
                         className="block py-1 hover:text-bodega-brick text-community-teal transition"
                       >
                         {item.label}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
               </details>
             </li>
             <li>
-              <a
-                href="/community"
+              <Link
+                to="/community"
                 className="hover:text-bodega-brick text-community-teal transition"
               >
                 Community
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/support"
+              <Link
+                to="/support"
                 className="hover:text-bodega-brick text-community-teal transition"
               >
                 Support
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/shop"
+              <Link
+                to="/shop"
                 className="hover:text-bodega-brick text-community-teal transition"
               >
                 Shop
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/contact"
+              <Link
+                to="/contact"
                 className="hover:text-bodega-brick text-community-teal transition"
               >
                 Contact
-              </a>
+              </Link>
             </li>
             <li className="pt-2">
-              <a href="/submit" className="btn-primary w-full">
+              <Link to="/submit" className="btn-primary w-full">
                 Submit a Story
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
