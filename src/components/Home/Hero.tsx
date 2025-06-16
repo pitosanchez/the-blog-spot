@@ -57,6 +57,17 @@ export const Hero = () => {
             All backgrounds. All experiences. All forms. Share your truth, your
             humor, your heart—your way.
           </p>
+          {/* Rotating Quotes Section */}
+          <div className="mb-8 max-w-xl mx-auto md:mx-0">
+            <div className="bg-white bg-opacity-80 rounded-xl p-6 shadow-lg border-l-4 border-bodega-brick">
+              <p className="text-xl text-vintage-ink font-lora italic mb-2">
+                "{quotes[currentQuote].text}"
+              </p>
+              <p className="text-community-teal font-source text-right">
+                — {quotes[currentQuote].author}
+              </p>
+            </div>
+          </div>
           <a
             href="/submit"
             className="btn-primary px-8 py-3 text-lg font-bold inline-block shadow-lg hover:scale-105 transition-transform font-source"
