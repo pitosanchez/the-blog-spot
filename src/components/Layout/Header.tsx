@@ -28,7 +28,7 @@ export const Header = () => {
         {/* Logo */}
         <a
           href="/"
-          className="text-3xl font-display font-bold text-vintage-ink tracking-tight"
+          className="text-2xl font-display font-bold text-vintage-ink tracking-tight"
         >
           The Blog Spot
         </a>

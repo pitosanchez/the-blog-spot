@@ -43,23 +43,23 @@ export const Hero = () => {
       <div className="container-custom relative z-10 flex flex-col md:flex-row items-center gap-12">
         {/* Left: Headline and CTA */}
         <div className="flex-1 text-center md:text-left">
-          <h1 className="text-5xl md:text-6xl font-display font-bold text-vintage-ink leading-tight mb-4 drop-shadow-lg">
+          <h1 className="text-5xl md:text-6xl font-playfair font-bold text-vintage-ink leading-tight mb-4 drop-shadow-lg">
             Every Story Matters.
             <br />
             <span className="text-bodega-brick">Every Voice Belongs.</span>
           </h1>
-          <p className="text-xl text-community-teal font-body mb-4 max-w-xl mx-auto md:mx-0 drop-shadow">
+          <p className="text-xl text-community-teal font-source mb-4 max-w-xl mx-auto md:mx-0 drop-shadow">
             The Blog Spot is a home for real stories, memories, and truths from
             people of every background. Whether you're sharing a poem, a photo
             essay, a confession, or a family recipe—your voice is welcome here.
           </p>
-          <p className="text-base text-vintage-ink font-body mb-8 max-w-xl mx-auto md:mx-0 drop-shadow">
+          <p className="text-base text-vintage-ink font-source mb-8 max-w-xl mx-auto md:mx-0 drop-shadow">
             All backgrounds. All experiences. All forms. Share your truth, your
             humor, your heart—your way.
           </p>
           <a
             href="/submit"
-            className="btn-primary px-8 py-3 text-lg font-bold inline-block shadow-lg hover:scale-105 transition-transform"
+            className="btn-primary px-8 py-3 text-lg font-bold inline-block shadow-lg hover:scale-105 transition-transform font-source"
           >
             Share Your Story
           </a>
@@ -69,21 +69,21 @@ export const Hero = () => {
           <div className="bg-white bg-opacity-70 backdrop-blur-md rounded-3xl shadow-xl border-4 border-community-teal max-w-md w-full p-8 flex flex-col items-center md:mb-8 md:mr-4">
             <div className="w-full h-48 bg-storyteller-cream bg-opacity-60 rounded-xl mb-6 flex items-center justify-center overflow-hidden">
               {/* Placeholder for featured image */}
-              <span className="text-7xl text-bodega-brick font-display">
+              <span className="text-7xl text-bodega-brick font-playfair">
                 ✍️
               </span>
             </div>
-            <h2 className="text-2xl font-display font-bold text-vintage-ink mb-2 text-center drop-shadow">
+            <h2 className="text-2xl font-playfair font-bold text-vintage-ink mb-2 text-center drop-shadow">
               "Cornerstore Confessions: The Day I Found My Voice"
             </h2>
-            <p className="text-community-teal font-body text-center mb-4 drop-shadow">
+            <p className="text-community-teal font-source text-center mb-4 drop-shadow">
               "I never thought a simple trip to the bodega would change my life.
               But that day, surrounded by the hum of refrigerators and the smell
               of fresh bread, I finally spoke my truth."
             </p>
             <a
               href="/cornerstore-confessions"
-              className="btn-secondary px-6 py-2 text-base font-bold mt-2"
+              className="btn-secondary px-6 py-2 text-base font-bold mt-2 font-source"
             >
               Read Featured Story
             </a>
