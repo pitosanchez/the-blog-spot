@@ -1,4 +1,4 @@
-git import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Header } from "./components/Layout/Header";
 import { Hero } from "./components/Home/Hero";
 import { Categories } from "./components/Home/Categories";
