@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import heroBg from "../../assets/blogspot-hero.png";
 
 const quotes = [
@@ -68,12 +69,12 @@ export const Hero = () => {
               </p>
             </div>
           </div>
-          <a
-            href="/submit"
+          <Link
+            to="/submit"
             className="btn-primary px-8 py-3 text-lg font-bold inline-block shadow-lg hover:scale-105 transition-transform font-source"
           >
             Share Your Story
-          </a>
+          </Link>
         </div>
         {/* Right: Featured Story Card - transparent and positioned for whitespace */}
         <div className="flex-1 flex justify-center md:justify-end items-end md:items-center">
@@ -92,12 +93,12 @@ export const Hero = () => {
               But that day, surrounded by the hum of refrigerators and the smell
               of fresh bread, I finally spoke my truth."
             </p>
-            <a
-              href="/cornerstore-confessions"
+            <Link
+              to="/cornerstore-confessions"
               className="btn-secondary px-6 py-2 text-base font-bold mt-2 font-source"
             >
               Read Featured Story
-            </a>
+            </Link>
           </div>
         </div>
       </div>
