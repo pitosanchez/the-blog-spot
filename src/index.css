@@ -7,10 +7,12 @@
 @layer base {
   html {
     @apply antialiased;
+    scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-storyteller-cream text-vintage-ink font-inter;
+    @apply bg-storyteller-cream text-vintage-ink font-inter overflow-x-hidden;
+    -webkit-overflow-scrolling: touch;
   }
 
   h1,
@@ -39,7 +41,7 @@
   }
 
   .container-custom {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full;
   }
 
   .card {
