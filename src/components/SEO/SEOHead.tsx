@@ -1,5 +1,4 @@
-import { Helmet } from "react-helmet-async";
-import { memo } from "react";
+import { useEffect, memo } from "react";
 
 interface SEOHeadProps {
   title?: string;
@@ -88,6 +87,56 @@ const generateStructuredData = (props: StructuredDataProps) => {
   return baseData;
 };
 
+// Helper function to update meta tags
+const updateMetaTag = (name: string, content: string, property?: boolean) => {
+  const selector = property
+    ? `meta[property="${name}"]`
+    : `meta[name="${name}"]`;
+  let element = document.querySelector(selector) as HTMLMetaElement;
+
+  if (!element) {
+    element = document.createElement("meta");
+    if (property) {
+      element.setAttribute("property", name);
+    } else {
+      element.setAttribute("name", name);
+    }
+    document.head.appendChild(element);
+  }
+
+  element.setAttribute("content", content);
+};
+
+// Helper function to update link tags
+const updateLinkTag = (rel: string, href: string) => {
+  let element = document.querySelector(`link[rel="${rel}"]`) as HTMLLinkElement;
+
+  if (!element) {
+    element = document.createElement("link");
+    element.setAttribute("rel", rel);
+    document.head.appendChild(element);
+  }
+
+  element.setAttribute("href", href);
+};
+
+// Helper function to update structured data
+const updateStructuredData = (data: any) => {
+  // Remove existing structured data
+  const existingScript = document.querySelector(
+    'script[type="application/ld+json"]'
+  );
+  if (existingScript) {
+    existingScript.remove();
+  }
+
+  // Add new structured data
+  const script = document.createElement("script");
+  script.type = "application/ld+json";
+  script.textContent = JSON.stringify(data);
+  document.head.appendChild(script);
+};
+
 export const SEOHead = memo<SEOHeadProps>(
   ({
     title = "The Blog Spot - Every Story Matters, Every Voice Belongs",
@@ -113,93 +162,109 @@ export const SEOHead = memo<SEOHeadProps>(
     noIndex = false,
     canonical,
   }) => {
-    const fullTitle = title.includes("The Blog Spot")
-      ? title
-      : `${title} | The Blog Spot`;
-    const fullUrl = url.startsWith("http")
-      ? url
-      : `https://theblogspot.com${url}`;
-    const fullImage = image.startsWith("http")
-      ? image
-      : `https://theblogspot.com${image}`;
-    const allKeywords = [...keywords, ...tags].join(", ");
+    useEffect(() => {
+      const fullTitle = title.includes("The Blog Spot")
+        ? title
+        : `${title} | The Blog Spot`;
+      const fullUrl = url.startsWith("http")
+        ? url
+        : `https://theblogspot.com${url}`;
+      const fullImage = image.startsWith("http")
+        ? image
+        : `https://theblogspot.com${image}`;
+      const allKeywords = [...keywords, ...tags].join(", ");
 
-    const structuredDataProps: StructuredDataProps = {
-      type: type === "article" ? "BlogPosting" : "WebSite",
-      name: fullTitle,
+      // Update document title
+      document.title = fullTitle;
+
+      // Update basic meta tags
+      updateMetaTag("description", description);
+      updateMetaTag("keywords", allKeywords);
+      if (author) updateMetaTag("author", author);
+
+      // Update robots
+      updateMetaTag("robots", noIndex ? "noindex,nofollow" : "index,follow");
+
+      // Update canonical URL
+      if (canonical) {
+        updateLinkTag("canonical", canonical);
+      }
+
+      // Update Open Graph tags
+      updateMetaTag("og:type", type, true);
+      updateMetaTag("og:title", fullTitle, true);
+      updateMetaTag("og:description", description, true);
+      updateMetaTag("og:image", fullImage, true);
+      updateMetaTag("og:url", fullUrl, true);
+      updateMetaTag("og:site_name", "The Blog Spot", true);
+      updateMetaTag("og:locale", "en_US", true);
+
+      // Update article specific Open Graph tags
+      if (type === "article") {
+        if (author) updateMetaTag("article:author", author, true);
+        if (publishedTime)
+          updateMetaTag("article:published_time", publishedTime, true);
+        if (modifiedTime)
+          updateMetaTag("article:modified_time", modifiedTime, true);
+        if (section) updateMetaTag("article:section", section, true);
+
+        // Remove existing article tags
+        const existingTags = document.querySelectorAll(
+          'meta[property^="article:tag"]'
+        );
+        existingTags.forEach((tag) => tag.remove());
+
+        // Add new article tags
+        tags.forEach((tag) => {
+          updateMetaTag("article:tag", tag, true);
+        });
+      }
+
+      // Update Twitter Card tags
+      updateMetaTag("twitter:card", "summary_large_image");
+      updateMetaTag("twitter:site", "@theblogspot");
+      updateMetaTag("twitter:creator", "@theblogspot");
+      updateMetaTag("twitter:title", fullTitle);
+      updateMetaTag("twitter:description", description);
+      updateMetaTag("twitter:image", fullImage);
+
+      // Update additional meta tags
+      updateMetaTag("theme-color", "#D2691E");
+      updateMetaTag("msapplication-TileColor", "#D2691E");
+      updateMetaTag("viewport", "width=device-width, initial-scale=1.0");
+
+      // Update structured data
+      const structuredDataProps: StructuredDataProps = {
+        type: type === "article" ? "BlogPosting" : "WebSite",
+        name: fullTitle,
+        description,
+        url: fullUrl,
+        image: fullImage,
+        author,
+        datePublished: publishedTime,
+        dateModified: modifiedTime,
+        keywords: [...keywords, ...tags],
+      };
+
+      const structuredData = generateStructuredData(structuredDataProps);
+      updateStructuredData(structuredData);
+    }, [
+      title,
       description,
-      url: fullUrl,
-      image: fullImage,
+      keywords,
+      image,
+      url,
+      type,
       author,
-      datePublished: publishedTime,
-      dateModified: modifiedTime,
-      keywords: [...keywords, ...tags],
-    };
+      publishedTime,
+      modifiedTime,
+      section,
+      tags,
+      noIndex,
+      canonical,
+    ]);
 
-    const structuredData = generateStructuredData(structuredDataProps);
-
-    return (
-      <Helmet>
-        {/* Basic Meta Tags */}
-        <title>{fullTitle}</title>
-        <meta name="description" content={description} />
-        <meta name="keywords" content={allKeywords} />
-        {author && <meta name="author" content={author} />}
-
-        {/* Canonical URL */}
-        {canonical && <link rel="canonical" href={canonical} />}
-
-        {/* Robots */}
-        <meta
-          name="robots"
-          content={noIndex ? "noindex,nofollow" : "index,follow"}
-        />
-
-        {/* Open Graph */}
-        <meta property="og:type" content={type} />
-        <meta property="og:title" content={fullTitle} />
-        <meta property="og:description" content={description} />
-        <meta property="og:image" content={fullImage} />
-        <meta property="og:url" content={fullUrl} />
-        <meta property="og:site_name" content="The Blog Spot" />
-        <meta property="og:locale" content="en_US" />
-
-        {/* Article specific Open Graph */}
-        {type === "article" && (
-          <>
-            {author && <meta property="article:author" content={author} />}
-            {publishedTime && (
-              <meta property="article:published_time" content={publishedTime} />
-            )}
-            {modifiedTime && (
-              <meta property="article:modified_time" content={modifiedTime} />
-            )}
-            {section && <meta property="article:section" content={section} />}
-            {tags.map((tag) => (
-              <meta key={tag} property="article:tag" content={tag} />
-            ))}
-          </>
-        )}
-
-        {/* Twitter Cards */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@theblogspot" />
-        <meta name="twitter:creator" content="@theblogspot" />
-        <meta name="twitter:title" content={fullTitle} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={fullImage} />
-
-        {/* Additional Meta Tags */}
-        <meta name="theme-color" content="#D2691E" />
-        <meta name="msapplication-TileColor" content="#D2691E" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-        {/* Structured Data */}
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
-      </Helmet>
-    );
+    return null; // This component doesn't render anything
   }
 );
 
