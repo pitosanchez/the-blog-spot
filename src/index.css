@@ -1,18 +1,50 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Roboto:wght@400;500;700&family=Lato:wght@400;700&family=Open+Sans:wght@400;700&family=Source+Sans+Pro:wght@400;700&family=Playfair+Display:wght@400;700&family=Merriweather:wght@400;700&family=Lora:wght@400;700&display=swap");
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-storyteller-cream: #faf4e8;
+  --color-bodega-brick: #c9482c;
+  --color-community-teal: #387d7a;
+  --color-vintage-ink: #2c2c2c;
+  --color-cream: #faf4e8;
+  --color-charcoal: #2c2c2c;
+  --color-deep-purple: #4a154b;
+  --color-warm-terracotta: #d2691e;
+
+  --font-family-display: Merriweather, serif;
+  --font-family-body: Space Grotesk, sans-serif;
+  --font-family-accent: DM Sans, sans-serif;
+  --font-family-playfair: Playfair Display, serif;
+  --font-family-source: Source Sans Pro, sans-serif;
+  --font-family-open: Open Sans, sans-serif;
+  --font-family-roboto: Roboto, sans-serif;
+  --font-family-lato: Lato, sans-serif;
+  --font-family-inter: Inter, sans-serif;
+  --font-family-lora: Lora, serif;
+  --font-family-merriweather: Merriweather, serif;
+
+  --spacing-128: 32rem;
+  --spacing-144: 36rem;
+
+  --border-radius-4xl: 2rem;
+}
 
 @layer base {
   html {
     @apply antialiased;
     scroll-behavior: smooth;
+    /* Ensure proper viewport handling */
+    height: 100%;
   }
 
   body {
-    @apply bg-storyteller-cream text-vintage-ink font-inter overflow-x-hidden;
+    @apply bg-storyteller-cream text-vintage-ink overflow-x-hidden;
+    font-family: Inter, sans-serif;
     -webkit-overflow-scrolling: touch;
+    /* Ensure proper viewport handling */
+    min-height: 100vh;
+    height: 100%;
   }
 
   h1,
@@ -21,31 +53,84 @@
   h4,
   h5,
   h6 {
-    @apply font-playfair font-bold text-vintage-ink;
+    font-family: "Playfair Display", serif;
+    @apply font-bold text-vintage-ink;
   }
 
   p {
-    @apply font-source;
+    font-family: "Source Sans Pro", sans-serif;
+  }
+
+  /* Prevent text overflow on all screen sizes */
+  * {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Fix for mobile viewport issues */
+  @supports (-webkit-touch-callout: none) {
+    .hero-section {
+      height: -webkit-fill-available;
+      min-height: -webkit-fill-available;
+    }
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-bodega-brick text-storyteller-cream px-6 py-3 rounded-lg font-accent font-medium 
+    @apply bg-bodega-brick text-storyteller-cream px-6 py-3 rounded-lg font-medium 
            hover:bg-community-teal hover:text-storyteller-cream transition-all duration-200 shadow;
+    font-family: "DM Sans", sans-serif;
   }
 
   .btn-secondary {
-    @apply bg-community-teal text-storyteller-cream px-6 py-3 rounded-lg font-accent font-medium 
+    @apply bg-community-teal text-storyteller-cream px-6 py-3 rounded-lg font-medium 
            hover:bg-bodega-brick hover:text-storyteller-cream transition-all duration-200 shadow;
+    font-family: "DM Sans", sans-serif;
   }
 
   .container-custom {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full;
+    /* Ensure content never bleeds outside container */
+    box-sizing: border-box;
   }
 
   .card {
     @apply bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-200;
+  }
+
+  /* Hero section specific improvements */
+  .hero-text {
+    /* Ensure text scales properly and doesn't overflow */
+    @apply leading-tight;
+    word-break: normal;
+    hyphens: auto;
+  }
+
+  /* Hero section container */
+  .hero-container {
+    /* Ensure proper spacing and prevent overflow */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+    padding: 1rem;
+  }
+
+  /* Navigation improvements */
+  .nav-link {
+    @apply transition-all duration-200 rounded-lg px-3 py-2;
+  }
+
+  .nav-link:hover {
+    @apply bg-gray-50 text-bodega-brick;
+  }
+
+  /* Viewport height fixes for mobile */
+  .vh-fix {
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
   }
 }
 
@@ -73,5 +158,61 @@
   }
   .font-merriweather {
     font-family: "Merriweather", serif;
+  }
+  .font-accent {
+    font-family: "DM Sans", sans-serif;
+  }
+  .font-display {
+    font-family: "Merriweather", serif;
+  }
+  .font-body {
+    font-family: "Space Grotesk", sans-serif;
+  }
+
+  /* Responsive text utilities */
+  .text-responsive-xl {
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl;
+  }
+
+  .text-responsive-lg {
+    @apply text-lg sm:text-xl md:text-2xl lg:text-3xl;
+  }
+
+  .text-responsive-base {
+    @apply text-sm sm:text-base md:text-lg lg:text-xl;
+  }
+
+  /* Spacing utilities for better layout control */
+  .space-y-responsive {
+    @apply space-y-4 md:space-y-6 lg:space-y-8;
+  }
+
+  /* Container utilities */
+  .container-tight {
+    @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .container-wide {
+    @apply max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Safe area utilities for mobile */
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Viewport height utilities */
+  .h-screen-safe {
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+  }
+
+  .min-h-screen-safe {
+    min-height: 100vh;
+    min-height: calc(var(--vh, 1vh) * 100);
   }
 }

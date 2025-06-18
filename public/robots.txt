@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://theblogspot.com/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Block access to admin or private areas (when they exist)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+Disallow: /*.json$
+
+# Allow access to CSS and JS files for proper rendering
+Allow: /static/
+Allow: /assets/
+Allow: *.css
+Allow: *.js 

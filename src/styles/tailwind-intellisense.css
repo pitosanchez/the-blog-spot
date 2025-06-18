@@ -1,0 +1,20 @@
+/* This file helps with Tailwind CSS v4 intellisense and reduces CSS warnings */
+/* It's not imported anywhere but helps VS Code understand Tailwind directives */
+
+@import "tailwindcss";
+
+@layer base {
+  /* Base styles */
+}
+
+@layer components {
+  /* Component styles */
+}
+
+@layer utilities {
+  /* Utility styles */
+}
+
+@theme {
+  /* Theme configuration */
+}

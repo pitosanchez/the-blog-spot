@@ -1,0 +1,126 @@
+{
+  "name": "The Blog Spot - Community Storytelling Platform",
+  "short_name": "The Blog Spot",
+  "description": "A community platform for sharing authentic stories and connecting storytellers from diverse backgrounds",
+  "start_url": "/the-blog-spot/",
+  "display": "standalone",
+  "background_color": "#F5F5DC",
+  "theme_color": "#2F4F4F",
+  "orientation": "portrait-primary",
+  "scope": "/the-blog-spot/",
+  "lang": "en-US",
+  "categories": ["lifestyle", "social", "entertainment", "education"],
+  "icons": [
+    {
+      "src": "/the-blog-spot/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/the-blog-spot/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/the-blog-spot/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/the-blog-spot/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/the-blog-spot/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/the-blog-spot/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/the-blog-spot/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/the-blog-spot/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/the-blog-spot/screenshots/desktop-home.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "Home page on desktop"
+    },
+    {
+      "src": "/the-blog-spot/screenshots/mobile-home.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Home page on mobile"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Submit Story",
+      "short_name": "Submit",
+      "description": "Share your story with the community",
+      "url": "/the-blog-spot/submit",
+      "icons": [
+        {
+          "src": "/the-blog-spot/icons/shortcut-submit.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Browse Stories",
+      "short_name": "Browse",
+      "description": "Explore community stories",
+      "url": "/the-blog-spot/categories",
+      "icons": [
+        {
+          "src": "/the-blog-spot/icons/shortcut-browse.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Community",
+      "short_name": "Community",
+      "description": "Connect with fellow storytellers",
+      "url": "/the-blog-spot/community",
+      "icons": [
+        {
+          "src": "/the-blog-spot/icons/shortcut-community.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "handle_links": "preferred",
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
+}
