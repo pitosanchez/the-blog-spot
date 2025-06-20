@@ -121,7 +121,9 @@ const updateLinkTag = (rel: string, href: string) => {
 };
 
 // Helper function to update structured data
-const updateStructuredData = (data: any) => {
+const updateStructuredData = (
+  data: ReturnType<typeof generateStructuredData>
+) => {
   // Remove existing structured data
   const existingScript = document.querySelector(
     'script[type="application/ld+json"]'

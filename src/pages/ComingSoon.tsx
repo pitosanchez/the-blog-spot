@@ -1,0 +1,59 @@
+import { memo } from "react";
+import { Link } from "react-router-dom";
+import { SEOHead } from "../components/SEO/SEOHead";
+
+interface ComingSoonPageProps {
+  title: string;
+  description?: string;
+}
+
+export const ComingSoonPage = memo<ComingSoonPageProps>(
+  ({
+    title,
+    description = "This section is coming soon. We're working hard to bring you amazing content!",
+  }) => {
+    return (
+      <>
+        <SEOHead
+          title={`${title} - Coming Soon`}
+          description={description}
+          noIndex={true} // Don't index coming soon pages
+        />
+
+        <div className="container-custom py-16 md:py-24 text-center min-h-[60vh] flex flex-col items-center justify-center">
+          <div className="max-w-2xl mx-auto px-4">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold text-vintage-ink mb-6">
+              {title}
+            </h1>
+
+            <p className="text-xl md:text-2xl text-community-teal mb-8 font-source">
+              Coming Soon...
+            </p>
+
+            <p className="text-lg text-vintage-ink/80 mb-12 font-source leading-relaxed">
+              {description}
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                to="/"
+                className="inline-block px-6 py-3 bg-bodega-brick text-white font-source font-semibold rounded-lg hover:bg-bodega-brick/90 transition-colors duration-200"
+              >
+                Return Home
+              </Link>
+
+              <Link
+                to="/newsletter"
+                className="inline-block px-6 py-3 border-2 border-community-teal text-community-teal font-source font-semibold rounded-lg hover:bg-community-teal hover:text-white transition-colors duration-200"
+              >
+                Get Notified
+              </Link>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+);
+
+ComingSoonPage.displayName = "ComingSoonPage";

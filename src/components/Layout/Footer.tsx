@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
+import { Logo } from "../ui/Logo";
 import { FOOTER_LINKS } from "../../constants";
 
 const SocialIcon = memo<{ icon: string; className?: string }>(
@@ -39,10 +40,14 @@ export const Footer = memo(() => {
         <div className="grid md:grid-cols-4 gap-8">
           {/* Brand Section */}
           <div>
-            <h3 className="text-lg font-bold mb-4 text-bodega-brick">
-              The Blog Spot
-            </h3>
-            <p className="text-cream text-opacity-80">
+            <div className="mb-4">
+              <Logo
+                showText={true}
+                linkClassName="inline-flex"
+                textColor="light"
+              />
+            </div>
+            <p className="text-cream text-opacity-80 mt-4">
               Where every story finds its home.
             </p>
           </div>

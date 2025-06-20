@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Background Circle -->
+  <rect width="32" height="32" rx="8" fill="#FAFAF0"/>
+  
+  <!-- Pen Icon -->
+  <g transform="translate(16, 16)">
+    <!-- Pen Nib -->
+    <path d="M0 -10 L-5 -5 L0 6 L5 -5 Z" fill="#4A2C2A" stroke="#4A2C2A" stroke-width="0.5" stroke-linejoin="round"/>
+    <!-- Pen Tip Detail -->
+    <circle cx="0" cy="-4" r="1.5" fill="#FAFAF0"/>
+    <!-- Pen Top -->
+    <rect x="-1" y="-11" width="2" height="2" fill="#4A2C2A" rx="0.5"/>
+  </g>
+</svg> 

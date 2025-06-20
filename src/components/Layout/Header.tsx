@@ -1,6 +1,7 @@
 import React, { useState, memo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/Button";
+import { Logo } from "../ui/Logo";
 import { useScrollPosition } from "../../hooks/useScrollPosition";
 import { STORIES_MENU } from "../../constants";
 import type { NavigationProps } from "../../types";
@@ -136,13 +137,7 @@ export const Header = memo(() => {
         aria-label="Main navigation"
       >
         {/* Logo */}
-        <Link
-          to="/"
-          className="text-2xl lg:text-3xl font-playfair font-bold text-vintage-ink tracking-tight hover:text-bodega-brick transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-bodega-brick focus:ring-opacity-50 rounded-lg px-2 py-1"
-          aria-label="The Blog Spot - Home"
-        >
-          The Blog Spot
-        </Link>
+        <Logo showText={true} />
 
         {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center space-x-1">
