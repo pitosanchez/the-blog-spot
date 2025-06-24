@@ -2,7 +2,7 @@ import { memo } from "react";
 import { Button } from "../ui/Button";
 import { QuoteCarousel } from "../ui/QuoteCarousel";
 import { HERO_QUOTES } from "../../constants";
-import heroBg from "../../assets/blogspot-hero.png";
+import heroBg from "../../assets/blogspot-hero.webp";
 
 export const Hero = memo(() => {
   return (

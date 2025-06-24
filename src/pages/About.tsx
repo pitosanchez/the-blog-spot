@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SEOHead } from "../components/SEO/SEOHead";
-import aboutBg from "../assets/what-is-story.jpg";
+import aboutBg from "../assets/what-is-story.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 
