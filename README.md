@@ -1,54 +1,82 @@
-# React + TypeScript + Vite
+# The Blog Spot - Creator Monetization Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern creator platform that puts creators first with 90% revenue share, weekly payouts, and simple tools to monetize content.
 
-Currently, two official plugins are available:
+## 🚀 Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The Blog Spot is a creator-first monetization platform designed to help writers, educators, coaches, and content creators build sustainable businesses. Unlike traditional platforms that take 20-30% of earnings, we only take 10% (including payment processing).
 
-## Expanding the ESLint configuration
+### Key Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **90% Revenue Share**: Keep 90% of everything you earn
+- **Weekly Payouts**: Get paid every Friday (minimum $25)
+- **Own Your Audience**: Export subscriber lists anytime
+- **Simple Tools**: No complex analytics or algorithms
+- **Multiple Monetization**: Subscriptions, workshops, courses, and more
+- **No Platform Fees**: Our 10% includes everything
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 🛠️ Tech Stack
+
+- **Frontend**: React 18 + TypeScript
+- **Styling**: Tailwind CSS v4
+- **Build Tool**: Vite
+- **Routing**: React Router v6
+- **Deployment**: GitHub Pages
+- **Analytics**: Google Analytics 4
+
+## 📁 Project Structure
+
+```
+src/
+├── components/
+│   ├── Home/          # Landing page components
+│   ├── Layout/        # Header, Footer
+│   ├── SEO/           # SEO components
+│   └── ui/            # Reusable UI components
+├── pages/             # Route pages
+├── hooks/             # Custom React hooks
+├── utils/             # Utility functions
+├── constants/         # App constants
+└── types/             # TypeScript types
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🚦 Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# Install dependencies
+npm install
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
+
+## 🎯 Current Focus
+
+The platform is currently focused on creator monetization with:
+
+- Creator onboarding flow
+- Pricing transparency
+- Success stories showcase
+- Simple, clean UI/UX
+
+## 📈 Revenue Model
+
+Path to $1M annual revenue:
+
+- Year 1: 100 creators @ $1k/month = $120k
+- Year 2: 500 creators @ $2k/month = $1.2M
+
+## 🔗 Links
+
+- Live Site: [https://pitolove.github.io/the-blog-spot/](https://pitolove.github.io/the-blog-spot/)
+- Documentation: See `/PROJECT_SUMMARY` folder
+
+## 📝 License
+
+© 2024 The Blog Spot. All rights reserved.

@@ -1,4 +1,4 @@
-// Analytics utility for The Blog Spot
+// Analytics utility for The Blog Spot Creator Platform
 // Supports Google Analytics 4, custom events, and performance monitoring
 
 interface AnalyticsEvent {
@@ -9,20 +9,11 @@ interface AnalyticsEvent {
 
 interface UserProperties {
   user_id?: string;
-  membership_tier?: "free" | "storyteller" | "creator";
+  creator_type?: string;
   is_verified?: boolean;
   member_since?: string;
-  stories_published?: number;
-  total_reads?: number;
-}
-
-interface PerformanceMetrics {
-  page_load_time?: number;
-  first_contentful_paint?: number;
-  largest_contentful_paint?: number;
-  cumulative_layout_shift?: number;
-  first_input_delay?: number;
-  time_to_interactive?: number;
+  total_earnings?: number;
+  subscriber_count?: number;
 }
 
 class Analytics {
@@ -50,98 +41,7 @@ class Analytics {
       });
       this.isInitialized = true;
     }
-
-    // Initialize performance monitoring
-    this.initializePerformanceMonitoring();
   }
-
-  private initializePerformanceMonitoring() {
-    if (typeof window === "undefined") return;
-
-    // Monitor Core Web Vitals
-    this.monitorWebVitals();
-
-    // Monitor page load performance
-    window.addEventListener("load", () => {
-      this.trackPagePerformance();
-    });
-  }
-
-  private monitorWebVitals() {
-    // This would integrate with web-vitals library in production
-    if (typeof window === "undefined") return;
-
-    // Monitor LCP (Largest Contentful Paint)
-    new PerformanceObserver((entryList) => {
-      const entries = entryList.getEntries();
-      const lastEntry = entries[entries.length - 1];
-
-      this.track("web_vital_lcp", {
-        value: lastEntry.startTime,
-        metric_type: "largest_contentful_paint",
-      });
-    }).observe({ entryTypes: ["largest-contentful-paint"] });
-
-    // Monitor FID (First Input Delay)
-    new PerformanceObserver((entryList) => {
-      const entries = entryList.getEntries();
-      entries.forEach((entry: any) => {
-        this.track("web_vital_fid", {
-          value: entry.processingStart - entry.startTime,
-          metric_type: "first_input_delay",
-        });
-      });
-    }).observe({ entryTypes: ["first-input"] });
-
-    // Monitor CLS (Cumulative Layout Shift)
-    let clsValue = 0;
-    new PerformanceObserver((entryList) => {
-      const entries = entryList.getEntries();
-      entries.forEach((entry: any) => {
-        if (!entry.hadRecentInput) {
-          clsValue += entry.value;
-        }
-      });
-
-      this.track("web_vital_cls", {
-        value: clsValue,
-        metric_type: "cumulative_layout_shift",
-      });
-    }).observe({ entryTypes: ["layout-shift"] });
-  }
-
-  private trackPagePerformance() {
-    if (typeof window === "undefined" || !window.performance) return;
-
-    const navigation = performance.getEntriesByType(
-      "navigation"
-    )[0] as PerformanceNavigationTiming;
-
-    if (navigation) {
-      const metrics: PerformanceMetrics = {
-        page_load_time: navigation.loadEventEnd - navigation.fetchStart,
-        first_contentful_paint: this.getFirstContentfulPaint(),
-        time_to_interactive: this.getTimeToInteractive(),
-      };
-
-      this.track("page_performance", metrics);
-    }
-  }
-
-  private getFirstContentfulPaint(): number | undefined {
-    const fcpEntry = performance.getEntriesByName("first-contentful-paint")[0];
-    return fcpEntry?.startTime;
-  }
-
-  private getTimeToInteractive(): number | undefined {
-    // Simplified TTI calculation - in production, use a proper library
-    const navigationEntry = performance.getEntriesByType(
-      "navigation"
-    )[0] as PerformanceNavigationTiming;
-    return navigationEntry?.domInteractive - navigationEntry?.fetchStart;
-  }
-
-  // Public API methods
 
   /**
    * Track a custom event
@@ -167,14 +67,6 @@ class Analytics {
     // Send to Google Analytics 4
     if (typeof window !== "undefined" && window.gtag) {
       window.gtag("event", eventName, parameters);
-    }
-
-    // Store for batch sending
-    this.events.push(event);
-
-    // Send events in batches
-    if (this.events.length >= 10) {
-      this.flushEvents();
     }
   }
 
@@ -208,27 +100,35 @@ class Analytics {
   }
 
   /**
-   * Track story interactions
+   * Track creator signup
    */
-  trackStoryInteraction(
-    action: string,
-    storyId: string,
-    additionalData: Record<string, any> = {}
-  ) {
-    this.track("story_interaction", {
-      action,
-      story_id: storyId,
-      ...additionalData,
+  trackCreatorSignup(creatorType: string, source?: string) {
+    this.track("creator_signup", {
+      creator_type: creatorType,
+      signup_source: source,
     });
   }
 
   /**
-   * Track user engagement
+   * Track creator earnings
    */
-  trackEngagement(type: string, data: Record<string, any> = {}) {
-    this.track("user_engagement", {
-      engagement_type: type,
-      ...data,
+  trackCreatorEarnings(amount: number, type: string) {
+    this.track("creator_earnings", {
+      amount,
+      earnings_type: type,
+      currency: "USD",
+    });
+  }
+
+  /**
+   * Track subscription events
+   */
+  trackSubscription(action: string, subscriberId?: string, amount?: number) {
+    this.track("subscription_event", {
+      action,
+      subscriber_id: subscriberId,
+      amount,
+      currency: "USD",
     });
   }
 
@@ -256,56 +156,6 @@ class Analytics {
   }
 
   /**
-   * Track performance metrics
-   */
-  trackPerformance(metric: string, value: number, unit = "ms") {
-    this.track("performance_metric", {
-      metric_name: metric,
-      metric_value: value,
-      metric_unit: unit,
-    });
-  }
-
-  /**
-   * Track search queries
-   */
-  trackSearch(query: string, results: number, category?: string) {
-    this.track("search", {
-      search_term: query,
-      search_results: results,
-      search_category: category,
-    });
-  }
-
-  /**
-   * Track social sharing
-   */
-  trackShare(platform: string, contentType: string, contentId: string) {
-    this.track("share", {
-      platform,
-      content_type: contentType,
-      content_id: contentId,
-    });
-  }
-
-  /**
-   * Flush pending events
-   */
-  private flushEvents() {
-    if (this.events.length === 0) return;
-
-    if (this.isDevelopment) {
-      console.log("📊 Flushing events:", this.events);
-      this.events = [];
-      return;
-    }
-
-    // In production, send events to analytics service
-    // This could be Google Analytics, Mixpanel, or custom analytics
-    this.events = [];
-  }
-
-  /**
    * Get analytics data for debugging
    */
   getDebugData() {
@@ -320,43 +170,6 @@ class Analytics {
 
 // Create singleton instance
 export const analytics = new Analytics();
-
-// Convenience functions for common tracking
-export const trackStoryView = (storyId: string, category: string) => {
-  analytics.trackStoryInteraction("view", storyId, { category });
-};
-
-export const trackStoryLike = (storyId: string) => {
-  analytics.trackStoryInteraction("like", storyId);
-};
-
-export const trackStoryShare = (storyId: string, platform: string) => {
-  analytics.trackShare(platform, "story", storyId);
-};
-
-export const trackCommentAdd = (storyId: string, isReply: boolean) => {
-  analytics.trackEngagement("comment", {
-    story_id: storyId,
-    is_reply: isReply,
-  });
-};
-
-export const trackMembershipUpgrade = (
-  fromTier: string,
-  toTier: string,
-  value: number
-) => {
-  analytics.trackConversion("membership_upgrade", value);
-  analytics.track("membership_change", {
-    from_tier: fromTier,
-    to_tier: toTier,
-  });
-};
-
-export const trackNewsletterSignup = (source: string) => {
-  analytics.trackConversion("newsletter_signup");
-  analytics.track("newsletter_signup", { source });
-};
 
 // Type declarations for gtag
 declare global {

@@ -1,28 +1,38 @@
-# The Blog Spot Design System
+# The Blog Spot Design System - Creator Platform
 
 ## Color Palette
 
 ### Primary Colors
 
-- **Bodega Brick**: `#D2691E` - Primary brand color for CTAs and highlights
-- **Community Teal**: `#008B8B` - Secondary brand color for accents
-- **Vintage Ink**: `#2F4F4F` - Primary text color
-- **Storyteller Cream**: `#F5F5DC` - Light accent color
+- **Purple**: `#9333EA` - Primary brand color
+- **Indigo**: `#4F46E5` - Secondary brand color
+- **Blue**: `#2563EB` - Accent color
 
-### Background Colors
+### Gradient Colors
 
-- **Cream**: `#FFFDD0` - Main background color
-- **Charcoal**: `#36454F` - Footer and dark section backgrounds
+- **Yellow**: `#FDE047` - Highlight gradient start
+- **Pink**: `#F472B6` - Highlight gradient end
 
-### Interactive Colors
+### Neutral Colors
 
-- **Warm Terracotta**: `#E2725B` - Hover states and warm accents
+- **White**: `#FFFFFF` - Primary background
+- **Gray-50**: `#F9FAFB` - Light background
+- **Gray-100**: `#F3F4F6` - Subtle background
+- **Gray-200**: `#E5E7EB` - Borders
+- **Gray-600**: `#4B5563` - Secondary text
+- **Gray-900**: `#111827` - Primary text
+
+### Interactive States
+
+- **Hover**: Lighten by 10%
+- **Active**: Darken by 10%
+- **Focus**: Ring with primary color
 
 ## Typography
 
 ### Font Families
 
-- **Playfair Display**: Headings and display text
+- **Playfair Display**: Headings and hero text
 - **Source Sans Pro**: Body text and UI elements
 
 ### Font Sizes
@@ -38,6 +48,8 @@
 - **text-5xl**: 48px
 - **text-6xl**: 60px
 - **text-7xl**: 72px
+- **text-8xl**: 96px
+- **text-9xl**: 128px
 
 ## Spacing Scale
 
@@ -52,6 +64,7 @@
 - **12**: 48px
 - **16**: 64px
 - **20**: 80px
+- **24**: 96px
 
 ## Component Guidelines
 
@@ -60,92 +73,118 @@
 - Use `Button` component for all interactive elements
 - Variants: `primary`, `secondary`, `outline`, `ghost`
 - Sizes: `sm`, `md`, `lg`
+- Include gradient backgrounds for primary CTAs
 - Always include proper ARIA labels
-- Include hover and active states
+
+### Cards
+
+- White background with subtle shadows
+- Border radius: 8px (rounded-lg)
+- Padding: 24px (p-6)
+- Hover effects for interactive cards
 
 ### Loading States
 
-- Use `LoadingSpinner` component for loading indicators
+- Use `LoadingSpinner` component
 - Sizes: `sm`, `md`, `lg`
 - Colors: `primary`, `secondary`, `white`
-- Always include proper ARIA labels
+- Include loading text for clarity
 
-### Error Handling
+## Gradient Guidelines
 
-- Wrap components in `ErrorBoundary`
-- Provide fallback UI for errors
-- Include retry mechanisms
-- Show helpful error messages
+### Background Gradients
 
-## Accessibility Guidelines
+- Hero: `from-purple-900 via-blue-900 to-indigo-900`
+- CTAs: `from-yellow-400 to-pink-400`
+- Sections: `from-purple-600 to-indigo-600`
 
-### ARIA Labels
+### Animated Elements
 
-- All interactive elements must have descriptive ARIA labels
-- Use `role` attributes appropriately
-- Include `aria-describedby` for complex interactions
-
-### Keyboard Navigation
-
-- All interactive elements must be keyboard accessible
-- Use proper focus management
-- Include visible focus indicators
-
-### Screen Readers
-
-- Use semantic HTML elements
-- Include `sr-only` text for context
-- Provide alternative text for images
+- Blob shapes with mix-blend-multiply
+- Subtle animations (2-4s duration)
+- Animation delays for visual interest
 
 ## Animation Guidelines
 
 ### Micro-interactions
 
-- Use subtle hover effects (scale, shadow, color)
-- Transition duration: 200-300ms
-- Use `ease-in-out` timing function
-- Include active states for tactile feedback
+- Scale on hover: 1.05
+- Transition duration: 300ms
+- Easing: ease-in-out
+- Shadow elevation on hover
 
-### Loading Animations
+### Page Transitions
 
-- Use spin animations for loading indicators
-- Keep animations smooth and purposeful
-- Respect user's motion preferences
+- Fade in: 600ms
+- Slide up: 800ms
+- Stagger: 200ms delay
+
+### Background Animations
+
+- Blob animation: 7s infinite
+- Pulse animation: 2s infinite
+- Respect prefers-reduced-motion
 
 ## Layout Guidelines
 
-### Grid System
-
-- Use CSS Grid for complex layouts
-- Use Flexbox for component-level layouts
-- Maintain consistent spacing
-- Ensure responsive design
-
 ### Container Widths
 
-- Use `container-custom` class for consistent max-widths
-- Ensure proper padding on mobile devices
-- Maintain readability across all screen sizes
+- max-w-6xl for navigation
+- max-w-7xl for content sections
+- Responsive padding: px-4 sm:px-6 lg:px-8
+
+### Grid System
+
+- Mobile: 1 column
+- Tablet: 2 columns (md:grid-cols-2)
+- Desktop: 3-4 columns (lg:grid-cols-3/4)
+
+### Hero Sections
+
+- Full viewport height minus nav
+- Centered content
+- Gradient backgrounds
+- Animated elements
+
+## Accessibility Guidelines
+
+### Color Contrast
+
+- Text on gradients: white with opacity
+- Minimum WCAG AA compliance
+- Test with color blindness simulators
+
+### Focus Management
+
+- Visible focus rings
+- Keyboard navigation support
+- Skip links for navigation
+
+### Screen Readers
+
+- Descriptive ARIA labels
+- Semantic HTML structure
+- Hidden decorative elements
 
 ## Best Practices
 
 ### Performance
 
-- Use lazy loading for routes and heavy components
-- Implement proper error boundaries
-- Optimize images and assets
-- Use memo for expensive components
+- Optimize gradient rendering
+- Lazy load heavy components
+- Use CSS transforms for animations
+- Minimize re-renders with memo
 
-### Maintainability
+### Responsive Design
 
-- Follow consistent naming conventions
-- Use TypeScript for type safety
-- Document complex components
-- Keep components focused and reusable
+- Mobile-first approach
+- Test on all breakpoints
+- Ensure touch targets are 44px+
+- Optimize for slow connections
 
-### User Experience
+### Creator Focus
 
-- Provide clear feedback for user actions
-- Maintain consistent navigation
-- Ensure fast loading times
-- Design for accessibility first
+- Clear value propositions
+- Transparent pricing displays
+- Trust indicators (stats, testimonials)
+- Simple, clean interfaces

@@ -1,121 +1,196 @@
-import type { Quote, Category, MenuItem, FeaturedStory } from "../types";
+import type { Quote } from "../types";
 
-// Inspirational quotes for the hero section
-export const HERO_QUOTES: Quote[] = [
+// Platform statistics for social proof
+export const PLATFORM_STATS = {
+  creators: "500+",
+  monthlyReaders: "50K+",
+  totalEarned: "$250K+",
+  avgCreatorIncome: "$2,000/mo",
+};
+
+// Hero quotes for creator platform
+export const CREATOR_HERO_QUOTES: Quote[] = [
   {
-    text: "Every corner store has a story. Every story has a home.",
-    author: "The Blog Spot",
+    text: "Keep 90% of your earnings. No complex analytics. Just write and get paid.",
+    author: "The Blog Spot Promise",
   },
   {
-    text: "Where community meets creativity, magic happens.",
-    author: "Our Readers",
+    text: "I made my first $1,000 in month two. The simplicity is refreshing.",
+    author: "Sarah Chen, Newsletter Writer",
   },
   {
-    text: "Your truth deserves to be heard.",
-    author: "The Blog Spot",
+    text: "Finally, a platform that doesn't take half my revenue.",
+    author: "Marcus Johnson, Poet",
   },
   {
-    text: "Stories connect us across all boundaries.",
-    author: "Community Member",
+    text: "Built my entire coaching business here. Zero tech headaches.",
+    author: "Elena Rodriguez, Life Coach",
   },
 ];
 
-// Story categories for the homepage
-export const STORY_CATEGORIES: Category[] = [
+// Creator success stories for homepage
+export const CREATOR_SUCCESS_STORIES = [
   {
-    id: "first-generation",
-    title: "First-Generation Stories",
-    description: "Tales of new beginnings and cultural bridges",
-    icon: "🌉",
-    slug: "first-generation",
-    postCount: 24,
+    id: "sarah-chen",
+    name: "Sarah Chen",
+    avatar: "/images/creators/sarah-chen.webp",
+    niche: "Tech & Career",
+    monthlyEarnings: "$3,200",
+    subscribers: 850,
+    quote: "I switched from Substack and doubled my income in 3 months.",
+    featured: true,
   },
   {
-    id: "neighborhood-memories",
-    title: "Neighborhood Memories",
-    description: "Stories that shaped our communities",
-    icon: "🏘️",
-    slug: "neighborhood-memories",
-    postCount: 18,
+    id: "marcus-johnson",
+    name: "Marcus Johnson",
+    avatar: "/images/creators/marcus-johnson.webp",
+    niche: "Poetry & Prose",
+    monthlyEarnings: "$1,800",
+    subscribers: 450,
+    quote: "The 90% revenue share changed everything for me.",
+    featured: true,
   },
   {
-    id: "family-traditions",
-    title: "Family Traditions",
-    description: "Legacies passed down through generations",
-    icon: "👨‍👩‍👧‍👦",
-    slug: "family-traditions",
-    postCount: 31,
-  },
-  {
-    id: "cultural-fusion",
-    title: "Cultural Fusion",
-    description: "Where different worlds meet and create magic",
-    icon: "✨",
-    slug: "cultural-fusion",
-    postCount: 15,
-  },
-  {
-    id: "street-wisdom",
-    title: "Street Wisdom",
-    description: "Life lessons learned on the corner",
-    icon: "🧠",
-    slug: "street-wisdom",
-    postCount: 22,
-  },
-  {
-    id: "community-heroes",
-    title: "Community Heroes",
-    description: "Everyday people doing extraordinary things",
-    icon: "🦸‍♂️",
-    slug: "community-heroes",
-    postCount: 19,
+    id: "elena-rodriguez",
+    name: "Elena Rodriguez",
+    avatar: "/images/creators/elena-rodriguez.webp",
+    niche: "Wellness Coaching",
+    monthlyEarnings: "$5,400",
+    subscribers: 180,
+    quote: "I run workshops and courses with zero platform interference.",
+    featured: true,
   },
 ];
 
-// Navigation menu items for stories dropdown
-export const STORIES_MENU: MenuItem[] = [
-  { label: "Cornerstore Confessions", href: "/cornerstore-confessions" },
-  { label: "Letters to My Younger Self", href: "/letters-to-my-younger-self" },
-  { label: "First Times", href: "/first-times" },
-  { label: "Poetry", href: "/poetry" },
-  { label: "Love", href: "/love" },
-  { label: "Relationships", href: "/relationships" },
-  { label: "Family & Community", href: "/family-community" },
-  { label: "Triumph & Survival", href: "/triumph-survival" },
-  { label: "Overcoming", href: "/overcoming" },
-  { label: "Illness", href: "/illness" },
-  { label: "Loneliness", href: "/loneliness" },
-  { label: "Environment", href: "/environment" },
-  { label: "Spirituality", href: "/spirituality" },
-  { label: "Kindness", href: "/kindness" },
-  { label: "Roots & Heritage", href: "/roots-heritage" },
-  { label: "Humor & Joy", href: "/humor-joy" },
+// Platform features for creators
+export const CREATOR_FEATURES = [
+  {
+    id: "revenue-share",
+    title: "Keep 90% of Earnings",
+    description: "Industry-leading revenue share. We only take 10%.",
+    icon: "💰",
+  },
+  {
+    id: "simple-tools",
+    title: "Simple Creator Tools",
+    description: "Everything you need, nothing you don't. Focus on creating.",
+    icon: "🛠️",
+  },
+  {
+    id: "instant-payouts",
+    title: "Weekly Payouts",
+    description: "Get paid every week. No waiting 30+ days.",
+    icon: "⚡",
+  },
+  {
+    id: "own-audience",
+    title: "Own Your Audience",
+    description: "Export your subscriber list anytime. It's yours.",
+    icon: "👥",
+  },
+  {
+    id: "workshops",
+    title: "Workshops & Courses",
+    description: "Sell workshops, courses, and premium content easily.",
+    icon: "🎓",
+  },
+  {
+    id: "no-algorithms",
+    title: "No Algorithm Games",
+    description: "Your subscribers see everything you publish. Period.",
+    icon: "📊",
+  },
 ];
 
-// Featured story for the hero section
-export const FEATURED_STORY: FeaturedStory = {
-  id: "cornerstore-confessions-1",
-  title: "Cornerstore Confessions: The Day I Found My Voice",
-  excerpt:
-    "I never thought a simple trip to the bodega would change my life. But that day, surrounded by the hum of refrigerators and the smell of fresh bread, I finally spoke my truth.",
-  slug: "cornerstore-confessions",
-  category: "Personal Growth",
-  readTime: 5,
-  publishedAt: "2024-01-15",
-  author: "Anonymous",
+// Pricing tiers for creators
+export const CREATOR_PRICING_OPTIONS = [
+  {
+    id: "free-posts",
+    name: "Free Content",
+    description: "Build your audience with free posts",
+    features: ["Unlimited free posts", "Basic analytics", "Email subscribers"],
+  },
+  {
+    id: "paid-subscriptions",
+    name: "Paid Subscriptions",
+    description: "Monetize with monthly subscriptions",
+    features: [
+      "Set your own price",
+      "Recurring payments",
+      "Member-only content",
+    ],
+  },
+  {
+    id: "workshops",
+    name: "Workshops & Courses",
+    description: "One-time purchases for premium content",
+    features: ["Sell workshops", "Digital downloads", "Tiered pricing"],
+  },
+];
+
+// Creator categories
+export const CREATOR_CATEGORIES = [
+  { id: "writers", label: "Writers & Journalists", count: 156 },
+  { id: "coaches", label: "Coaches & Consultants", count: 89 },
+  { id: "artists", label: "Artists & Poets", count: 124 },
+  { id: "educators", label: "Educators & Teachers", count: 67 },
+  { id: "wellness", label: "Wellness & Health", count: 93 },
+  { id: "business", label: "Business & Finance", count: 78 },
+];
+
+// FAQ for creators
+export const CREATOR_FAQ = [
+  {
+    question: "How much does The Blog Spot take?",
+    answer:
+      "We take only 10% of your earnings. You keep 90%. This includes payment processing.",
+  },
+  {
+    question: "When do I get paid?",
+    answer:
+      "Every Friday. If you've earned over $25, we automatically deposit to your account.",
+  },
+  {
+    question: "Can I bring my existing subscribers?",
+    answer:
+      "Yes! Import your email list and we'll help you transition smoothly.",
+  },
+  {
+    question: "What about my old content?",
+    answer:
+      "Import all your previous posts with our migration tool. Keep your archive intact.",
+  },
+  {
+    question: "Can I leave anytime?",
+    answer:
+      "Absolutely. Export your subscriber list and content whenever you want. No lock-in.",
+  },
+];
+
+// Call-to-action messages
+export const CTA_MESSAGES = {
+  hero: "Start Earning in 5 Minutes",
+  pricing: "Join 500+ Creators",
+  features: "See How It Works",
+  testimonial: "Start Your Journey",
 };
 
 // Footer links
 export const FOOTER_LINKS = {
-  categories: [
-    { label: "First-Generation Stories", href: "/first-generation" },
-    { label: "Neighborhood Memories", href: "/neighborhood-memories" },
-    { label: "Family Traditions", href: "/family-traditions" },
+  creators: [
+    { label: "How It Works", href: "/how-it-works" },
+    { label: "Pricing", href: "/pricing" },
+    { label: "Browse Creators", href: "/creators" },
   ],
-  connect: [
-    { label: "About Us", href: "/about" },
-    { label: "Submit Story", href: "/submit" },
-    { label: "Contact", href: "/contact" },
+  company: [
+    { label: "About", href: "/about" },
+    { label: "Membership", href: "/membership" },
+    { label: "Community", href: "/community" },
+  ],
+  support: [
+    { label: "Help Center", href: "/help", isComingSoon: true },
+    { label: "Contact", href: "/contact", isComingSoon: true },
+    { label: "Terms", href: "/terms", isComingSoon: true },
   ],
   social: [
     {
@@ -147,218 +222,4 @@ export const BREAKPOINTS = {
   lg: "1024px",
   xl: "1280px",
   "2xl": "1536px",
-} as const;
-
-// SEO metadata for story categories
-export const CATEGORY_SEO_DATA = {
-  "cornerstore-confessions": {
-    title: "Cornerstore Confessions - Real Stories from Everyday Places",
-    description:
-      "Authentic stories and confessions from corner stores, bodegas, and neighborhood spots. Share your real-life experiences and connect with others.",
-    keywords: [
-      "cornerstore",
-      "confessions",
-      "real stories",
-      "neighborhood",
-      "bodega",
-      "authentic experiences",
-    ],
-  },
-  "letters-to-my-younger-self": {
-    title: "Letters to My Younger Self - Wisdom and Reflections",
-    description:
-      "Heartfelt letters and advice to younger selves. Share your wisdom, regrets, and life lessons with our community.",
-    keywords: [
-      "letters",
-      "younger self",
-      "advice",
-      "wisdom",
-      "life lessons",
-      "reflections",
-    ],
-  },
-  "first-times": {
-    title: "First Times - Stories of New Experiences",
-    description:
-      "Share your first-time experiences, milestones, and memorable moments. Connect through stories of new beginnings.",
-    keywords: [
-      "first time",
-      "new experiences",
-      "milestones",
-      "memorable moments",
-      "beginnings",
-    ],
-  },
-  poetry: {
-    title: "Poetry - Creative Expression and Verse",
-    description:
-      "Original poetry, spoken word, and creative verse from our community. Share your poetic voice and artistic expression.",
-    keywords: [
-      "poetry",
-      "poems",
-      "spoken word",
-      "verse",
-      "creative writing",
-      "artistic expression",
-    ],
-  },
-  love: {
-    title: "Love Stories - Romance, Relationships, and Connection",
-    description:
-      "Stories about love, romance, relationships, and human connection. Share your love experiences and heartfelt moments.",
-    keywords: [
-      "love",
-      "romance",
-      "relationships",
-      "connection",
-      "dating",
-      "heartfelt stories",
-    ],
-  },
-  relationships: {
-    title: "Relationship Stories - Family, Friends, and Connections",
-    description:
-      "Stories about all types of relationships - family, friends, romantic, and more. Share your relationship experiences.",
-    keywords: [
-      "relationships",
-      "family",
-      "friends",
-      "connections",
-      "bonds",
-      "social stories",
-    ],
-  },
-  "family-community": {
-    title: "Family & Community - Stories of Belonging and Togetherness",
-    description:
-      "Stories about family bonds, community connections, and belonging. Share your experiences of togetherness and support.",
-    keywords: [
-      "family",
-      "community",
-      "belonging",
-      "togetherness",
-      "support",
-      "bonds",
-    ],
-  },
-  "triumph-survival": {
-    title: "Triumph & Survival - Stories of Overcoming and Resilience",
-    description:
-      "Inspiring stories of triumph, survival, and resilience. Share your experiences of overcoming challenges and adversity.",
-    keywords: [
-      "triumph",
-      "survival",
-      "resilience",
-      "overcoming",
-      "challenges",
-      "adversity",
-      "strength",
-    ],
-  },
-  overcoming: {
-    title: "Overcoming - Stories of Growth and Perseverance",
-    description:
-      "Stories about overcoming obstacles, personal growth, and perseverance. Share your journey of transformation.",
-    keywords: [
-      "overcoming",
-      "obstacles",
-      "personal growth",
-      "perseverance",
-      "transformation",
-      "journey",
-    ],
-  },
-  illness: {
-    title: "Illness - Health Stories and Medical Experiences",
-    description:
-      "Stories about illness, health challenges, recovery, and medical experiences. Share your health journey with compassion.",
-    keywords: [
-      "illness",
-      "health",
-      "medical",
-      "recovery",
-      "healing",
-      "health challenges",
-    ],
-  },
-  loneliness: {
-    title: "Loneliness - Stories of Isolation and Connection",
-    description:
-      "Stories about loneliness, isolation, and finding connection. Share your experiences and find community understanding.",
-    keywords: [
-      "loneliness",
-      "isolation",
-      "connection",
-      "solitude",
-      "mental health",
-      "community",
-    ],
-  },
-  environment: {
-    title: "Environment - Nature, Climate, and Sustainability Stories",
-    description:
-      "Stories about the environment, nature, climate change, and sustainability. Share your environmental experiences and perspectives.",
-    keywords: [
-      "environment",
-      "nature",
-      "climate",
-      "sustainability",
-      "ecology",
-      "green living",
-    ],
-  },
-  spirituality: {
-    title: "Spirituality - Faith, Belief, and Spiritual Journeys",
-    description:
-      "Stories about spirituality, faith, belief systems, and spiritual journeys. Share your spiritual experiences and insights.",
-    keywords: [
-      "spirituality",
-      "faith",
-      "belief",
-      "spiritual journey",
-      "religion",
-      "meditation",
-    ],
-  },
-  kindness: {
-    title: "Kindness - Stories of Compassion and Good Deeds",
-    description:
-      "Stories about kindness, compassion, good deeds, and human generosity. Share uplifting experiences of kindness.",
-    keywords: [
-      "kindness",
-      "compassion",
-      "good deeds",
-      "generosity",
-      "helping others",
-      "humanity",
-    ],
-  },
-  "roots-heritage": {
-    title: "Roots & Heritage - Cultural Identity and Ancestry Stories",
-    description:
-      "Stories about cultural roots, heritage, ancestry, and identity. Share your cultural experiences and family history.",
-    keywords: [
-      "roots",
-      "heritage",
-      "culture",
-      "ancestry",
-      "identity",
-      "tradition",
-      "family history",
-    ],
-  },
-  "humor-joy": {
-    title: "Humor & Joy - Funny Stories and Joyful Moments",
-    description:
-      "Funny stories, joyful moments, and uplifting experiences. Share laughter and positivity with our community.",
-    keywords: [
-      "humor",
-      "joy",
-      "funny stories",
-      "laughter",
-      "happiness",
-      "uplifting",
-      "positivity",
-    ],
-  },
 } as const;

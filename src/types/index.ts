@@ -5,44 +5,9 @@ export interface Quote {
   author: string;
 }
 
-export interface Category {
-  id: string;
-  title: string;
-  description: string;
-  icon: string;
-  slug: string;
-  postCount?: number;
-}
-
-export interface MenuItem {
-  label: string;
-  href: string;
-  isExternal?: boolean;
-}
-
-export interface FeaturedStory {
-  id: string;
-  title: string;
-  excerpt: string;
-  slug: string;
-  category: string;
-  readTime: number;
-  publishedAt: string;
-  author?: string;
-}
-
 export interface NavigationProps {
   isOpen: boolean;
   onToggle: () => void;
-}
-
-export interface HeroProps {
-  featuredStory?: FeaturedStory;
-}
-
-export interface CategoriesProps {
-  categories?: Category[];
-  onCategoryClick?: (category: Category) => void;
 }
 
 export interface NewsletterFormData {
@@ -63,6 +28,7 @@ export interface ButtonProps {
   loading?: boolean;
   type?: "button" | "submit" | "reset";
   className?: string;
+  href?: string;
 }
 
 // Animation and interaction types
@@ -90,4 +56,74 @@ export interface PageMeta {
   keywords?: string[];
   ogImage?: string;
   canonicalUrl?: string;
+}
+
+// Creator platform specific types
+export interface Creator {
+  id: string;
+  name: string;
+  avatar: string;
+  niche: string;
+  bio?: string;
+  monthlyEarnings: string;
+  subscribers: number;
+  joinedDate?: string;
+  verified?: boolean;
+  featured?: boolean;
+  quote?: string;
+}
+
+export interface CreatorStats {
+  totalEarnings: number;
+  monthlyEarnings: number;
+  subscribers: number;
+  posts: number;
+  engagement: number;
+}
+
+export interface PricingTier {
+  id: string;
+  name: string;
+  price?: number;
+  interval?: "monthly" | "yearly" | "one-time";
+  description: string;
+  features: string[];
+  highlighted?: boolean;
+}
+
+export interface Workshop {
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+  creatorId: string;
+  duration: string;
+  startDate?: string;
+  maxParticipants?: number;
+  currentParticipants?: number;
+}
+
+export interface CreatorFeature {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+}
+
+export interface FAQ {
+  question: string;
+  answer: string;
+}
+
+export interface PlatformStats {
+  creators: string;
+  monthlyReaders: string;
+  totalEarned: string;
+  avgCreatorIncome: string;
+}
+
+export interface CreatorCategory {
+  id: string;
+  label: string;
+  count: number;
 }

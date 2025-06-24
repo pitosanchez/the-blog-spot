@@ -3,15 +3,15 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { LoadingSpinner } from "./components/ui/LoadingSpinner";
 import { SEOHead } from "./components/SEO/SEOHead";
-import { CategoryPage } from "./components/CategoryPage";
 import { Header } from "./components/Layout/Header";
 import { Footer } from "./components/Layout/Footer";
 import { Hero } from "./components/Home/Hero";
-import { Categories } from "./components/Home/Categories";
-import { Newsletter } from "./components/Home/Newsletter";
+import { CreatorShowcase } from "./components/Home/CreatorShowcase";
+import { Features } from "./components/Home/Features";
+import { CreatorCTA } from "./components/Home/CreatorCTA";
 import { ComingSoonPage } from "./pages/ComingSoon";
 import { AppProvider } from "./contexts/AppContext";
-import { ALL_ROUTES } from "./config/routes";
+import { MAIN_ROUTES } from "./config/routes";
 import { analytics } from "./utils/analytics";
 import "./utils/pwa"; // Initialize PWA functionality
 
@@ -19,6 +19,10 @@ import "./utils/pwa"; // Initialize PWA functionality
 const About = lazy(() => import("./pages/About"));
 const Membership = lazy(() => import("./pages/Membership"));
 const Community = lazy(() => import("./pages/Community"));
+const HowItWorks = lazy(() => import("./pages/HowItWorks"));
+const Pricing = lazy(() => import("./pages/Pricing"));
+const GetStarted = lazy(() => import("./pages/GetStarted"));
+const Creators = lazy(() => import("./pages/Creators"));
 
 // Enhanced loading component
 const PageLoader = () => (
@@ -56,8 +60,9 @@ const HomePage = () => (
   <>
     <SEOHead />
     <Hero />
-    <Categories />
-    <Newsletter />
+    <CreatorShowcase />
+    <Features />
+    <CreatorCTA />
   </>
 );
 
@@ -99,15 +104,13 @@ function App() {
                       <Route path="/about" element={<About />} />
                       <Route path="/membership" element={<Membership />} />
                       <Route path="/community" element={<Community />} />
-
-                      {/* Poetry page (already implemented) */}
-                      <Route
-                        path="/poetry"
-                        element={<CategoryPage categorySlug="poetry" />}
-                      />
+                      <Route path="/how-it-works" element={<HowItWorks />} />
+                      <Route path="/pricing" element={<Pricing />} />
+                      <Route path="/get-started" element={<GetStarted />} />
+                      <Route path="/creators" element={<Creators />} />
 
                       {/* Dynamic routes from configuration */}
-                      {ALL_ROUTES.filter(
+                      {MAIN_ROUTES.filter(
                         (route) => route.isComingSoon && route.path !== "/"
                       ).map((route) => (
                         <Route
