@@ -1,28 +1,28 @@
-import { useState } from 'react';
-import type { FormEvent } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useApp } from '../../contexts/AppContext';
-import { authService } from '../../services/auth.service';
-import { Button } from '../ui/Button';
-import { LoadingSpinner } from '../ui/LoadingSpinner';
+import { useState } from "react";
+import type { FormEvent } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useApp } from "../../contexts/AppContext";
+import { authService } from "../../services/auth.service";
+import { Button } from "../ui/Button";
+import { LoadingSpinner } from "../ui/LoadingSpinner";
 
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const { login } = useApp();
-  
+
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const from = location.state?.from?.pathname || '/';
+  const from = location.state?.from?.pathname || "/";
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setIsLoading(true);
 
     try {
@@ -30,14 +30,16 @@ export default function Login() {
       login(response.user);
       navigate(from, { replace: true });
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Login failed. Please try again.');
+      setError(
+        err instanceof Error ? err.message : "Login failed. Please try again."
+      );
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
@@ -51,7 +53,7 @@ export default function Login() {
             Sign in to your account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-400">
-            Or{' '}
+            Or{" "}
             <Link
               to="/signup"
               className="font-medium text-electric-sage hover:text-electric-sage/80 transition-colors"
@@ -60,7 +62,7 @@ export default function Login() {
             </Link>
           </p>
         </div>
-        
+
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
@@ -111,7 +113,10 @@ export default function Login() {
                 type="checkbox"
                 className="h-4 w-4 text-electric-sage focus:ring-electric-sage border-gray-700 rounded bg-gray-900"
               />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-400">
+              <label
+                htmlFor="remember-me"
+                className="ml-2 block text-sm text-gray-400"
+              >
                 Remember me
               </label>
             </div>
@@ -130,11 +135,11 @@ export default function Login() {
             <Button
               type="submit"
               variant="primary"
-              size="large"
+              size="lg"
               disabled={isLoading}
               className="w-full flex justify-center"
             >
-              {isLoading ? <LoadingSpinner /> : 'Sign in'}
+              {isLoading ? <LoadingSpinner /> : "Sign in"}
             </Button>
           </div>
         </form>
