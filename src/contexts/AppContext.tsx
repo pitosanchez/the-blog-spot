@@ -1,5 +1,6 @@
 import { createContext, useContext, useReducer, useEffect } from "react";
 import type { ReactNode } from "react";
+import { authService } from "../services/auth.service";
 
 // Types for our global state
 export interface User {
@@ -109,7 +110,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem("user", JSON.stringify(user));
   };
 
-  const logout = () => {
+  const logout = async () => {
+    await authService.logout();
     dispatch({ type: "LOGOUT" });
     localStorage.removeItem("user");
   };
@@ -127,28 +129,45 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem("theme", newTheme);
   };
 
-  // Load saved state on mount
+  // Load saved state on mount and verify token
   useEffect(() => {
-    const savedUser = localStorage.getItem("user");
-    const savedTheme = localStorage.getItem("theme");
-    const savedPreferences = localStorage.getItem("preferences");
+    const initializeAuth = async () => {
+      try {
+        // Check if we have a valid token
+        const user = await authService.verifyToken();
+        
+        if (user) {
+          dispatch({ type: "SET_USER", payload: user });
+        } else {
+          // If no valid token, check localStorage for user (backwards compatibility)
+          const savedUser = localStorage.getItem("user");
+          if (savedUser) {
+            dispatch({ type: "SET_USER", payload: JSON.parse(savedUser) });
+          }
+        }
 
-    if (savedUser) {
-      dispatch({ type: "SET_USER", payload: JSON.parse(savedUser) });
-    }
+        // Load theme preference
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme) {
+          dispatch({ type: "SET_THEME", payload: savedTheme as "light" | "dark" });
+        }
 
-    if (savedTheme) {
-      dispatch({ type: "SET_THEME", payload: savedTheme as "light" | "dark" });
-    }
+        // Load other preferences
+        const savedPreferences = localStorage.getItem("preferences");
+        if (savedPreferences) {
+          dispatch({
+            type: "UPDATE_PREFERENCES",
+            payload: JSON.parse(savedPreferences),
+          });
+        }
+      } catch (error) {
+        console.error("Auth initialization error:", error);
+      } finally {
+        dispatch({ type: "SET_LOADING", payload: false });
+      }
+    };
 
-    if (savedPreferences) {
-      dispatch({
-        type: "UPDATE_PREFERENCES",
-        payload: JSON.parse(savedPreferences),
-      });
-    }
-
-    dispatch({ type: "SET_LOADING", payload: false });
+    initializeAuth();
   }, []);
 
   const value: AppContextType = {

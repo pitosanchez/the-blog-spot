@@ -2,7 +2,7 @@ import { memo } from "react";
 
 interface LoadingSpinnerProps {
   size?: "sm" | "md" | "lg";
-  color?: "primary" | "secondary" | "white";
+  color?: "primary" | "secondary" | "pure-white";
   className?: string;
   "aria-label"?: string;
 }
@@ -21,9 +21,9 @@ export const LoadingSpinner = memo<LoadingSpinnerProps>(
     };
 
     const colorClasses = {
-      primary: "border-bodega-brick border-t-transparent",
-      secondary: "border-community-teal border-t-transparent",
-      white: "border-white border-t-transparent",
+      primary: "border-creative-teal border-t-transparent",
+      secondary: "border-muted-blue-grey border-t-transparent",
+      "pure-white": "border-pure-white border-t-transparent",
     };
 
     return (

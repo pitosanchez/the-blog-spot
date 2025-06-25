@@ -18,15 +18,15 @@ export const Logo = memo<LogoProps>(
     return (
       <Link
         to="/"
-        className={`flex items-center gap-2 sm:gap-3 hover:opacity-90 transition-opacity duration-200 focus:outline-none focus:ring-2 focus:ring-bodega-brick focus:ring-opacity-50 rounded-lg ${linkClassName}`}
+        className={`flex items-center gap-2 sm:gap-3 hover:opacity-90 transition-opacity duration-200 focus:outline-none focus:ring-2 focus:ring-creative-teal/50 rounded-lg ${linkClassName}`}
         aria-label="The Blog Spot - Home"
       >
         {/* Logo Icon Container */}
         <div className={`relative ${className}`}>
           {/* Speech Bubble Background */}
-          <div className="relative w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-storyteller-cream rounded-2xl flex items-center justify-center shadow-sm">
+          <div className="relative w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-sepia-note rounded-2xl flex items-center justify-center shadow-sm">
             {/* Speech Bubble Tail */}
-            <div className="absolute -bottom-2 left-3 w-4 h-4 bg-storyteller-cream transform rotate-45 rounded-sm"></div>
+            <div className="absolute -bottom-2 left-3 w-4 h-4 bg-sepia-note transform rotate-45 rounded-sm"></div>
 
             {/* Pen Icon */}
             <svg
@@ -56,21 +56,21 @@ export const Logo = memo<LogoProps>(
           <div className="flex flex-col items-start">
             <span
               className={`text-lg sm:text-xl lg:text-2xl font-playfair font-bold leading-tight ${
-                textColor === "light" ? "text-bodega-brick" : "text-vintage-ink"
+                textColor === "light" ? "text-creative-teal" : "text-slate-ink"
               }`}
             >
               THE
             </span>
             <span
               className={`text-lg sm:text-xl lg:text-2xl font-playfair font-bold leading-tight -mt-1 ${
-                textColor === "light" ? "text-bodega-brick" : "text-vintage-ink"
+                textColor === "light" ? "text-creative-teal" : "text-slate-ink"
               }`}
             >
               BLOG
             </span>
             <span
               className={`text-lg sm:text-xl lg:text-2xl font-playfair font-bold leading-tight -mt-1 ${
-                textColor === "light" ? "text-bodega-brick" : "text-vintage-ink"
+                textColor === "light" ? "text-creative-teal" : "text-slate-ink"
               }`}
             >
               SPOT

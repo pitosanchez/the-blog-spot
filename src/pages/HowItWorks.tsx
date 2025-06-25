@@ -1,219 +1,230 @@
 import { memo } from "react";
-import { SEOHead } from "../components/SEO/SEOHead";
-import { Button } from "../components/ui/Button";
+import { Link } from "react-router-dom";
 
-const HowItWorks = memo(() => {
-  const steps = [
-    {
-      number: "01",
-      title: "Sign Up in Minutes",
-      description:
-        "Create your creator account with just an email. No lengthy applications or waiting periods.",
-      icon: "✍️",
-    },
-    {
-      number: "02",
-      title: "Set Your Prices",
-      description:
-        "Choose your subscription price or offer one-time purchases. You're in complete control.",
-      icon: "💰",
-    },
-    {
-      number: "03",
-      title: "Create & Publish",
-      description:
-        "Use our simple editor to write posts, create workshops, or upload digital products.",
-      icon: "📝",
-    },
-    {
-      number: "04",
-      title: "Get Paid Weekly",
-      description:
-        "Every Friday, we deposit your earnings directly to your bank account. No waiting.",
-      icon: "💸",
-    },
-  ];
+const steps = [
+  {
+    number: "01",
+    title: "Create Your Account",
+    description:
+      "Sign up in 30 seconds. No credit card required, no complex setup.",
+    features: [
+      "Instant account activation",
+      "Import existing content",
+      "Connect social profiles",
+    ],
+    icon: "🚀",
+  },
+  {
+    number: "02",
+    title: "Publish Your Content",
+    description:
+      "Write, upload, or import your stories. Our editor makes it effortless.",
+    features: ["Rich text editor", "Media uploads", "SEO optimization"],
+    icon: "✍️",
+  },
+  {
+    number: "03",
+    title: "Build Your Audience",
+    description:
+      "Share your unique link. Readers discover and subscribe to your content.",
+    features: [
+      "Custom creator page",
+      "Social sharing tools",
+      "Analytics dashboard",
+    ],
+    icon: "📈",
+  },
+  {
+    number: "04",
+    title: "Start Earning",
+    description:
+      "Set your prices. Get paid weekly. Keep 90% of everything you earn.",
+    features: ["Weekly payouts", "Multiple pricing tiers", "90% revenue share"],
+    icon: "💰",
+  },
+];
 
+const features = [
+  {
+    title: "No Algorithm Games",
+    description:
+      "Your subscribers see everything you publish. No shadow banning, no suppression.",
+    icon: "📊",
+  },
+  {
+    title: "Own Your Audience",
+    description:
+      "Export your subscriber list anytime. Your audience belongs to you, not us.",
+    icon: "👥",
+  },
+  {
+    title: "Simple Pricing",
+    description:
+      "One transparent rate: we take 10%, you keep 90%. No hidden fees, ever.",
+    icon: "💎",
+  },
+  {
+    title: "Weekly Payouts",
+    description:
+      "Get paid every Friday. No waiting 30+ days like other platforms.",
+    icon: "⚡",
+  },
+];
+
+export const HowItWorks = memo(() => {
   return (
-    <>
-      <SEOHead
-        title="How It Works - The Blog Spot Creator Platform"
-        description="Learn how easy it is to start earning on The Blog Spot. Sign up, create content, and get paid weekly with 90% revenue share."
-      />
+    <div className="bg-ink-black text-crisp-white min-h-screen">
+      {/* Hero Section */}
+      <section className="relative pt-24 pb-16 overflow-hidden">
+        <div className="absolute inset-0 gradient-mesh opacity-30"></div>
 
-      <div className="min-h-screen bg-gradient-to-b from-white to-cream">
-        {/* Hero Section */}
-        <section className="py-16 md:py-24 bg-white">
-          <div className="container-custom px-4 md:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold text-vintage-ink mb-6">
-                Start Earning in 4 Simple Steps
-              </h1>
-              <p className="text-xl text-warm-gray-700 mb-8">
-                No complex setup. No confusing analytics. Just a straightforward
-                path to monetizing your content.
-              </p>
+        <div className="relative z-10 container-custom px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-4xl mx-auto">
+            <h1 className="font-display font-black text-5xl md:text-6xl lg:text-7xl leading-tight mb-6">
+              How It <span className="text-electric-sage">Works</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-warm-gray leading-relaxed mb-8">
+              From zero to earning in 4 simple steps. No complex setup, no
+              hidden fees.
+            </p>
+            <div className="inline-flex items-center gap-2 bg-charcoal/50 backdrop-blur-xl border border-warm-gray/20 rounded-full px-6 py-3">
+              <div className="w-2 h-2 bg-electric-sage rounded-full animate-pulse"></div>
+              <span className="text-sm text-warm-gray">
+                Average setup time: 5 minutes
+              </span>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Steps Section */}
-        <section className="py-16 md:py-24">
-          <div className="container-custom px-4 md:px-6 lg:px-8">
-            <div className="max-w-5xl mx-auto">
-              {steps.map((step, index) => (
+      {/* Steps Section */}
+      <section className="py-20">
+        <div className="container-custom px-4 sm:px-6 lg:px-8">
+          <div className="space-y-20">
+            {steps.map((step, index) => (
+              <div key={step.number} className="relative">
                 <div
-                  key={step.number}
-                  className={`flex flex-col md:flex-row items-center gap-8 mb-16 ${
-                    index % 2 === 1 ? "md:flex-row-reverse" : ""
+                  className={`grid lg:grid-cols-2 gap-12 items-center ${
+                    index % 2 === 1 ? "lg:grid-flow-col-dense" : ""
                   }`}
                 >
-                  <div className="flex-1">
-                    <div className="flex items-center gap-4 mb-4">
-                      <span className="text-6xl font-bold text-community-teal/20">
+                  {/* Content */}
+                  <div className={index % 2 === 1 ? "lg:col-start-2" : ""}>
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="text-6xl">{step.icon}</div>
+                      <div className="text-8xl font-display font-black text-electric-sage/20">
                         {step.number}
-                      </span>
-                      <span className="text-4xl">{step.icon}</span>
+                      </div>
                     </div>
-                    <h2 className="text-3xl font-playfair font-bold text-vintage-ink mb-4">
+
+                    <h2 className="font-display font-bold text-4xl md:text-5xl mb-6">
                       {step.title}
                     </h2>
-                    <p className="text-lg text-warm-gray-700">
+
+                    <p className="text-xl text-warm-gray leading-relaxed mb-8">
                       {step.description}
                     </p>
+
+                    <ul className="space-y-3">
+                      {step.features.map((feature, idx) => (
+                        <li key={idx} className="flex items-center gap-3">
+                          <svg
+                            className="w-5 h-5 text-electric-sage flex-shrink-0"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                          <span className="text-warm-gray">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <div className="flex-1">
-                    <div className="bg-white rounded-2xl shadow-lg p-8 border border-warm-gray-100">
-                      {/* Placeholder for step illustration */}
-                      <div className="h-64 bg-gradient-to-br from-cream to-warm-gray-50 rounded-lg flex items-center justify-center">
-                        <span className="text-6xl opacity-50">{step.icon}</span>
+
+                  {/* Visual */}
+                  <div className={index % 2 === 1 ? "lg:col-start-1" : ""}>
+                    <div className="glassmorphism rounded-2xl p-8 backdrop-blur-xl border border-warm-gray/20 hover:border-electric-sage/50 transition-all duration-300">
+                      <div className="aspect-square bg-gradient-to-br from-electric-sage/20 to-hot-coral/20 rounded-xl flex items-center justify-center">
+                        <div className="text-8xl">{step.icon}</div>
                       </div>
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
-        {/* Features Grid */}
-        <section className="py-16 md:py-24 bg-white">
-          <div className="container-custom px-4 md:px-6 lg:px-8">
-            <h2 className="text-3xl md:text-4xl font-playfair font-bold text-vintage-ink text-center mb-12">
-              Everything Included, No Hidden Fees
+                {/* Connector Line */}
+                {index < steps.length - 1 && (
+                  <div className="hidden lg:block absolute left-1/2 -bottom-10 w-px h-20 bg-gradient-to-b from-electric-sage/50 to-transparent"></div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 bg-charcoal/50">
+        <div className="container-custom px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="font-display font-bold text-4xl md:text-5xl mb-6">
+              Why Creators <span className="text-electric-sage">Choose Us</span>
             </h2>
-            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-community-teal/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">📊</span>
-                </div>
-                <h3 className="font-source font-bold text-vintage-ink mb-2">
-                  Simple Analytics
-                </h3>
-                <p className="text-warm-gray-700">
-                  See your earnings, subscribers, and top content at a glance.
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-bodega-brick/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">🔒</span>
-                </div>
-                <h3 className="font-source font-bold text-vintage-ink mb-2">
-                  Secure Payments
-                </h3>
-                <p className="text-warm-gray-700">
-                  Powered by Stripe. Your financial data is always protected.
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-community-teal/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">🚀</span>
-                </div>
-                <h3 className="font-source font-bold text-vintage-ink mb-2">
-                  Growth Tools
-                </h3>
-                <p className="text-warm-gray-700">
-                  Built-in SEO, social sharing, and email tools to grow your
-                  audience.
-                </p>
-              </div>
-            </div>
+            <p className="text-xl text-warm-gray max-w-2xl mx-auto">
+              We built the platform we wished existed when we were starting out.
+            </p>
           </div>
-        </section>
 
-        {/* FAQ Section */}
-        <section className="py-16 md:py-24">
-          <div className="container-custom px-4 md:px-6 lg:px-8">
-            <div className="max-w-3xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-playfair font-bold text-vintage-ink text-center mb-12">
-                Common Questions
-              </h2>
-              <div className="space-y-6">
-                <div className="bg-white rounded-xl p-6 shadow-md">
-                  <h3 className="font-source font-bold text-vintage-ink mb-2">
-                    Do I need technical skills?
-                  </h3>
-                  <p className="text-warm-gray-700">
-                    Not at all. If you can write an email, you can use The Blog
-                    Spot.
-                  </p>
-                </div>
-                <div className="bg-white rounded-xl p-6 shadow-md">
-                  <h3 className="font-source font-bold text-vintage-ink mb-2">
-                    Can I import my existing content?
-                  </h3>
-                  <p className="text-warm-gray-700">
-                    Yes! We have tools to import from Substack, Medium, and
-                    other platforms.
-                  </p>
-                </div>
-                <div className="bg-white rounded-xl p-6 shadow-md">
-                  <h3 className="font-source font-bold text-vintage-ink mb-2">
-                    What payment methods are supported?
-                  </h3>
-                  <p className="text-warm-gray-700">
-                    We support all major credit cards, debit cards, and ACH
-                    transfers through Stripe.
-                  </p>
-                </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                className="glassmorphism rounded-xl p-6 backdrop-blur-xl border border-warm-gray/20 hover:border-electric-sage/50 transition-all duration-300 hover:scale-105"
+              >
+                <div className="text-4xl mb-4">{feature.icon}</div>
+                <h3 className="font-bold text-xl mb-3">{feature.title}</h3>
+                <p className="text-warm-gray text-sm leading-relaxed">
+                  {feature.description}
+                </p>
               </div>
-            </div>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* CTA Section */}
-        <section className="py-16 md:py-24 bg-gradient-to-br from-vintage-ink to-warm-gray-900 text-white">
-          <div className="container-custom px-4 md:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-playfair font-bold mb-6">
-                Ready to Start Your Creator Journey?
-              </h2>
-              <p className="text-xl mb-8 text-warm-gray-200">
-                Join 500+ creators already earning on their own terms.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button
-                  href="/get-started"
-                  size="lg"
-                  className="bg-community-teal hover:bg-community-teal-dark text-white"
-                >
-                  Get Started Now
-                </Button>
-                <Button
-                  href="/creators"
-                  variant="outline"
-                  size="lg"
-                  className="border-white text-white hover:bg-white hover:text-vintage-ink"
-                >
-                  Browse Creators
-                </Button>
-              </div>
+      {/* CTA Section */}
+      <section className="py-20">
+        <div className="container-custom px-4 sm:px-6 lg:px-8">
+          <div className="glassmorphism rounded-2xl p-12 backdrop-blur-xl border border-warm-gray/20 text-center">
+            <h2 className="font-display font-bold text-4xl md:text-5xl mb-6">
+              Ready to Start{" "}
+              <span className="text-electric-sage">Earning?</span>
+            </h2>
+            <p className="text-xl text-warm-gray mb-8 max-w-2xl mx-auto">
+              Join 500+ creators who've already made the switch to a platform
+              that actually pays.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                to="/get-started"
+                className="btn-coral group relative overflow-hidden"
+              >
+                <span className="relative z-10">Start Creating Today</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-hot-coral to-electric-sage opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </Link>
+              <Link to="/pricing" className="btn-secondary">
+                View Pricing
+              </Link>
             </div>
           </div>
-        </section>
-      </div>
-    </>
+        </div>
+      </section>
+    </div>
   );
 });
+
+HowItWorks.displayName = "HowItWorks";
 
 export default HowItWorks;

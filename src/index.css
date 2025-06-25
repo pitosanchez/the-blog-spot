@@ -1,48 +1,107 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Roboto:wght@400;500;700&family=Lato:wght@400;700&family=Open+Sans:wght@400;700&family=Source+Sans+Pro:wght@400;700&family=Playfair+Display:wght@400;700&family=Merriweather:wght@400;700&family=Lora:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Inter+Tight:wght@700;900&family=Tiempos+Text:wght@400;600&family=Playfair+Display:wght@400;700&family=Merriweather:wght@400;700&family=Lora:wght@400;700&display=swap");
 
 @import "tailwindcss";
 
 @theme {
-  --color-storyteller-cream: #faf4e8;
-  --color-bodega-brick: #c9482c;
-  --color-community-teal: #387d7a;
-  --color-vintage-ink: #2c2c2c;
-  --color-cream: #faf4e8;
-  --color-charcoal: #2c2c2c;
-  --color-deep-purple: #4a154b;
-  --color-warm-terracotta: #d2691e;
+  /* Bold, high-contrast editorial palette */
+  --color-ink-black: #0a0a0a; /* Deep black background */
+  --color-charcoal: #1c1c1c; /* Secondary dark */
+  --color-electric-sage: #00ff88; /* Primary brand color */
+  --color-hot-coral: #ff4747; /* CTA accent */
+  --color-crisp-white: #ffffff; /* Primary text on dark */
+  --color-warm-gray: #a8a8a8; /* Secondary text */
+  --color-forest-dark: #1e3a2c; /* Deep forest green */
+  --color-lime-bright: #b8ff00; /* Alternative accent */
 
-  --font-family-display: Merriweather, serif;
-  --font-family-body: Space Grotesk, sans-serif;
-  --font-family-accent: DM Sans, sans-serif;
-  --font-family-playfair: Playfair Display, serif;
-  --font-family-source: Source Sans Pro, sans-serif;
-  --font-family-open: Open Sans, sans-serif;
-  --font-family-roboto: Roboto, sans-serif;
-  --font-family-lato: Lato, sans-serif;
-  --font-family-inter: Inter, sans-serif;
-  --font-family-lora: Lora, serif;
+  /* Legacy color mappings for compatibility */
+  --color-pure-white: #ffffff;
+  --color-forest-ink: #0a0a0a;
+  --color-sage-mist: #a8a8a8;
+  --color-mountain-lake: #00ff88;
+  --color-pine-forest: #1e3a2c;
+  --color-sunset-amber: #ff4747;
+  --color-morning-cream: #1c1c1c;
+
+  /* Font families */
+  --font-family-display: "Inter Tight", sans-serif;
+  --font-family-body: Inter, sans-serif;
+  --font-family-serif: "Tiempos Text", serif;
+  --font-family-accent: Inter, sans-serif;
+  --font-family-playfair: "Playfair Display", serif;
   --font-family-merriweather: Merriweather, serif;
+  --font-family-lora: Lora, serif;
 
+  /* Spacing */
   --spacing-128: 32rem;
   --spacing-144: 36rem;
 
   --border-radius-4xl: 2rem;
+
+  /* Animations */
+  @keyframes blob {
+    0% {
+      transform: translate(0px, 0px) scale(1);
+    }
+    33% {
+      transform: translate(30px, -50px) scale(1.1);
+    }
+    66% {
+      transform: translate(-20px, 20px) scale(0.9);
+    }
+    100% {
+      transform: translate(0px, 0px) scale(1);
+    }
+  }
+
+  @keyframes typewriter {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
 }
 
 @layer base {
   html {
     @apply antialiased;
     scroll-behavior: smooth;
-    /* Ensure proper viewport handling */
     height: 100%;
   }
 
   body {
-    @apply bg-storyteller-cream text-vintage-ink overflow-x-hidden;
+    @apply bg-ink-black text-crisp-white overflow-x-hidden;
     font-family: Inter, sans-serif;
     -webkit-overflow-scrolling: touch;
-    /* Ensure proper viewport handling */
     min-height: 100vh;
     height: 100%;
   }
@@ -53,21 +112,18 @@
   h4,
   h5,
   h6 {
-    font-family: "Playfair Display", serif;
-    @apply font-bold text-vintage-ink;
+    @apply font-bold text-crisp-white;
   }
 
   p {
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: Inter, sans-serif;
   }
 
-  /* Prevent text overflow on all screen sizes */
   * {
     word-wrap: break-word;
     overflow-wrap: break-word;
   }
 
-  /* Fix for mobile viewport issues */
   @supports (-webkit-touch-callout: none) {
     .hero-section {
       height: -webkit-fill-available;
@@ -77,39 +133,50 @@
 }
 
 @layer components {
+  .btn {
+    @apply px-6 py-3 rounded-lg font-medium transition-all duration-200 shadow;
+  }
+
   .btn-primary {
-    @apply bg-bodega-brick text-storyteller-cream px-6 py-3 rounded-lg font-medium 
-           hover:bg-community-teal hover:text-storyteller-cream transition-all duration-200 shadow;
-    font-family: "DM Sans", sans-serif;
+    @apply bg-electric-sage text-ink-black px-8 py-4 rounded-lg font-bold
+    hover:bg-electric-sage/90 hover:scale-105 transition-all duration-200 shadow-lg shadow-electric-sage/20;
   }
 
   .btn-secondary {
-    @apply bg-community-teal text-storyteller-cream px-6 py-3 rounded-lg font-medium 
-           hover:bg-bodega-brick hover:text-storyteller-cream transition-all duration-200 shadow;
-    font-family: "DM Sans", sans-serif;
+    @apply bg-charcoal text-crisp-white px-8 py-4 rounded-lg font-medium border border-warm-gray/20
+    hover:bg-warm-gray/10 hover:border-electric-sage/50 transition-all duration-200;
+  }
+
+  .btn-outline {
+    @apply border-2 border-electric-sage text-electric-sage px-8 py-4 rounded-lg font-medium
+    hover:bg-electric-sage hover:text-ink-black transition-all duration-200;
+  }
+
+  .btn-coral {
+    @apply bg-hot-coral text-crisp-white px-8 py-4 rounded-lg font-bold
+    hover:bg-hot-coral/90 hover:scale-105 transition-all duration-200 shadow-lg shadow-hot-coral/20;
   }
 
   .container-custom {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full;
-    /* Ensure content never bleeds outside container */
+    @apply max-w-7xl mx-auto;
     box-sizing: border-box;
   }
 
   .card {
-    @apply bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-200;
+    @apply bg-charcoal rounded-lg shadow-2xl p-6 hover:shadow-electric-sage/20 transition-all duration-300 border border-warm-gray/10;
   }
 
-  /* Hero section specific improvements */
+  .card-hover {
+    @apply hover:scale-105 hover:shadow-xl hover:border-electric-sage/50;
+  }
+
   .hero-text {
-    /* Ensure text scales properly and doesn't overflow */
     @apply leading-tight;
     word-break: normal;
     hyphens: auto;
   }
 
-  /* Hero section container */
   .hero-container {
-    /* Ensure proper spacing and prevent overflow */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -118,58 +185,179 @@
     padding: 1rem;
   }
 
-  /* Navigation improvements */
   .nav-link {
     @apply transition-all duration-200 rounded-lg px-3 py-2;
   }
 
   .nav-link:hover {
-    @apply bg-gray-50 text-bodega-brick;
+    @apply bg-charcoal text-electric-sage;
   }
 
-  /* Viewport height fixes for mobile */
   .vh-fix {
     height: 100vh;
     height: calc(var(--vh, 1vh) * 100);
   }
+
+  .gradient-mesh {
+    background-image: radial-gradient(
+        at 40% 20%,
+        hsla(152, 100%, 50%, 0.3) 0px,
+        transparent 50%
+      ),
+      radial-gradient(at 80% 0%, hsla(189, 100%, 56%, 0.2) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, hsla(355, 100%, 64%, 0.2) 0px, transparent 50%),
+      radial-gradient(
+        at 80% 50%,
+        hsla(152, 100%, 50%, 0.2) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 0% 100%,
+        hsla(189, 100%, 56%, 0.15) 0px,
+        transparent 50%
+      );
+  }
+
+  .glassmorphism {
+    @apply bg-charcoal/40 backdrop-blur-xl border border-warm-gray/20;
+  }
+
+  .typewriter {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typewriter 2s steps(40, end);
+  }
+
+  .typewriter-cursor::after {
+    content: "|";
+    animation: blink 1s infinite;
+  }
 }
 
 @layer utilities {
+  /* Custom color utilities */
+  .bg-ink-black {
+    background-color: var(--color-ink-black);
+  }
+
+  .bg-charcoal {
+    background-color: var(--color-charcoal);
+  }
+
+  .bg-electric-sage {
+    background-color: var(--color-electric-sage);
+  }
+
+  .bg-hot-coral {
+    background-color: var(--color-hot-coral);
+  }
+
+  .bg-forest-dark {
+    background-color: var(--color-forest-dark);
+  }
+
+  .bg-lime-bright {
+    background-color: var(--color-lime-bright);
+  }
+
+  .text-crisp-white {
+    color: var(--color-crisp-white);
+  }
+
+  .text-warm-gray {
+    color: var(--color-warm-gray);
+  }
+
+  .text-electric-sage {
+    color: var(--color-electric-sage);
+  }
+
+  .text-hot-coral {
+    color: var(--color-hot-coral);
+  }
+
+  .text-ink-black {
+    color: var(--color-ink-black);
+  }
+
+  /* Legacy utilities for compatibility */
+  .bg-pure-white {
+    background-color: var(--color-crisp-white);
+  }
+
+  .bg-forest-ink {
+    background-color: var(--color-ink-black);
+  }
+
+  .bg-sage-mist {
+    background-color: var(--color-warm-gray);
+  }
+
+  .bg-mountain-lake {
+    background-color: var(--color-electric-sage);
+  }
+
+  .bg-pine-forest {
+    background-color: var(--color-forest-dark);
+  }
+
+  .bg-sunset-amber {
+    background-color: var(--color-hot-coral);
+  }
+
+  .bg-morning-cream {
+    background-color: var(--color-charcoal);
+  }
+
+  .text-pure-white {
+    color: var(--color-crisp-white);
+  }
+
+  .text-forest-ink {
+    color: var(--color-ink-black);
+  }
+
+  .text-sage-mist {
+    color: var(--color-warm-gray);
+  }
+
+  .text-mountain-lake {
+    color: var(--color-electric-sage);
+  }
+
+  .text-pine-forest {
+    color: var(--color-forest-dark);
+  }
+
+  .text-sunset-amber {
+    color: var(--color-hot-coral);
+  }
+
+  /* Font utilities */
+  .font-display {
+    font-family: var(--font-family-display);
+  }
+  .font-body {
+    font-family: var(--font-family-body);
+  }
+  .font-serif {
+    font-family: var(--font-family-serif);
+  }
+  .font-inter {
+    font-family: Inter, sans-serif;
+  }
   .font-playfair {
     font-family: "Playfair Display", serif;
   }
-  .font-source {
-    font-family: "Source Sans Pro", sans-serif;
-  }
-  .font-open {
-    font-family: "Open Sans", sans-serif;
-  }
-  .font-roboto {
-    font-family: "Roboto", sans-serif;
-  }
-  .font-lato {
-    font-family: "Lato", sans-serif;
-  }
-  .font-inter {
-    font-family: "Inter", sans-serif;
-  }
-  .font-lora {
-    font-family: "Lora", serif;
-  }
-  .font-merriweather {
-    font-family: "Merriweather", serif;
-  }
-  .font-accent {
-    font-family: "DM Sans", sans-serif;
-  }
-  .font-display {
-    font-family: "Merriweather", serif;
-  }
-  .font-body {
-    font-family: "Space Grotesk", sans-serif;
+  .font-tiempos {
+    font-family: "Tiempos Text", serif;
   }
 
   /* Responsive text utilities */
+  .text-responsive-hero {
+    @apply text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl;
+  }
+
   .text-responsive-xl {
     @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl;
   }
@@ -179,10 +367,10 @@
   }
 
   .text-responsive-base {
-    @apply text-sm sm:text-base md:text-lg lg:text-xl;
+    @apply text-base sm:text-lg md:text-xl;
   }
 
-  /* Spacing utilities for better layout control */
+  /* Spacing utilities */
   .space-y-responsive {
     @apply space-y-4 md:space-y-6 lg:space-y-8;
   }
@@ -196,7 +384,7 @@
     @apply max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
-  /* Safe area utilities for mobile */
+  /* Safe area utilities */
   .safe-top {
     padding-top: env(safe-area-inset-top);
   }
@@ -217,24 +405,18 @@
   }
 }
 
-/* Blob animations */
-@keyframes blob {
-  0% {
-    transform: translate(0px, 0px) scale(1);
-  }
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-  }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-  100% {
-    transform: translate(0px, 0px) scale(1);
-  }
-}
-
+/* Animations */
 .animate-blob {
   animation: blob 7s infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-gradient {
+  animation: gradient-shift 8s ease infinite;
+  background-size: 200% 200%;
 }
 
 .animation-delay-2000 {
@@ -245,7 +427,80 @@
   animation-delay: 4s;
 }
 
-/* Ping animation already exists in Tailwind, but adding delays */
-.animate-ping {
-  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+/* Gradient text with bold colors */
+.gradient-text {
+  @apply text-transparent bg-clip-text bg-gradient-to-r from-electric-sage to-lime-bright;
+}
+
+.gradient-text-accent {
+  @apply text-transparent bg-clip-text bg-gradient-to-r from-hot-coral to-electric-sage;
+}
+
+/* Focus states */
+input:focus,
+textarea:focus,
+select:focus {
+  @apply outline-none ring-2 ring-electric-sage/50;
+}
+
+/* Hover states */
+a:hover {
+  @apply text-electric-sage;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-charcoal;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-electric-sage rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-electric-sage/80;
+}
+
+/* Loading spinner colors */
+.spinner-primary {
+  @apply text-electric-sage;
+}
+
+.spinner-secondary {
+  @apply text-hot-coral;
+}
+
+/* Background patterns with bold colors */
+.bg-gradient-hero {
+  @apply bg-gradient-to-br from-ink-black via-charcoal to-forest-dark;
+}
+
+.bg-gradient-section {
+  @apply bg-gradient-to-r from-electric-sage to-lime-bright;
+}
+
+.bg-gradient-cta {
+  @apply bg-gradient-to-r from-hot-coral to-electric-sage;
+}
+
+/* Text shadows for impact */
+.text-shadow-sm {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.text-shadow-lg {
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+}
+
+/* Glow effects */
+.glow-sage {
+  box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+}
+
+.glow-coral {
+  box-shadow: 0 0 30px rgba(255, 71, 71, 0.3);
 }

@@ -39,26 +39,26 @@ export const QuoteCarousel = memo<QuoteCarouselProps>(
         aria-live="polite"
       >
         {/* Quote Content */}
-        <div className="bg-white bg-opacity-80 rounded-xl p-4 md:p-5 shadow-lg border-l-4 border-bodega-brick h-full flex flex-col justify-center transition-all duration-500 ease-in-out">
-          <blockquote className="text-base md:text-lg text-vintage-ink font-lora italic mb-2 md:mb-3">
+        <div className="h-full flex flex-col justify-center transition-all duration-500 ease-in-out">
+          <blockquote className="text-base md:text-lg text-crisp-white font-serif italic mb-2 md:mb-3 text-center">
             "{currentQuote.text}"
           </blockquote>
-          <cite className="text-sm md:text-base text-community-teal font-source text-right not-italic">
+          <cite className="text-sm md:text-base text-electric-sage font-medium text-center not-italic">
             — {currentQuote.author}
           </cite>
         </div>
 
         {/* Indicators */}
         {totalQuotes > 1 && (
-          <div className="flex justify-center mt-3 space-x-2">
+          <div className="flex justify-center mt-4 space-x-2">
             {quotes.map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToQuote(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-bodega-brick focus:ring-opacity-50 ${
+                className={`w-2 h-2 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-electric-sage/50 ${
                   index === currentIndex
-                    ? "bg-bodega-brick"
-                    : "bg-bodega-brick bg-opacity-30 hover:bg-opacity-60"
+                    ? "bg-electric-sage"
+                    : "bg-warm-gray/30 hover:bg-warm-gray/60"
                 }`}
                 aria-label={`Go to quote ${index + 1}`}
               />
@@ -68,10 +68,10 @@ export const QuoteCarousel = memo<QuoteCarouselProps>(
 
         {/* Controls (optional) */}
         {showControls && totalQuotes > 1 && (
-          <div className="flex justify-center items-center mt-2 space-x-2">
+          <div className="flex justify-center items-center mt-3 space-x-2">
             <button
               onClick={previousQuote}
-              className="p-1 text-community-teal hover:text-bodega-brick transition-colors focus:outline-none focus:ring-2 focus:ring-bodega-brick focus:ring-opacity-50 rounded"
+              className="p-1 text-electric-sage hover:text-electric-sage/80 transition-colors focus:outline-none focus:ring-2 focus:ring-electric-sage/50 rounded"
               aria-label="Previous quote"
             >
               <svg
@@ -91,7 +91,7 @@ export const QuoteCarousel = memo<QuoteCarouselProps>(
 
             <button
               onClick={togglePlayback}
-              className="p-1 text-community-teal hover:text-bodega-brick transition-colors focus:outline-none focus:ring-2 focus:ring-bodega-brick focus:ring-opacity-50 rounded"
+              className="p-1 text-electric-sage hover:text-electric-sage/80 transition-colors focus:outline-none focus:ring-2 focus:ring-electric-sage/50 rounded"
               aria-label={isPlaying ? "Pause rotation" : "Play rotation"}
             >
               {isPlaying ? (
@@ -127,7 +127,7 @@ export const QuoteCarousel = memo<QuoteCarouselProps>(
 
             <button
               onClick={nextQuote}
-              className="p-1 text-community-teal hover:text-bodega-brick transition-colors focus:outline-none focus:ring-2 focus:ring-bodega-brick focus:ring-opacity-50 rounded"
+              className="p-1 text-electric-sage hover:text-electric-sage/80 transition-colors focus:outline-none focus:ring-2 focus:ring-electric-sage/50 rounded"
               aria-label="Next quote"
             >
               <svg

@@ -61,24 +61,24 @@ export class ErrorBoundary extends Component<
           role="alert"
           aria-live="assertive"
         >
-          <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-6 text-center">
+          <div className="max-w-md w-full bg-pure-white rounded-lg shadow-lg p-6 text-center">
             <div className="text-6xl mb-4" role="img" aria-label="Error icon">
               😔
             </div>
-            <h1 className="text-2xl font-bold text-vintage-ink mb-4">
+            <h1 className="text-2xl font-bold text-slate-ink mb-4">
               Oops! Something went wrong
             </h1>
-            <p className="text-community-teal mb-6">
+            <p className="text-creative-teal mb-6">
               We're sorry, but something unexpected happened. Please try one of
               the options below.
             </p>
 
             {process.env.NODE_ENV === "development" && this.state.error && (
               <details className="mb-6 text-left">
-                <summary className="cursor-pointer text-sm text-gray-600 hover:text-gray-800">
+                <summary className="cursor-pointer text-sm text-muted-blue-grey hover:text-slate-ink">
                   Error details (development only)
                 </summary>
-                <pre className="mt-2 p-3 bg-gray-100 rounded text-xs overflow-auto max-h-32">
+                <pre className="mt-2 p-3 bg-sepia-note rounded text-xs overflow-auto max-h-32">
                   {this.state.error.toString()}
                 </pre>
               </details>

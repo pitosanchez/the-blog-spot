@@ -1,0 +1,254 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  CREATOR
+  ADMIN
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELED
+  PAST_DUE
+  PAUSED
+}
+
+enum PayoutStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  SCHEDULED
+  ARCHIVED
+}
+
+model User {
+  id                String    @id @default(uuid())
+  email             String    @unique
+  username          String    @unique
+  passwordHash      String
+  role              UserRole  @default(USER)
+  emailVerified     Boolean   @default(false)
+  avatarUrl         String?
+  bio               String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  creator           Creator?
+  subscriptions     Subscription[]
+  bookmarks         Bookmark[]
+  comments          Comment[]
+  purchases         Purchase[]
+  notifications     Notification[]
+}
+
+model Creator {
+  id                String    @id @default(uuid())
+  userId            String    @unique
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  displayName       String
+  about             String?
+  profileImageUrl   String?
+  coverImageUrl     String?
+  
+  stripeAccountId   String?   @unique
+  stripeOnboarded   Boolean   @default(false)
+  
+  subscriberCount   Int       @default(0)
+  totalEarnings     Float     @default(0)
+  availableBalance  Float     @default(0)
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  posts             Post[]
+  subscribers       Subscription[]
+  payouts           Payout[]
+  tiers             SubscriptionTier[]
+  analytics         CreatorAnalytics[]
+}
+
+model SubscriptionTier {
+  id                String    @id @default(uuid())
+  creatorId         String
+  creator           Creator   @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  
+  name              String
+  description       String?
+  price             Float
+  features          String[]  @default([])
+  
+  stripePriceId     String?   @unique
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  subscriptions     Subscription[]
+}
+
+model Subscription {
+  id                String              @id @default(uuid())
+  userId            String
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  creatorId         String
+  creator           Creator             @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  tierId            String
+  tier              SubscriptionTier    @relation(fields: [tierId], references: [id])
+  
+  status            SubscriptionStatus
+  currentPeriodEnd  DateTime
+  
+  stripeSubscriptionId String?          @unique
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  @@unique([userId, creatorId])
+}
+
+model Post {
+  id                String          @id @default(uuid())
+  creatorId         String
+  creator           Creator         @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  
+  title             String
+  slug              String
+  content           String
+  excerpt           String?
+  coverImageUrl     String?
+  
+  isPremium         Boolean         @default(false)
+  price             Float?
+  
+  status            ContentStatus   @default(DRAFT)
+  publishedAt       DateTime?
+  scheduledFor      DateTime?
+  
+  viewCount         Int             @default(0)
+  likeCount         Int             @default(0)
+  
+  tags              String[]        @default([])
+  
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  
+  comments          Comment[]
+  bookmarks         Bookmark[]
+  purchases         Purchase[]
+  
+  @@unique([creatorId, slug])
+  @@index([status, publishedAt])
+}
+
+model Comment {
+  id                String    @id @default(uuid())
+  postId            String
+  post              Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId            String
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  content           String
+  
+  parentId          String?
+  parent            Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies           Comment[] @relation("CommentReplies")
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+}
+
+model Bookmark {
+  id                String    @id @default(uuid())
+  userId            String
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId            String
+  post              Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  createdAt         DateTime  @default(now())
+  
+  @@unique([userId, postId])
+}
+
+model Purchase {
+  id                String    @id @default(uuid())
+  userId            String
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId            String
+  post              Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  amount            Float
+  platformFee       Float
+  creatorEarnings   Float
+  
+  stripePaymentIntentId String? @unique
+  
+  createdAt         DateTime  @default(now())
+  
+  @@unique([userId, postId])
+}
+
+model Payout {
+  id                String        @id @default(uuid())
+  creatorId         String
+  creator           Creator       @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  
+  amount            Float
+  currency          String        @default("usd")
+  status            PayoutStatus  @default(PENDING)
+  
+  stripePayoutId    String?       @unique
+  
+  scheduledFor      DateTime
+  processedAt       DateTime?
+  failureReason     String?
+  
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+}
+
+model CreatorAnalytics {
+  id                String    @id @default(uuid())
+  creatorId         String
+  creator           Creator   @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  
+  date              DateTime  @db.Date
+  
+  views             Int       @default(0)
+  uniqueVisitors    Int       @default(0)
+  newSubscribers    Int       @default(0)
+  canceledSubscribers Int     @default(0)
+  revenue           Float     @default(0)
+  
+  createdAt         DateTime  @default(now())
+  
+  @@unique([creatorId, date])
+}
+
+model Notification {
+  id                String    @id @default(uuid())
+  userId            String
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  type              String
+  title             String
+  message           String
+  data              Json?
+  
+  read              Boolean   @default(false)
+  readAt            DateTime?
+  
+  createdAt         DateTime  @default(now())
+}

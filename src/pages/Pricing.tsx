@@ -1,236 +1,451 @@
-import { memo } from "react";
-import { SEOHead } from "../components/SEO/SEOHead";
-import { Button } from "../components/ui/Button";
-import { CREATOR_FAQ } from "../constants";
+import { memo, useState } from "react";
+import { Link } from "react-router-dom";
 
-const Pricing = memo(() => {
+const pricingTiers = [
+  {
+    name: "Free",
+    price: "$0",
+    period: "forever",
+    description: "Perfect for getting started and building your audience",
+    features: [
+      "Unlimited free posts",
+      "Basic analytics",
+      "Email subscribers",
+      "Social sharing",
+      "SEO optimization",
+      "Mobile responsive",
+    ],
+    cta: "Start Free",
+    popular: false,
+    color: "charcoal",
+  },
+  {
+    name: "Creator",
+    price: "10%",
+    period: "commission",
+    description: "For serious creators ready to monetize their content",
+    features: [
+      "Everything in Free",
+      "Paid subscriptions",
+      "Weekly payouts",
+      "90% revenue share",
+      "Premium analytics",
+      "Custom branding",
+      "Priority support",
+      "Export subscribers",
+    ],
+    cta: "Start Earning",
+    popular: true,
+    color: "electric-sage",
+  },
+  {
+    name: "Pro",
+    price: "10%",
+    period: "commission + $29/mo",
+    description: "Advanced features for established creators and businesses",
+    features: [
+      "Everything in Creator",
+      "Advanced workshops",
+      "Course creation tools",
+      "Affiliate marketing",
+      "White-label options",
+      "API access",
+      "Dedicated manager",
+      "Custom integrations",
+    ],
+    cta: "Go Pro",
+    popular: false,
+    color: "hot-coral",
+  },
+];
+
+const faqs = [
+  {
+    question: "How much does The Blog Spot take?",
+    answer:
+      "We take only 10% of your earnings. You keep 90%. This includes payment processing fees, so there are no hidden costs.",
+  },
+  {
+    question: "When do I get paid?",
+    answer:
+      "Every Friday. If you've earned over $25, we automatically deposit to your bank account. No waiting 30+ days like other platforms.",
+  },
+  {
+    question: "Can I switch plans anytime?",
+    answer:
+      "Absolutely. Upgrade or downgrade anytime. Changes take effect immediately, and we'll prorate any differences.",
+  },
+  {
+    question: "What payment methods do you accept?",
+    answer:
+      "We support all major credit cards, debit cards, and ACH transfers through Stripe. Your readers can pay however they prefer.",
+  },
+  {
+    question: "Can I export my data?",
+    answer:
+      "Yes! Your content, subscriber list, and analytics are always exportable. You own your data, not us.",
+  },
+  {
+    question: "Is there a setup fee?",
+    answer:
+      "No setup fees, no hidden costs, no annual contracts. Just our simple 10% commission on what you earn.",
+  },
+];
+
+export const Pricing = memo(() => {
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
   return (
-    <>
-      <SEOHead
-        title="Pricing - Simple, Transparent Creator Fees"
-        description="The Blog Spot takes only 10% of your earnings. No platform fees, no hidden costs. Compare with other platforms."
-      />
+    <div className="bg-ink-black text-crisp-white min-h-screen">
+      {/* Hero Section */}
+      <section className="relative pt-24 pb-16 overflow-hidden">
+        <div className="absolute inset-0 gradient-mesh opacity-30"></div>
 
-      <div className="min-h-screen bg-gradient-to-b from-white to-cream">
-        {/* Hero Section */}
-        <section className="py-16 md:py-24 bg-white">
-          <div className="container-custom px-4 md:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold text-vintage-ink mb-6">
-                Simple, Honest Pricing
-              </h1>
-              <p className="text-xl text-warm-gray-700 mb-8">
-                We take 10%. You keep 90%. That's it.
-              </p>
-              <div className="inline-flex items-center gap-2 bg-community-teal/10 text-community-teal px-6 py-3 rounded-full text-lg font-medium">
-                <span>✓</span>
-                <span>
-                  No platform fees • No setup costs • No hidden charges
-                </span>
-              </div>
-            </div>
-          </div>
-        </section>
+        <div className="relative z-10 container-custom px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-4xl mx-auto">
+            <h1 className="font-display font-black text-5xl md:text-6xl lg:text-7xl leading-tight mb-6">
+              Simple <span className="text-electric-sage">Pricing</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-warm-gray leading-relaxed mb-8">
+              No hidden fees. No complex tiers. Just a simple 10% commission on
+              what you earn.
+            </p>
 
-        {/* Pricing Calculator */}
-        <section className="py-16 md:py-24">
-          <div className="container-custom px-4 md:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto">
-              <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 border border-warm-gray-100">
-                <h2 className="text-3xl font-playfair font-bold text-vintage-ink text-center mb-8">
-                  Your Earnings Calculator
-                </h2>
-
-                <div className="space-y-8">
-                  <div>
-                    <h3 className="text-xl font-source font-bold text-vintage-ink mb-4">
-                      If you charge $10/month per subscriber:
-                    </h3>
-                    <div className="grid md:grid-cols-3 gap-4">
-                      <div className="bg-cream rounded-lg p-4 text-center">
-                        <div className="text-3xl font-bold text-community-teal">
-                          $90
-                        </div>
-                        <div className="text-sm text-warm-gray-600">
-                          You keep from 10 subscribers
-                        </div>
-                      </div>
-                      <div className="bg-cream rounded-lg p-4 text-center">
-                        <div className="text-3xl font-bold text-community-teal">
-                          $900
-                        </div>
-                        <div className="text-sm text-warm-gray-600">
-                          You keep from 100 subscribers
-                        </div>
-                      </div>
-                      <div className="bg-cream rounded-lg p-4 text-center">
-                        <div className="text-3xl font-bold text-bodega-brick">
-                          $9,000
-                        </div>
-                        <div className="text-sm text-warm-gray-600">
-                          You keep from 1,000 subscribers
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="border-t pt-8">
-                    <h3 className="text-xl font-source font-bold text-vintage-ink mb-4">
-                      Compare Your Earnings:
-                    </h3>
-                    <div className="overflow-x-auto">
-                      <table className="w-full">
-                        <thead>
-                          <tr className="border-b">
-                            <th className="text-left py-3 px-4">
-                              Monthly Revenue
-                            </th>
-                            <th className="text-center py-3 px-4 text-community-teal font-bold">
-                              You Keep (Blog Spot)
-                            </th>
-                            <th className="text-center py-3 px-4 text-warm-gray-600">
-                              Others (87%)
-                            </th>
-                            <th className="text-center py-3 px-4 text-warm-gray-600">
-                              Difference
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr className="border-b">
-                            <td className="py-3 px-4">$1,000</td>
-                            <td className="text-center py-3 px-4 font-bold text-community-teal">
-                              $900
-                            </td>
-                            <td className="text-center py-3 px-4">$870</td>
-                            <td className="text-center py-3 px-4 text-bodega-brick">
-                              +$30
-                            </td>
-                          </tr>
-                          <tr className="border-b">
-                            <td className="py-3 px-4">$5,000</td>
-                            <td className="text-center py-3 px-4 font-bold text-community-teal">
-                              $4,500
-                            </td>
-                            <td className="text-center py-3 px-4">$4,350</td>
-                            <td className="text-center py-3 px-4 text-bodega-brick">
-                              +$150
-                            </td>
-                          </tr>
-                          <tr>
-                            <td className="py-3 px-4">$10,000</td>
-                            <td className="text-center py-3 px-4 font-bold text-community-teal">
-                              $9,000
-                            </td>
-                            <td className="text-center py-3 px-4">$8,700</td>
-                            <td className="text-center py-3 px-4 text-bodega-brick">
-                              +$300
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
+            {/* Revenue Share Highlight */}
+            <div className="glassmorphism rounded-2xl p-8 backdrop-blur-xl border border-warm-gray/20 max-w-md mx-auto">
+              <div className="text-center">
+                <div className="text-6xl font-display font-black text-electric-sage mb-2">
+                  90%
+                </div>
+                <div className="text-lg text-warm-gray">You Keep</div>
+                <div className="text-sm text-warm-gray mt-2">
+                  vs 50-70% on other platforms
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* What's Included */}
-        <section className="py-16 md:py-24 bg-white">
-          <div className="container-custom px-4 md:px-6 lg:px-8">
-            <h2 className="text-3xl md:text-4xl font-playfair font-bold text-vintage-ink text-center mb-12">
-              Everything You Need to Succeed
-            </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-              <div className="text-center">
-                <div className="text-4xl mb-4">💳</div>
-                <h3 className="font-source font-bold text-vintage-ink mb-2">
-                  Payment Processing
-                </h3>
-                <p className="text-sm text-warm-gray-700">
-                  Secure payments via Stripe included in your 10%
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl mb-4">📧</div>
-                <h3 className="font-source font-bold text-vintage-ink mb-2">
-                  Email Tools
-                </h3>
-                <p className="text-sm text-warm-gray-700">
-                  Send updates to your subscribers at no extra cost
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl mb-4">📊</div>
-                <h3 className="font-source font-bold text-vintage-ink mb-2">
-                  Analytics Dashboard
-                </h3>
-                <p className="text-sm text-warm-gray-700">
-                  Track your growth and earnings in real-time
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl mb-4">🛡️</div>
-                <h3 className="font-source font-bold text-vintage-ink mb-2">
-                  Content Protection
-                </h3>
-                <p className="text-sm text-warm-gray-700">
-                  Your content is protected and backed up daily
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ Section */}
-        <section className="py-16 md:py-24">
-          <div className="container-custom px-4 md:px-6 lg:px-8">
-            <div className="max-w-3xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-playfair font-bold text-vintage-ink text-center mb-12">
-                Frequently Asked Questions
-              </h2>
-              <div className="space-y-6">
-                {CREATOR_FAQ.map((faq, index) => (
-                  <div
-                    key={index}
-                    className="bg-white rounded-xl p-6 shadow-md"
-                  >
-                    <h3 className="font-source font-bold text-vintage-ink mb-2">
-                      {faq.question}
-                    </h3>
-                    <p className="text-warm-gray-700">{faq.answer}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-16 md:py-24 bg-gradient-to-br from-community-teal to-bodega-brick text-white">
-          <div className="container-custom px-4 md:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-playfair font-bold mb-6">
-                Start Keeping More of What You Earn
-              </h2>
-              <p className="text-xl mb-8 text-white/90">
-                No contracts. No commitments. Cancel anytime.
-              </p>
-              <Button
-                href="/get-started"
-                size="lg"
-                className="bg-white text-vintage-ink hover:bg-cream"
+      {/* Pricing Cards */}
+      <section className="py-20">
+        <div className="container-custom px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {pricingTiers.map((tier) => (
+              <div
+                key={tier.name}
+                className={`glassmorphism rounded-2xl p-8 backdrop-blur-xl border transition-all duration-300 hover:scale-105 relative ${
+                  tier.popular
+                    ? "border-electric-sage/50 shadow-electric-sage/20 shadow-2xl"
+                    : "border-warm-gray/20 hover:border-electric-sage/30"
+                }`}
               >
-                Get Started Free
-              </Button>
+                {tier.popular && (
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                    <div className="bg-electric-sage text-ink-black px-6 py-2 rounded-full text-sm font-bold">
+                      Most Popular
+                    </div>
+                  </div>
+                )}
+
+                <div className="text-center mb-8">
+                  <h3 className="font-display font-bold text-2xl mb-2">
+                    {tier.name}
+                  </h3>
+                  <div className="mb-4">
+                    <span className="text-4xl font-black text-electric-sage">
+                      {tier.price}
+                    </span>
+                    <span className="text-warm-gray ml-2">/{tier.period}</span>
+                  </div>
+                  <p className="text-warm-gray text-sm">{tier.description}</p>
+                </div>
+
+                <ul className="space-y-3 mb-8">
+                  {tier.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-center gap-3">
+                      <svg
+                        className="w-5 h-5 text-electric-sage flex-shrink-0"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      <span className="text-warm-gray text-sm">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <Link
+                  to="/get-started"
+                  className={`block w-full text-center py-4 rounded-lg font-semibold transition-all duration-200 ${
+                    tier.popular
+                      ? "bg-electric-sage text-ink-black hover:bg-electric-sage/90 hover:scale-105 shadow-lg shadow-electric-sage/20"
+                      : "bg-charcoal text-crisp-white border border-warm-gray/20 hover:border-electric-sage/50 hover:text-electric-sage"
+                  }`}
+                >
+                  {tier.cta}
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Comparison Section */}
+      <section className="py-20 bg-charcoal/50">
+        <div className="container-custom px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="font-display font-bold text-4xl md:text-5xl mb-6">
+              How We <span className="text-electric-sage">Compare</span>
+            </h2>
+            <p className="text-xl text-warm-gray max-w-2xl mx-auto">
+              See why creators are switching to The Blog Spot.
+            </p>
+          </div>
+
+          <div className="glassmorphism rounded-2xl backdrop-blur-xl border border-warm-gray/20 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-warm-gray/20">
+                    <th className="text-left p-6 font-bold">Feature</th>
+                    <th className="text-center p-6 font-bold text-electric-sage">
+                      The Blog Spot
+                    </th>
+                    <th className="text-center p-6 font-bold text-warm-gray">
+                      Substack
+                    </th>
+                    <th className="text-center p-6 font-bold text-warm-gray">
+                      Medium
+                    </th>
+                    <th className="text-center p-6 font-bold text-warm-gray">
+                      Patreon
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-warm-gray/10">
+                    <td className="p-6 text-warm-gray">Revenue Share</td>
+                    <td className="p-6 text-center text-electric-sage font-bold">
+                      90%
+                    </td>
+                    <td className="p-6 text-center text-warm-gray">90%</td>
+                    <td className="p-6 text-center text-warm-gray">~50%</td>
+                    <td className="p-6 text-center text-warm-gray">90%</td>
+                  </tr>
+                  <tr className="border-b border-warm-gray/10">
+                    <td className="p-6 text-warm-gray">Payout Frequency</td>
+                    <td className="p-6 text-center text-electric-sage font-bold">
+                      Weekly
+                    </td>
+                    <td className="p-6 text-center text-warm-gray">Monthly</td>
+                    <td className="p-6 text-center text-warm-gray">Monthly</td>
+                    <td className="p-6 text-center text-warm-gray">Monthly</td>
+                  </tr>
+                  <tr className="border-b border-warm-gray/10">
+                    <td className="p-6 text-warm-gray">Setup Time</td>
+                    <td className="p-6 text-center text-electric-sage font-bold">
+                      5 minutes
+                    </td>
+                    <td className="p-6 text-center text-warm-gray">
+                      15 minutes
+                    </td>
+                    <td className="p-6 text-center text-warm-gray">
+                      2 minutes
+                    </td>
+                    <td className="p-6 text-center text-warm-gray">
+                      30 minutes
+                    </td>
+                  </tr>
+                  <tr className="border-b border-warm-gray/10">
+                    <td className="p-6 text-warm-gray">Export Data</td>
+                    <td className="p-6 text-center">
+                      <svg
+                        className="w-5 h-5 text-electric-sage mx-auto"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </td>
+                    <td className="p-6 text-center">
+                      <svg
+                        className="w-5 h-5 text-electric-sage mx-auto"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </td>
+                    <td className="p-6 text-center">
+                      <svg
+                        className="w-5 h-5 text-warm-gray mx-auto"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </td>
+                    <td className="p-6 text-center">
+                      <svg
+                        className="w-5 h-5 text-warm-gray mx-auto"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
-        </section>
-      </div>
-    </>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20">
+        <div className="container-custom px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="font-display font-bold text-4xl md:text-5xl mb-6">
+              Common <span className="text-electric-sage">Questions</span>
+            </h2>
+            <p className="text-xl text-warm-gray max-w-2xl mx-auto">
+              Everything you need to know about pricing and features.
+            </p>
+          </div>
+
+          <div className="max-w-3xl mx-auto space-y-4">
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                className="glassmorphism rounded-xl backdrop-blur-xl border border-warm-gray/20 overflow-hidden"
+              >
+                <button
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  className="w-full p-6 text-left flex items-center justify-between hover:bg-electric-sage/5 transition-colors"
+                >
+                  <span className="font-semibold">{faq.question}</span>
+                  <svg
+                    className={`w-5 h-5 text-electric-sage transition-transform ${
+                      openFaq === index ? "rotate-180" : ""
+                    }`}
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
+                {openFaq === index && (
+                  <div className="px-6 pb-6 text-warm-gray">{faq.answer}</div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20">
+        <div className="container-custom px-4 sm:px-6 lg:px-8">
+          <div className="glassmorphism rounded-2xl p-12 backdrop-blur-xl border border-warm-gray/20 text-center">
+            <h2 className="font-display font-bold text-4xl md:text-5xl mb-6">
+              Ready to Keep <span className="text-electric-sage">90%?</span>
+            </h2>
+            <p className="text-xl text-warm-gray mb-8 max-w-2xl mx-auto">
+              Start your creator journey today. No setup fees, no hidden costs,
+              no long-term contracts.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                to="/get-started"
+                className="btn-coral group relative overflow-hidden"
+              >
+                <span className="relative z-10">Start Creating Today</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-hot-coral to-electric-sage opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </Link>
+              <Link to="/how-it-works" className="btn-secondary">
+                See How It Works
+              </Link>
+            </div>
+
+            {/* Trust indicators */}
+            <div className="flex flex-wrap justify-center items-center gap-6 mt-8 text-sm text-warm-gray">
+              <span className="flex items-center gap-2">
+                <svg
+                  className="w-4 h-4 text-electric-sage"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                Free to start
+              </span>
+              <span className="flex items-center gap-2">
+                <svg
+                  className="w-4 h-4 text-electric-sage"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                Cancel anytime
+              </span>
+              <span className="flex items-center gap-2">
+                <svg
+                  className="w-4 h-4 text-electric-sage"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                Export your data
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 });
+
+Pricing.displayName = "Pricing";
 
 export default Pricing;

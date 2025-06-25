@@ -24,6 +24,17 @@ const Pricing = lazy(() => import("./pages/Pricing"));
 const GetStarted = lazy(() => import("./pages/GetStarted"));
 const Creators = lazy(() => import("./pages/Creators"));
 
+// Auth pages
+const Login = lazy(() => import("./components/Auth/Login"));
+const Signup = lazy(() => import("./components/Auth/Signup"));
+
+// Dashboard pages
+const DashboardLayout = lazy(() => import("./components/Dashboard/DashboardLayout"));
+const DashboardOverview = lazy(() => import("./pages/Dashboard/Overview"));
+const DashboardPosts = lazy(() => import("./pages/Dashboard/Posts"));
+const PostEditor = lazy(() => import("./pages/Dashboard/PostEditor"));
+const BecomeCreator = lazy(() => import("./pages/BecomeCreator"));
+
 // Enhanced loading component
 const PageLoader = () => (
   <div
@@ -32,7 +43,7 @@ const PageLoader = () => (
     aria-label="Loading page content"
   >
     <LoadingSpinner size="lg" color="primary" />
-    <p className="text-community-teal font-source">Loading content...</p>
+    <p className="text-creative-teal font-source">Loading content...</p>
     <span className="sr-only">Loading page content, please wait</span>
   </div>
 );
@@ -69,10 +80,10 @@ const HomePage = () => (
 // 404 page component
 const NotFoundPage = () => (
   <div className="container-custom py-16 text-center min-h-[60vh] flex flex-col items-center justify-center">
-    <h1 className="text-4xl font-bold text-vintage-ink mb-4">
+    <h1 className="text-4xl font-bold text-slate-ink mb-4">
       404 - Page Not Found
     </h1>
-    <p className="text-community-teal mb-8">
+    <p className="text-creative-teal mb-8">
       The page you're looking for doesn't exist.
     </p>
     <a href="/" className="btn-primary">
@@ -99,6 +110,19 @@ function App() {
                     <Routes>
                       {/* Home page */}
                       <Route path="/" element={<HomePage />} />
+
+                      {/* Auth routes */}
+                      <Route path="/login" element={<Login />} />
+                      <Route path="/signup" element={<Signup />} />
+                      <Route path="/become-creator" element={<BecomeCreator />} />
+
+                      {/* Dashboard routes */}
+                      <Route path="/dashboard" element={<DashboardLayout />}>
+                        <Route index element={<DashboardOverview />} />
+                        <Route path="posts" element={<DashboardPosts />} />
+                        <Route path="posts/new" element={<PostEditor />} />
+                        <Route path="posts/:id/edit" element={<PostEditor />} />
+                      </Route>
 
                       {/* Static pages with custom components */}
                       <Route path="/about" element={<About />} />

@@ -4,13 +4,13 @@ import type { ButtonProps } from "../../types";
 
 const buttonVariants = {
   primary:
-    "bg-bodega-brick text-storyteller-cream hover:bg-community-teal hover:scale-105 hover:shadow-lg active:scale-95 transform transition-all duration-200 ease-in-out",
+    "bg-creative-teal text-pure-white hover:bg-creative-teal/90 hover:scale-105 hover:shadow-lg active:scale-95 transform transition-all duration-200 ease-in-out",
   secondary:
-    "bg-community-teal text-storyteller-cream hover:bg-bodega-brick hover:scale-105 hover:shadow-lg active:scale-95 transform transition-all duration-200 ease-in-out",
+    "bg-deep-plum text-pure-white hover:bg-deep-plum/90 hover:scale-105 hover:shadow-lg active:scale-95 transform transition-all duration-200 ease-in-out",
   outline:
-    "border-2 border-bodega-brick text-bodega-brick hover:bg-bodega-brick hover:text-storyteller-cream hover:scale-105 hover:shadow-md active:scale-95 transform transition-all duration-200 ease-in-out",
+    "border-2 border-creative-teal text-creative-teal hover:bg-creative-teal hover:text-pure-white hover:scale-105 hover:shadow-md active:scale-95 transform transition-all duration-200 ease-in-out",
   ghost:
-    "text-bodega-brick hover:bg-bodega-brick hover:bg-opacity-10 hover:scale-105 active:scale-95 transform transition-all duration-200 ease-in-out",
+    "text-creative-teal hover:bg-sepia-note hover:scale-105 active:scale-95 transform transition-all duration-200 ease-in-out",
 };
 
 const buttonSizes = {
@@ -45,7 +45,7 @@ export const Button = forwardRef<
     ref
   ) => {
     const baseClasses =
-      "inline-flex items-center justify-center font-accent font-medium rounded-lg transition-all duration-200 shadow focus:outline-none focus:ring-2 focus:ring-bodega-brick focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed";
+      "inline-flex items-center justify-center font-accent font-medium rounded-lg transition-all duration-200 shadow focus:outline-none focus:ring-2 focus:ring-creative-teal/50 disabled:opacity-50 disabled:cursor-not-allowed";
 
     const variantClasses = buttonVariants[variant];
     const sizeClasses = buttonSizes[size];
