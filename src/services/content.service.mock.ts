@@ -1,4 +1,5 @@
-import type { PaginatedResponse, Post, Category, Tag } from './content.service';
+import type { Category, Tag } from './content.service';
+import type { PaginatedResponse, Post } from './creator.service';
 
 const mockCategories: Category[] = [
   { id: '1', name: 'Technology', slug: 'technology', postCount: 45 },

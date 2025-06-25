@@ -311,8 +311,7 @@ export default function PostEditor() {
           <Button
             type="button"
             variant="primary"
-            onClick={(e: React.MouseEvent) => {
-              e.preventDefault();
+            onClick={() => {
               handleSubmit(new Event('submit') as any, 'published');
             }}
             disabled={isSaving}

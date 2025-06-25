@@ -161,4 +161,4 @@ class CreatorService {
 export const creatorService = USE_MOCK ? (new MockCreatorService() as unknown as CreatorService) : new CreatorService();
 
 // Export types for use in other services
-export type { Creator, CreatorStats, Post, PaginatedResponse, Subscriber, CreatorDashboard };
+export type { Creator, CreatorStats };

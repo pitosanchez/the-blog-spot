@@ -242,7 +242,7 @@ export default function BecomeCreator() {
             <Button
               type="submit"
               variant="primary"
-              size="large"
+              size="lg"
               disabled={isLoading}
               className="w-full sm:w-auto"
             >

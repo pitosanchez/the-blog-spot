@@ -171,7 +171,7 @@ export default function Signup() {
             <Button
               type="submit"
               variant="primary"
-              size="large"
+              size="lg"
               disabled={isLoading}
               className="w-full flex justify-center"
             >

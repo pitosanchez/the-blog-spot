@@ -9,7 +9,8 @@
       "Bash(cp:*)",
       "Bash(npx prisma:*)",
       "Bash(npm run typecheck:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(grep:*)"
     ],
     "deny": []
   }
