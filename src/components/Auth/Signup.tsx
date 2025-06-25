@@ -1,9 +1,10 @@
-import { useState, FormEvent } from 'react';
+import { useState } from 'react';
+import type { FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../../contexts/AppContext';
 import { authService } from '../../services/auth.service';
-import Button from '../ui/Button';
-import LoadingSpinner from '../ui/LoadingSpinner';
+import { Button } from '../ui/Button';
+import { LoadingSpinner } from '../ui/LoadingSpinner';
 
 export default function Signup() {
   const navigate = useNavigate();

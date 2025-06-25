@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { contentService } from '../../services';
 import type { Post, PaginatedResponse } from '../../services';
-import LoadingSpinner from '../../components/ui/LoadingSpinner';
+import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 
 export default function DashboardPosts() {
   const [posts, setPosts] = useState<Post[]>([]);

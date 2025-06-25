@@ -1,4 +1,4 @@
-import { User } from '../contexts/AppContext';
+import type { User } from '../contexts/AppContext';
 import { apiClient } from './api.client';
 import { API_ENDPOINTS } from './api.config';
 

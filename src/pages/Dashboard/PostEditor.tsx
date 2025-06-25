@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { contentService, uploadService } from '../../services';
 import type { Post, CreatePostData, UpdatePostData, Category, Tag } from '../../services';
-import LoadingSpinner from '../../components/ui/LoadingSpinner';
-import Button from '../../components/ui/Button';
+import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
+import { Button } from '../../components/ui/Button';
 
 export default function PostEditor() {
   const { id } = useParams();
@@ -311,7 +311,10 @@ export default function PostEditor() {
           <Button
             type="button"
             variant="primary"
-            onClick={(e) => handleSubmit(e as React.FormEvent, 'published')}
+            onClick={(e: React.MouseEvent) => {
+              e.preventDefault();
+              handleSubmit(new Event('submit') as any, 'published');
+            }}
             disabled={isSaving}
           >
             {isSaving ? <LoadingSpinner /> : isEditing ? 'Update & Publish' : 'Publish'}

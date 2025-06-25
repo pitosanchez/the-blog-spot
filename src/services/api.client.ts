@@ -21,7 +21,7 @@ interface RequestConfig extends RequestInit {
 
 class ApiClient {
   private baseURL: string;
-  private defaultHeaders: HeadersInit;
+  private defaultHeaders: Record<string, string>;
 
   constructor(baseURL: string = API_CONFIG.BASE_URL) {
     this.baseURL = baseURL;
@@ -38,14 +38,14 @@ class ApiClient {
       skipAuth = false,
       retry: _ = true, // TODO: Implement retry logic
       timeout = API_CONFIG.TIMEOUT,
-      headers = {},
+      headers = {} as Record<string, string>,
       ...fetchConfig
     } = config;
 
     // Add auth token if available and not skipped
     const token = authService.getToken();
     if (token && !skipAuth) {
-      headers['Authorization'] = `Bearer ${token}`;
+      (headers as Record<string, string>)['Authorization'] = `Bearer ${token}`;
     }
 
     const url = `${this.baseURL}${endpoint}`;
@@ -83,7 +83,7 @@ class ApiClient {
         return {} as T;
       }
 
-      return isJson ? await response.json() : await response.text();
+      return isJson ? await response.json() : await response.text() as T;
     } catch (error) {
       clearTimeout(timeoutId);
 
@@ -91,7 +91,7 @@ class ApiClient {
         throw error;
       }
 
-      if (error.name === 'AbortError') {
+      if (error instanceof Error && error.name === 'AbortError') {
         throw new ApiError('Request timeout', 408);
       }
 
@@ -156,7 +156,7 @@ class ApiClient {
     const { headers = {}, ...restConfig } = config || {};
     
     // Remove Content-Type to let browser set it with boundary
-    const uploadHeaders = { ...headers };
+    const uploadHeaders = { ...headers } as Record<string, string>;
     delete uploadHeaders['Content-Type'];
 
     return this.request<T>(endpoint, {

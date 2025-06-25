@@ -1,4 +1,4 @@
-import { Creator, CreatorStats } from '../types';
+import type { Creator, CreatorStats } from '../types';
 import { apiClient } from './api.client';
 import { API_ENDPOINTS } from './api.config';
 import { MockCreatorService } from './creator.service.mock';
@@ -159,3 +159,6 @@ class CreatorService {
 }
 
 export const creatorService = USE_MOCK ? (new MockCreatorService() as unknown as CreatorService) : new CreatorService();
+
+// Export types for use in other services
+export type { Creator, CreatorStats, Post, PaginatedResponse, Subscriber, CreatorDashboard };

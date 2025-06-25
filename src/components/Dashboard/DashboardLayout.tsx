@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, Outlet, useLocation, Navigate } from 'react-router-dom';
 import { useApp } from '../../contexts/AppContext';
 import { Logo } from '../ui/Logo';
-import LoadingSpinner from '../ui/LoadingSpinner';
+import { LoadingSpinner } from '../ui/LoadingSpinner';
 
 const navigation = [
   { name: 'Overview', href: '/dashboard', icon: HomeIcon },

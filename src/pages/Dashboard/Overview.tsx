@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { creatorService } from '../../services';
 import type { CreatorDashboard } from '../../services';
-import LoadingSpinner from '../../components/ui/LoadingSpinner';
+import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 
 export default function DashboardOverview() {
   const [dashboard, setDashboard] = useState<CreatorDashboard | null>(null);

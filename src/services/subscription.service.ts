@@ -1,6 +1,6 @@
 import { apiClient } from './api.client';
 import { API_ENDPOINTS } from './api.config';
-import { PricingTier } from '../types';
+import type { PricingTier } from '../types';
 
 export interface Subscription {
   id: string;

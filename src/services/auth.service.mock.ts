@@ -107,13 +107,4 @@ export class MockAuthService {
     return this.currentToken;
   }
 
-  private setToken(token: string) {
-    this.currentToken = token;
-    localStorage.setItem('authToken', token);
-  }
-
-  private clearToken() {
-    this.currentToken = null;
-    localStorage.removeItem('authToken');
-  }
 }
