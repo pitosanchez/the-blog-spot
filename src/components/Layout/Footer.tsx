@@ -1,20 +1,13 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
-import { Logo } from "../ui/Logo";
 
 export const Footer = memo(() => {
   return (
     <footer className="bg-charcoal border-t border-warm-gray/10">
       <div className="container-custom px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         {/* Top Section */}
-        <div className="flex flex-col md:flex-row items-center justify-between mb-8 pb-8 border-b border-warm-gray/10">
-          <div className="flex items-center space-x-3 mb-4 md:mb-0">
-            <Logo className="h-8 w-8 text-electric-sage" />
-            <span className="font-display font-bold text-2xl text-crisp-white">
-              The Blog Spot
-            </span>
-          </div>
-          <p className="text-warm-gray text-center md:text-right max-w-md">
+        <div className="flex flex-col md:flex-row items-center justify-center mb-8 pb-8 border-b border-warm-gray/10">
+          <p className="text-warm-gray text-center max-w-md">
             The creator platform that actually puts creators first. Keep 90% of
             your earnings.
           </p>
@@ -175,8 +168,7 @@ export const Footer = memo(() => {
         {/* Bottom Section */}
         <div className="pt-8 border-t border-warm-gray/10 flex flex-col md:flex-row items-center justify-between">
           <p className="text-warm-gray text-sm mb-4 md:mb-0">
-            © 2024 The Blog Spot. All rights reserved. Built with ❤️ for
-            creators.
+            © 2024 All rights reserved. Built with ❤️ for creators.
           </p>
           <div className="flex items-center space-x-6">
             {/* Performance badges */}

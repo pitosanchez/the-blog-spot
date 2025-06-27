@@ -28,14 +28,16 @@ class Analytics {
 
   private initializeAnalytics() {
     if (this.isDevelopment) {
-      console.log("📊 Analytics initialized in development mode");
+      if (import.meta.env.DEV) {
+        console.log("📊 Analytics initialized in development mode");
+      }
       this.isInitialized = true;
       return;
     }
 
     // Initialize Google Analytics 4 in production
     if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("config", "GA_MEASUREMENT_ID", {
+      window.gtag("config", import.meta.env.VITE_GA_MEASUREMENT_ID || "GA_MEASUREMENT_ID", {
         page_title: document.title,
         page_location: window.location.href,
       });
@@ -59,7 +61,9 @@ class Analytics {
     };
 
     if (this.isDevelopment) {
-      console.log("📊 Analytics Event:", event);
+      if (import.meta.env.DEV) {
+        console.log("📊 Analytics Event:", event);
+      }
       this.events.push(event);
       return;
     }
@@ -77,12 +81,14 @@ class Analytics {
     this.userProperties = { ...this.userProperties, ...properties };
 
     if (this.isDevelopment) {
-      console.log("📊 User Properties:", this.userProperties);
+      if (import.meta.env.DEV) {
+        console.log("📊 User Properties:", this.userProperties);
+      }
       return;
     }
 
     if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("config", "GA_MEASUREMENT_ID", {
+      window.gtag("config", import.meta.env.VITE_GA_MEASUREMENT_ID || "GA_MEASUREMENT_ID", {
         custom_map: properties,
       });
     }

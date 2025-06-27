@@ -161,7 +161,9 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
           });
         }
       } catch (error) {
-        console.error("Auth initialization error:", error);
+        if (import.meta.env.DEV) {
+          console.error("Auth initialization error:", error);
+        }
       } finally {
         dispatch({ type: "SET_LOADING", payload: false });
       }

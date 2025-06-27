@@ -26,7 +26,9 @@ export class ErrorBoundary extends Component<
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Error caught by boundary:", error, errorInfo);
+    if (import.meta.env.DEV) {
+      console.error("Error caught by boundary:", error, errorInfo);
+    }
 
     // Call custom error handler if provided
     this.props.onError?.(error, errorInfo);

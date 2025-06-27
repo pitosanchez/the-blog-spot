@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect } from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { LoadingSpinner } from "./components/ui/LoadingSpinner";
 import { SEOHead } from "./components/SEO/SEOHead";
@@ -50,8 +50,10 @@ const PageLoader = () => (
 
 // Error handler for development
 const handleError = (error: Error, errorInfo: React.ErrorInfo) => {
-  console.error("Application Error:", error, errorInfo);
   // In production, send to error tracking service
+  if (import.meta.env.DEV) {
+    console.error("Application Error:", error, errorInfo);
+  }
 };
 
 // Analytics tracker component
@@ -97,70 +99,68 @@ function App() {
     <AppProvider>
       <ErrorBoundary onError={handleError}>
         <div className="min-h-screen bg-cream">
-          <BrowserRouter basename="/the-blog-spot">
-            <div className="flex flex-col min-h-screen">
+          <div className="flex flex-col min-h-screen">
+            <ErrorBoundary>
+              <Header />
+            </ErrorBoundary>
+
+            <main className="flex-1" role="main">
               <ErrorBoundary>
-                <Header />
+                <AnalyticsTracker />
+                <Suspense fallback={<PageLoader />}>
+                  <Routes>
+                    {/* Home page */}
+                    <Route path="/" element={<HomePage />} />
+
+                    {/* Auth routes */}
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<Signup />} />
+                    <Route path="/become-creator" element={<BecomeCreator />} />
+
+                    {/* Dashboard routes */}
+                    <Route path="/dashboard" element={<DashboardLayout />}>
+                      <Route index element={<DashboardOverview />} />
+                      <Route path="posts" element={<DashboardPosts />} />
+                      <Route path="posts/new" element={<PostEditor />} />
+                      <Route path="posts/:id/edit" element={<PostEditor />} />
+                    </Route>
+
+                    {/* Static pages with custom components */}
+                    <Route path="/about" element={<About />} />
+                    <Route path="/membership" element={<Membership />} />
+                    <Route path="/community" element={<Community />} />
+                    <Route path="/how-it-works" element={<HowItWorks />} />
+                    <Route path="/pricing" element={<Pricing />} />
+                    <Route path="/get-started" element={<GetStarted />} />
+                    <Route path="/creators" element={<Creators />} />
+
+                    {/* Dynamic routes from configuration */}
+                    {MAIN_ROUTES.filter(
+                      (route) => route.isComingSoon && route.path !== "/"
+                    ).map((route) => (
+                      <Route
+                        key={route.path}
+                        path={route.path}
+                        element={
+                          <ComingSoonPage
+                            title={route.title}
+                            description={`We're working on bringing you amazing ${route.title.toLowerCase()} content. Check back soon!`}
+                          />
+                        }
+                      />
+                    ))}
+
+                    {/* 404 page */}
+                    <Route path="*" element={<NotFoundPage />} />
+                  </Routes>
+                </Suspense>
               </ErrorBoundary>
+            </main>
 
-              <main className="flex-1" role="main">
-                <ErrorBoundary>
-                  <AnalyticsTracker />
-                  <Suspense fallback={<PageLoader />}>
-                    <Routes>
-                      {/* Home page */}
-                      <Route path="/" element={<HomePage />} />
-
-                      {/* Auth routes */}
-                      <Route path="/login" element={<Login />} />
-                      <Route path="/signup" element={<Signup />} />
-                      <Route path="/become-creator" element={<BecomeCreator />} />
-
-                      {/* Dashboard routes */}
-                      <Route path="/dashboard" element={<DashboardLayout />}>
-                        <Route index element={<DashboardOverview />} />
-                        <Route path="posts" element={<DashboardPosts />} />
-                        <Route path="posts/new" element={<PostEditor />} />
-                        <Route path="posts/:id/edit" element={<PostEditor />} />
-                      </Route>
-
-                      {/* Static pages with custom components */}
-                      <Route path="/about" element={<About />} />
-                      <Route path="/membership" element={<Membership />} />
-                      <Route path="/community" element={<Community />} />
-                      <Route path="/how-it-works" element={<HowItWorks />} />
-                      <Route path="/pricing" element={<Pricing />} />
-                      <Route path="/get-started" element={<GetStarted />} />
-                      <Route path="/creators" element={<Creators />} />
-
-                      {/* Dynamic routes from configuration */}
-                      {MAIN_ROUTES.filter(
-                        (route) => route.isComingSoon && route.path !== "/"
-                      ).map((route) => (
-                        <Route
-                          key={route.path}
-                          path={route.path}
-                          element={
-                            <ComingSoonPage
-                              title={route.title}
-                              description={`We're working on bringing you amazing ${route.title.toLowerCase()} content. Check back soon!`}
-                            />
-                          }
-                        />
-                      ))}
-
-                      {/* 404 page */}
-                      <Route path="*" element={<NotFoundPage />} />
-                    </Routes>
-                  </Suspense>
-                </ErrorBoundary>
-              </main>
-
-              <ErrorBoundary>
-                <Footer />
-              </ErrorBoundary>
-            </div>
-          </BrowserRouter>
+            <ErrorBoundary>
+              <Footer />
+            </ErrorBoundary>
+          </div>
         </div>
       </ErrorBoundary>
     </AppProvider>

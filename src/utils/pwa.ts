@@ -42,7 +42,9 @@ class PWAManager {
 
   private async registerServiceWorker() {
     if (!("serviceWorker" in navigator)) {
-      console.log("📱 Service workers not supported");
+      if (import.meta.env.DEV) {
+        console.log("📱 Service workers not supported");
+      }
       return;
     }
 
@@ -56,7 +58,9 @@ class PWAManager {
 
       this.registration = registration;
 
-      console.log("📱 Service Worker registered successfully");
+      if (import.meta.env.DEV) {
+        console.log("📱 Service Worker registered successfully");
+      }
       analytics.track("pwa_service_worker_registered");
 
       // Check for updates
@@ -69,7 +73,9 @@ class PWAManager {
         this.handleServiceWorkerMessage(event);
       });
     } catch (error) {
-      console.error("📱 Service Worker registration failed:", error);
+      if (import.meta.env.DEV) {
+        console.error("📱 Service Worker registration failed:", error);
+      }
       analytics.track("pwa_service_worker_error", {
         error_message: error instanceof Error ? error.message : "Unknown error",
       });
@@ -78,7 +84,9 @@ class PWAManager {
 
   private setupInstallPrompt() {
     window.addEventListener("beforeinstallprompt", (event) => {
-      console.log("📱 Install prompt available");
+      if (import.meta.env.DEV) {
+        console.log("📱 Install prompt available");
+      }
 
       // Prevent the mini-infobar from appearing
       event.preventDefault();
@@ -94,7 +102,9 @@ class PWAManager {
 
     // Track successful installation
     window.addEventListener("appinstalled", () => {
-      console.log("📱 PWA installed successfully");
+      if (import.meta.env.DEV) {
+        console.log("📱 PWA installed successfully");
+      }
       this.deferredPrompt = null;
 
       analytics.track("pwa_installed");
@@ -108,7 +118,9 @@ class PWAManager {
     if (!("serviceWorker" in navigator)) return;
 
     navigator.serviceWorker.addEventListener("controllerchange", () => {
-      console.log("📱 Service Worker controller changed");
+      if (import.meta.env.DEV) {
+        console.log("📱 Service Worker controller changed");
+      }
 
       // Reload the page to get the latest version
       if (!navigator.serviceWorker.controller?.scriptURL.includes("sw.js")) {
@@ -121,14 +133,18 @@ class PWAManager {
     const newWorker = registration.installing;
     if (!newWorker) return;
 
-    console.log("📱 New service worker installing");
+    if (import.meta.env.DEV) {
+      console.log("📱 New service worker installing");
+    }
 
     newWorker.addEventListener("statechange", () => {
       if (
         newWorker.state === "installed" &&
         navigator.serviceWorker.controller
       ) {
-        console.log("📱 New service worker installed, update available");
+        if (import.meta.env.DEV) {
+          console.log("📱 New service worker installed, update available");
+        }
 
         const updateInfo: PWAUpdateInfo = {
           isUpdateAvailable: true,
@@ -149,14 +165,20 @@ class PWAManager {
 
     switch (type) {
       case "CACHE_UPDATED":
-        console.log("📱 Cache updated:", payload);
+        if (import.meta.env.DEV) {
+          console.log("📱 Cache updated:", payload);
+        }
         break;
       case "OFFLINE_READY":
-        console.log("📱 App ready for offline use");
+        if (import.meta.env.DEV) {
+          console.log("📱 App ready for offline use");
+        }
         this.showOfflineReadyMessage();
         break;
       default:
-        console.log("📱 Service Worker message:", event.data);
+        if (import.meta.env.DEV) {
+          console.log("📱 Service Worker message:", event.data);
+        }
     }
   }
 
@@ -196,7 +218,9 @@ class PWAManager {
    */
   async showInstallPrompt(): Promise<boolean> {
     if (!this.deferredPrompt) {
-      console.log("📱 No install prompt available");
+      if (import.meta.env.DEV) {
+        console.log("📱 No install prompt available");
+      }
       return false;
     }
 
@@ -212,15 +236,21 @@ class PWAManager {
       });
 
       if (choiceResult.outcome === "accepted") {
-        console.log("📱 User accepted install prompt");
+        if (import.meta.env.DEV) {
+          console.log("📱 User accepted install prompt");
+        }
         this.deferredPrompt = null;
         return true;
       } else {
-        console.log("📱 User dismissed install prompt");
+        if (import.meta.env.DEV) {
+          console.log("📱 User dismissed install prompt");
+        }
         return false;
       }
     } catch (error) {
-      console.error("📱 Error showing install prompt:", error);
+      if (import.meta.env.DEV) {
+        console.error("📱 Error showing install prompt:", error);
+      }
       return false;
     }
   }
@@ -298,7 +328,9 @@ class PWAManager {
    */
   private showInstallSuccessMessage() {
     // This would typically show a toast notification
-    console.log("📱 Thank you for installing The Blog Spot!");
+    if (import.meta.env.DEV) {
+      console.log("📱 Thank you for installing The Blog Spot!");
+    }
   }
 
   /**
@@ -306,7 +338,9 @@ class PWAManager {
    */
   private showOfflineReadyMessage() {
     // This would typically show a toast notification
-    console.log("📱 The Blog Spot is ready for offline use!");
+    if (import.meta.env.DEV) {
+      console.log("📱 The Blog Spot is ready for offline use!");
+    }
   }
 
   /**
@@ -317,7 +351,9 @@ class PWAManager {
       !this.registration ||
       !("sync" in window.ServiceWorkerRegistration.prototype)
     ) {
-      console.log("📱 Background sync not supported");
+      if (import.meta.env.DEV) {
+        console.log("📱 Background sync not supported");
+      }
       return false;
     }
 
@@ -337,7 +373,9 @@ class PWAManager {
       analytics.track("pwa_background_sync_registered", { tag });
       return true;
     } catch (error) {
-      console.error("📱 Background sync registration failed:", error);
+      if (import.meta.env.DEV) {
+        console.error("📱 Background sync registration failed:", error);
+      }
       return false;
     }
   }
@@ -347,7 +385,9 @@ class PWAManager {
    */
   async requestNotificationPermission(): Promise<NotificationPermission> {
     if (!("Notification" in window)) {
-      console.log("📱 Notifications not supported");
+      if (import.meta.env.DEV) {
+        console.log("📱 Notifications not supported");
+      }
       return "denied";
     }
 
@@ -365,7 +405,9 @@ class PWAManager {
    */
   async subscribeToPush(): Promise<PushSubscription | null> {
     if (!this.registration || !("PushManager" in window)) {
-      console.log("📱 Push notifications not supported");
+      if (import.meta.env.DEV) {
+        console.log("📱 Push notifications not supported");
+      }
       return null;
     }
 
@@ -380,7 +422,9 @@ class PWAManager {
       analytics.track("pwa_push_subscription_created");
       return subscription;
     } catch (error) {
-      console.error("📱 Push subscription failed:", error);
+      if (import.meta.env.DEV) {
+        console.error("📱 Push subscription failed:", error);
+      }
       return null;
     }
   }

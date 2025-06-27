@@ -10,7 +10,9 @@ const GetStarted = memo(() => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission
-    console.log("Form submitted:", { email, name, creatorType });
+    if (import.meta.env.DEV) {
+      console.log("Form submitted:", { email, name, creatorType });
+    }
   };
 
   return (

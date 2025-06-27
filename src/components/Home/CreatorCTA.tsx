@@ -7,7 +7,9 @@ export const CreatorCTA = memo(() => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission
-    console.log("Email submitted:", email);
+    if (import.meta.env.DEV) {
+      console.log("Email submitted:", email);
+    }
   };
 
   return (

@@ -61,7 +61,9 @@ class AuthService {
       this.setToken(data.token);
       return data;
     } catch (error) {
-      console.error('Login error:', error);
+      if (import.meta.env.DEV) {
+        console.error('Login error:', error);
+      }
       throw error;
     }
   }
@@ -85,7 +87,9 @@ class AuthService {
       this.setToken(result.token);
       return result;
     } catch (error) {
-      console.error('Signup error:', error);
+      if (import.meta.env.DEV) {
+        console.error('Signup error:', error);
+      }
       throw error;
     }
   }
@@ -101,7 +105,9 @@ class AuthService {
         });
       }
     } catch (error) {
-      console.error('Logout error:', error);
+      if (import.meta.env.DEV) {
+        console.error('Logout error:', error);
+      }
     } finally {
       this.clearToken();
     }
@@ -125,7 +131,9 @@ class AuthService {
       const data = await response.json();
       return data.user;
     } catch (error) {
-      console.error('Token verification error:', error);
+      if (import.meta.env.DEV) {
+        console.error('Token verification error:', error);
+      }
       this.clearToken();
       return null;
     }
@@ -146,7 +154,9 @@ class AuthService {
         throw new Error(error.message || 'Failed to send reset email');
       }
     } catch (error) {
-      console.error('Forgot password error:', error);
+      if (import.meta.env.DEV) {
+        console.error('Forgot password error:', error);
+      }
       throw error;
     }
   }
@@ -166,7 +176,9 @@ class AuthService {
         throw new Error(error.message || 'Failed to reset password');
       }
     } catch (error) {
-      console.error('Reset password error:', error);
+      if (import.meta.env.DEV) {
+        console.error('Reset password error:', error);
+      }
       throw error;
     }
   }

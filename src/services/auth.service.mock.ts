@@ -95,12 +95,16 @@ export class MockAuthService {
       throw new Error('Email not found');
     }
 
-    console.log(`Mock: Password reset email sent to ${email}`);
+    if (import.meta.env.DEV) {
+      console.log(`Mock: Password reset email sent to ${email}`);
+    }
   }
 
   async resetPassword(token: string, _newPassword: string): Promise<void> {
     await new Promise(resolve => setTimeout(resolve, 500));
-    console.log(`Mock: Password reset with token ${token}`);
+    if (import.meta.env.DEV) {
+      console.log(`Mock: Password reset with token ${token}`);
+    }
   }
 
   getToken() {

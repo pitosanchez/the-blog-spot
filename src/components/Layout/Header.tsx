@@ -4,20 +4,10 @@ import { Logo } from "../ui/Logo";
 import { useApp } from "../../contexts/AppContext";
 
 export const Header = memo(() => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { state, logout } = useApp();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const navLinks = [
     { href: "/how-it-works", label: "How It Works" },
@@ -34,76 +24,99 @@ export const Header = memo(() => {
   };
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-ink-black/95 backdrop-blur-xl border-b border-warm-gray/10 shadow-lg"
-          : "bg-transparent"
-      }`}
-    >
-      <nav className="container-custom px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3 group">
-            <Logo className="h-8 w-8 text-electric-sage transition-transform duration-300 group-hover:scale-110" />
-            <span className="font-display font-bold text-xl text-crisp-white">
-              The Blog Spot
-            </span>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
-            {navLinks.map((link) => (
+    <header className="relative z-50 bg-ink-black/20 backdrop-blur-md border-b border-warm-gray/5 shadow-sm">
+      <nav className="container-custom">
+        <div className="flex items-center justify-between h-16 sm:h-18 md:h-20 relative max-w-7xl mx-auto">
+          {/* Desktop Navigation with Logo */}
+          <div className="hidden md:flex items-center w-full justify-between">
+            {/* Left section - Logo with more space */}
+            <div className="flex items-center">
               <Link
-                key={link.href}
-                to={link.href}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  isActive(link.href)
-                    ? "bg-electric-sage/10 text-electric-sage"
-                    : "text-warm-gray hover:text-crisp-white hover:bg-charcoal"
-                }`}
+                to="/"
+                className="flex items-center group flex-shrink-0 mr-8"
               >
-                {link.label}
+                <Logo
+                  size="nav"
+                  className="text-lime-bright transition-transform duration-300 group-hover:scale-110"
+                  style={{ height: "clamp(2rem, 3vw, 2.5rem)" }}
+                />
               </Link>
-            ))}
+            </div>
+
+            {/* Center section - Navigation Links */}
+            <div className="flex items-center space-x-6 flex-1 justify-center">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  className={`px-3 py-2 rounded-lg font-medium transition-all duration-200 whitespace-nowrap touch-target ${
+                    isActive(link.href)
+                      ? "bg-electric-sage/10 text-electric-sage"
+                      : "text-warm-gray hover:text-crisp-white hover:bg-charcoal"
+                  }`}
+                  style={{ fontSize: "clamp(0.875rem, 1vw, 1rem)" }}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+
+            {/* Right section - Auth buttons with more space */}
+            <div className="flex items-center space-x-3 ml-8">
+              {state.isAuthenticated ? (
+                <>
+                  <span
+                    className="text-warm-gray whitespace-nowrap"
+                    style={{ fontSize: "clamp(0.75rem, 0.9vw, 0.875rem)" }}
+                  >
+                    Welcome, {state.user?.name}
+                  </span>
+                  <button
+                    onClick={handleLogout}
+                    className="text-warm-gray hover:text-electric-sage transition-colors duration-200 font-medium whitespace-nowrap touch-target px-3 py-1.5 rounded-lg"
+                    style={{ fontSize: "clamp(0.875rem, 1vw, 1rem)" }}
+                  >
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    className="text-warm-gray hover:text-electric-sage transition-colors duration-200 font-medium whitespace-nowrap touch-target px-3 py-1.5 rounded-lg"
+                    style={{ fontSize: "clamp(0.875rem, 1vw, 1rem)" }}
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    to="/signup"
+                    className="bg-electric-sage text-ink-black rounded-lg font-semibold hover:bg-electric-sage/90 hover:scale-105 transition-all duration-200 shadow-lg shadow-electric-sage/20 whitespace-nowrap touch-target"
+                    style={{
+                      fontSize: "clamp(0.875rem, 1vw, 1rem)",
+                      padding:
+                        "clamp(0.5rem, 0.8vw, 0.75rem) clamp(1rem, 1.5vw, 1.25rem)",
+                    }}
+                  >
+                    Get Started
+                  </Link>
+                </>
+              )}
+            </div>
           </div>
 
-          {/* CTA Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
-            {state.isAuthenticated ? (
-              <>
-                <span className="text-warm-gray text-sm">
-                  Welcome, {state.user?.name}
-                </span>
-                <button
-                  onClick={handleLogout}
-                  className="text-warm-gray hover:text-electric-sage transition-colors duration-200"
-                >
-                  Sign Out
-                </button>
-              </>
-            ) : (
-              <>
-                <Link
-                  to="/login"
-                  className="text-warm-gray hover:text-electric-sage transition-colors duration-200"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  to="/signup"
-                  className="bg-electric-sage text-ink-black px-5 py-2.5 rounded-lg font-semibold hover:bg-electric-sage/90 hover:scale-105 transition-all duration-200 shadow-lg shadow-electric-sage/20"
-                >
-                  Get Started
-                </Link>
-              </>
-            )}
-          </div>
+          {/* Mobile Logo (hidden on desktop) */}
+          <Link to="/" className="md:hidden flex items-center group">
+            <Logo
+              size="nav"
+              className="text-lime-bright transition-transform duration-300 group-hover:scale-110"
+              style={{ height: "clamp(1.75rem, 3vw, 2.25rem)" }}
+            />
+          </Link>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg text-warm-gray hover:text-crisp-white hover:bg-charcoal transition-colors"
+            className="md:hidden absolute right-4 p-2 rounded-lg text-warm-gray hover:text-crisp-white hover:bg-charcoal transition-colors touch-target"
             aria-label="Toggle menu"
           >
             <svg
@@ -126,14 +139,14 @@ export const Header = memo(() => {
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-warm-gray/10">
+          <div className="md:hidden py-4 border-t border-warm-gray/10 safe-bottom">
             <div className="space-y-1">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   to={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 ${
+                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 touch-target ${
                     isActive(link.href)
                       ? "bg-electric-sage/10 text-electric-sage"
                       : "text-warm-gray hover:text-crisp-white hover:bg-charcoal"
@@ -153,7 +166,7 @@ export const Header = memo(() => {
                         setIsMobileMenuOpen(false);
                         handleLogout();
                       }}
-                      className="block w-full text-center px-4 py-3 rounded-lg text-warm-gray hover:text-electric-sage transition-colors"
+                      className="block w-full text-center px-4 py-3 rounded-lg text-warm-gray hover:text-electric-sage transition-colors touch-target"
                     >
                       Sign Out
                     </button>
@@ -163,14 +176,14 @@ export const Header = memo(() => {
                     <Link
                       to="/login"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="block text-center px-4 py-3 rounded-lg text-warm-gray hover:text-electric-sage transition-colors"
+                      className="block text-center px-4 py-3 rounded-lg text-warm-gray hover:text-electric-sage transition-colors touch-target"
                     >
                       Sign In
                     </Link>
                     <Link
                       to="/signup"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="block text-center bg-electric-sage text-ink-black px-4 py-3 rounded-lg font-semibold hover:bg-electric-sage/90 transition-all duration-200"
+                      className="block text-center bg-electric-sage text-ink-black px-4 py-3 rounded-lg font-semibold hover:bg-electric-sage/90 transition-all duration-200 touch-target"
                     >
                       Get Started
                     </Link>

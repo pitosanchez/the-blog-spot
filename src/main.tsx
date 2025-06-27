@@ -1,13 +1,20 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App.tsx";
 import { ErrorBoundary } from "./components/ErrorBoundary";
+import { initResponsiveUtils } from "./utils/viewport.ts";
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
+// Initialize responsive utilities
+initResponsiveUtils();
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
     <ErrorBoundary>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ErrorBoundary>
-  </StrictMode>
+  </React.StrictMode>
 );
