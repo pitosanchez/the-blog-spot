@@ -23,6 +23,7 @@ const HowItWorks = lazy(() => import("./pages/HowItWorks"));
 const Pricing = lazy(() => import("./pages/Pricing"));
 const GetStarted = lazy(() => import("./pages/GetStarted"));
 const Creators = lazy(() => import("./pages/Creators"));
+const Compliance = lazy(() => import("./pages/Compliance"));
 
 // Auth pages
 const Login = lazy(() => import("./components/Auth/Login"));
@@ -131,6 +132,7 @@ function App() {
                     <Route path="/community" element={<Community />} />
                     <Route path="/how-it-works" element={<HowItWorks />} />
                     <Route path="/pricing" element={<Pricing />} />
+                    <Route path="/compliance" element={<Compliance />} />
                     <Route path="/get-started" element={<GetStarted />} />
                     <Route path="/creators" element={<Creators />} />
 

@@ -12,12 +12,12 @@ export const CreatorShowcase = memo(() => {
       <div className="container-custom px-4 md:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-crisp-white mb-6">
-            Creators Earning{" "}
-            <span className="text-electric-sage">Their Worth</span>
+            Medical Professionals{" "}
+            <span className="text-medical-blue">Earning More</span>
           </h2>
           <p className="text-xl text-warm-gray max-w-2xl mx-auto">
-            Real creators, real earnings. No inflated numbers, just honest
-            success stories.
+            Real physicians creating sustainable income through medical education,
+            CME courses, and case-based learning.
           </p>
         </div>
 
@@ -41,29 +41,34 @@ export const CreatorShowcase = memo(() => {
               className="glassmorphism rounded-xl p-6 backdrop-blur-xl border border-warm-gray/20 hover:border-electric-sage/50 transition-all duration-300 hover:scale-105"
             >
               <div className="flex items-start gap-4 mb-4">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-electric-sage/20 to-hot-coral/20 flex items-center justify-center text-crisp-white font-bold text-xl">
-                  {creator.name.charAt(0)}
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-medical-blue/30 to-electric-sage/20 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-medical-blue" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM8 9a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1zm1-4a1 1 0 112 0v2a1 1 0 11-2 0V5zm0 8a1 1 0 112 0v2a1 1 0 11-2 0v-2z"/>
+                  </svg>
                 </div>
                 <div className="flex-1">
                   <h3 className="font-bold text-crisp-white text-lg">
                     {creator.name}
                   </h3>
                   <p className="text-sm text-warm-gray">{creator.niche}</p>
+                  {creator.credentials && (
+                    <p className="text-xs text-medical-blue mt-1">{creator.credentials}</p>
+                  )}
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div className="bg-charcoal/50 rounded-lg p-3 text-center border border-warm-gray/20">
-                  <div className="text-2xl font-bold text-electric-sage">
+                  <div className="text-2xl font-bold text-medical-blue">
                     {creator.monthlyEarnings}
                   </div>
                   <div className="text-xs text-warm-gray">per month</div>
                 </div>
                 <div className="bg-charcoal/50 rounded-lg p-3 text-center border border-warm-gray/20">
-                  <div className="text-2xl font-bold text-electric-sage">
+                  <div className="text-2xl font-bold text-medical-blue">
                     {creator.subscribers}
                   </div>
-                  <div className="text-xs text-warm-gray">subscribers</div>
+                  <div className="text-xs text-warm-gray">learners</div>
                 </div>
               </div>
 
@@ -76,7 +81,7 @@ export const CreatorShowcase = memo(() => {
 
         <div className="text-center">
           <Link to="/creators" className="btn-secondary">
-            Browse All Creators
+            Browse Medical Creators
           </Link>
         </div>
       </div>

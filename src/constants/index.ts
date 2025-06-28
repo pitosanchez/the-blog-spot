@@ -2,103 +2,108 @@ import type { Quote } from "../types";
 
 // Platform statistics for social proof
 export const PLATFORM_STATS = {
-  creators: "500+",
-  monthlyReaders: "50K+",
-  totalEarned: "$250K+",
-  avgCreatorIncome: "$2,000/mo",
+  creators: "200+",
+  monthlyReaders: "25K+",
+  totalEarned: "$500K+",
+  avgCreatorIncome: "$5,000/mo",
+  medicalSpecialties: "15+",
+  cmeHoursDelivered: "10K+",
 };
 
-// Hero quotes for creator platform
+// Hero quotes for medical creator platform
 export const CREATOR_HERO_QUOTES: Quote[] = [
   {
-    text: "Keep 90% of your earnings. No complex analytics. Just write and get paid.",
-    author: "The Blog Spot Promise",
+    text: "Share your medical expertise. Keep 90% of earnings. Full HIPAA compliance.",
+    author: "MedCreator Hub Promise",
   },
   {
-    text: "I made my first $1,000 in month two. The simplicity is refreshing.",
-    author: "Sarah Chen, Newsletter Writer",
+    text: "I earn $8,000/month teaching emergency medicine cases to residents.",
+    author: "Dr. Sarah Chen, Emergency Medicine",
   },
   {
-    text: "Finally, a platform that doesn't take half my revenue.",
-    author: "Marcus Johnson, Poet",
+    text: "My CME courses generate passive income while helping colleagues nationwide.",
+    author: "Dr. Marcus Johnson, Cardiology",
   },
   {
-    text: "Built my entire coaching business here. Zero tech headaches.",
-    author: "Elena Rodriguez, Life Coach",
+    text: "Built a thriving medical education business with zero compliance worries.",
+    author: "Dr. Elena Rodriguez, Internal Medicine",
   },
 ];
 
-// Creator success stories for homepage
+// Medical creator success stories for homepage
 export const CREATOR_SUCCESS_STORIES = [
   {
-    id: "sarah-chen",
-    name: "Sarah Chen",
-    avatar: "/images/creators/sarah-chen.webp",
-    niche: "Tech & Career",
-    monthlyEarnings: "$3,200",
-    subscribers: 850,
-    quote: "I switched from Substack and doubled my income in 3 months.",
+    id: "dr-sarah-chen",
+    name: "Dr. Sarah Chen, MD",
+    avatar: "/images/creators/dr-chen.webp",
+    niche: "Emergency Medicine",
+    monthlyEarnings: "$12,500",
+    subscribers: 2850,
+    quote: "Teaching clinical cases to residents while earning sustainably.",
     featured: true,
+    credentials: "Board Certified Emergency Medicine",
   },
   {
-    id: "marcus-johnson",
-    name: "Marcus Johnson",
-    avatar: "/images/creators/marcus-johnson.webp",
-    niche: "Poetry & Prose",
-    monthlyEarnings: "$1,800",
-    subscribers: 450,
-    quote: "The 90% revenue share changed everything for me.",
+    id: "dr-marcus-johnson",
+    name: "Dr. Marcus Johnson, MD",
+    avatar: "/images/creators/dr-johnson.webp",
+    niche: "Cardiology CME",
+    monthlyEarnings: "$18,200",
+    subscribers: 1450,
+    quote: "My CME courses help cardiologists stay current with latest guidelines.",
     featured: true,
+    credentials: "Fellow, American College of Cardiology",
   },
   {
-    id: "elena-rodriguez",
-    name: "Elena Rodriguez",
-    avatar: "/images/creators/elena-rodriguez.webp",
-    niche: "Wellness Coaching",
-    monthlyEarnings: "$5,400",
-    subscribers: 180,
-    quote: "I run workshops and courses with zero platform interference.",
+    id: "dr-elena-rodriguez",
+    name: "Dr. Elena Rodriguez, MD",
+    avatar: "/images/creators/dr-rodriguez.webp",
+    niche: "Internal Medicine",
+    monthlyEarnings: "$9,800",
+    subscribers: 980,
+    quote: "Case-based learning that actually improves patient outcomes.",
     featured: true,
+    credentials: "Program Director, IM Residency",
   },
 ];
 
-// Platform features for creators
+// Medical platform features
 export const CREATOR_FEATURES = [
   {
     id: "revenue-share",
     title: "Keep 90% of Earnings",
-    description: "Industry-leading revenue share. We only take 10%.",
+    description: "Best revenue share for medical educators. Only 10% platform fee.",
     icon: "💰",
   },
   {
-    id: "simple-tools",
-    title: "Simple Creator Tools",
-    description: "Everything you need, nothing you don't. Focus on creating.",
-    icon: "🛠️",
+    id: "hipaa-compliant",
+    title: "HIPAA Compliant",
+    description: "Full HIPAA compliance for case discussions and patient data.",
+    icon: "🔒",
   },
   {
-    id: "instant-payouts",
-    title: "Weekly Payouts",
-    description: "Get paid every week. No waiting 30+ days.",
-    icon: "⚡",
-  },
-  {
-    id: "own-audience",
-    title: "Own Your Audience",
-    description: "Export your subscriber list anytime. It's yours.",
-    icon: "👥",
-  },
-  {
-    id: "workshops",
-    title: "Workshops & Courses",
-    description: "Sell workshops, courses, and premium content easily.",
+    id: "cme-credits",
+    title: "CME Integration",
+    description: "Offer accredited CME credits. We handle the paperwork.",
     icon: "🎓",
   },
   {
-    id: "no-algorithms",
-    title: "No Algorithm Games",
-    description: "Your subscribers see everything you publish. Period.",
-    icon: "📊",
+    id: "case-tools",
+    title: "Medical Case Tools",
+    description: "Anonymization, DICOM viewers, and clinical image support.",
+    icon: "🏥",
+  },
+  {
+    id: "peer-review",
+    title: "Peer Review System",
+    description: "Built-in peer review for maintaining medical standards.",
+    icon: "✅",
+  },
+  {
+    id: "pharma-sponsors",
+    title: "Sponsorship Options",
+    description: "Connect with pharma and device companies for ethical sponsorships.",
+    icon: "🤝",
   },
 ];
 
@@ -128,42 +133,47 @@ export const CREATOR_PRICING_OPTIONS = [
   },
 ];
 
-// Creator categories
+// Medical specialty categories
 export const CREATOR_CATEGORIES = [
-  { id: "writers", label: "Writers & Journalists", count: 156 },
-  { id: "coaches", label: "Coaches & Consultants", count: 89 },
-  { id: "artists", label: "Artists & Poets", count: 124 },
-  { id: "educators", label: "Educators & Teachers", count: 67 },
-  { id: "wellness", label: "Wellness & Health", count: 93 },
-  { id: "business", label: "Business & Finance", count: 78 },
+  { id: "emergency", label: "Emergency Medicine", count: 24 },
+  { id: "internal", label: "Internal Medicine", count: 31 },
+  { id: "cardiology", label: "Cardiology", count: 18 },
+  { id: "radiology", label: "Radiology", count: 22 },
+  { id: "surgery", label: "Surgery", count: 19 },
+  { id: "pediatrics", label: "Pediatrics", count: 16 },
+  { id: "psychiatry", label: "Psychiatry", count: 14 },
+  { id: "family", label: "Family Medicine", count: 27 },
+  { id: "anesthesia", label: "Anesthesiology", count: 12 },
+  { id: "pathology", label: "Pathology", count: 9 },
+  { id: "dermatology", label: "Dermatology", count: 8 },
 ];
 
-// FAQ for creators
+// FAQ for medical creators
 export const CREATOR_FAQ = [
   {
-    question: "How much does The Blog Spot take?",
+    question: "Is the platform HIPAA compliant?",
     answer:
-      "We take only 10% of your earnings. You keep 90%. This includes payment processing.",
+      "Yes, fully HIPAA compliant. All patient data is encrypted and we provide BAA agreements.",
   },
   {
-    question: "When do I get paid?",
+    question: "Can I offer CME credits?",
     answer:
-      "Every Friday. If you've earned over $25, we automatically deposit to your account.",
+      "Yes! We partner with accreditation bodies to help you offer AMA PRA Category 1 Credits.",
   },
   {
-    question: "Can I bring my existing subscribers?",
+    question: "How do you verify medical licenses?",
     answer:
-      "Yes! Import your email list and we'll help you transition smoothly.",
+      "We verify all medical licenses through state boards before account activation.",
   },
   {
-    question: "What about my old content?",
+    question: "What about malpractice concerns?",
     answer:
-      "Import all your previous posts with our migration tool. Keep your archive intact.",
+      "Educational content is covered under our platform insurance. Always include appropriate disclaimers.",
   },
   {
-    question: "Can I leave anytime?",
+    question: "Can hospitals subscribe for their staff?",
     answer:
-      "Absolutely. Export your subscriber list and content whenever you want. No lock-in.",
+      "Yes! We offer institutional subscriptions with volume discounts and admin dashboards.",
   },
 ];
 

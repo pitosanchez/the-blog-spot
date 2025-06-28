@@ -3,92 +3,92 @@ import { Link } from "react-router-dom";
 
 const pricingTiers = [
   {
-    name: "Free",
+    name: "Medical Student",
     price: "$0",
     period: "forever",
-    description: "Perfect for getting started and building your audience",
+    description: "For medical students and residents building their professional presence",
     features: [
-      "Unlimited free posts",
-      "Basic analytics",
-      "Email subscribers",
-      "Social sharing",
-      "SEO optimization",
-      "Mobile responsive",
+      "Basic profile",
+      "Share case studies",
+      "Join discussions",
+      "Follow specialists",
+      "Access free content",
+      "Mobile app access",
     ],
     cta: "Start Free",
     popular: false,
     color: "charcoal",
   },
   {
-    name: "Creator",
+    name: "Medical Professional",
     price: "10%",
-    period: "commission",
-    description: "For serious creators ready to monetize their content",
+    period: "commission only",
+    description: "For practicing physicians ready to monetize their expertise",
     features: [
-      "Everything in Free",
+      "Everything in Student",
       "Paid subscriptions",
-      "Weekly payouts",
-      "90% revenue share",
-      "Premium analytics",
-      "Custom branding",
-      "Priority support",
-      "Export subscribers",
+      "CME credit integration",
+      "HIPAA compliant tools",
+      "Case anonymization",
+      "Weekly payouts ($100 min)",
+      "Professional analytics",
+      "License verification",
     ],
     cta: "Start Earning",
     popular: true,
-    color: "electric-sage",
+    color: "medical-blue",
   },
   {
-    name: "Pro",
-    price: "10%",
-    period: "commission + $29/mo",
-    description: "Advanced features for established creators and businesses",
+    name: "Medical Educator",
+    price: "$49/mo",
+    period: "+ 10% commission",
+    description: "For medical educators, program directors, and institutions",
     features: [
-      "Everything in Creator",
-      "Advanced workshops",
-      "Course creation tools",
-      "Affiliate marketing",
+      "Everything in Professional",
+      "CME accreditation support",
+      "Bulk institutional access",
+      "Advanced compliance tools",
       "White-label options",
       "API access",
-      "Dedicated manager",
+      "Dedicated support",
       "Custom integrations",
     ],
-    cta: "Go Pro",
+    cta: "Scale Your Impact",
     popular: false,
-    color: "hot-coral",
+    color: "electric-sage",
   },
 ];
 
 const faqs = [
   {
-    question: "How much does The Blog Spot take?",
+    question: "Is MedCreator Hub HIPAA compliant?",
     answer:
-      "We take only 10% of your earnings. You keep 90%. This includes payment processing fees, so there are no hidden costs.",
+      "Yes, fully HIPAA compliant. All patient data is encrypted, we provide BAA agreements, and our infrastructure meets all healthcare privacy requirements.",
   },
   {
-    question: "When do I get paid?",
+    question: "Can I offer CME credits through the platform?",
     answer:
-      "Every Friday. If you've earned over $25, we automatically deposit to your bank account. No waiting 30+ days like other platforms.",
+      "Yes! We partner with ACCME-accredited providers to help you offer AMA PRA Category 1 Credits™. We handle all the administrative work.",
   },
   {
-    question: "Can I switch plans anytime?",
+    question: "How do you verify medical licenses?",
     answer:
-      "Absolutely. Upgrade or downgrade anytime. Changes take effect immediately, and we'll prorate any differences.",
+      "We verify all medical licenses through primary source verification with state medical boards before activating professional accounts.",
   },
   {
-    question: "What payment methods do you accept?",
+    question: "What specialties are supported?",
     answer:
-      "We support all major credit cards, debit cards, and ACH transfers through Stripe. Your readers can pay however they prefer.",
+      "All medical specialties are welcome. We have dedicated features for case-based learning, procedural videos, and specialty-specific content.",
   },
   {
-    question: "Can I export my data?",
+    question: "Can hospitals buy institutional subscriptions?",
     answer:
-      "Yes! Your content, subscriber list, and analytics are always exportable. You own your data, not us.",
+      "Yes! We offer enterprise plans with volume discounts, admin dashboards, and usage analytics for hospitals and medical schools.",
   },
   {
-    question: "Is there a setup fee?",
+    question: "What about malpractice liability?",
     answer:
-      "No setup fees, no hidden costs, no annual contracts. Just our simple 10% commission on what you earn.",
+      "Educational content with proper disclaimers is covered under our platform insurance. We provide templates and guidelines for risk mitigation.",
   },
 ];
 
@@ -104,11 +104,11 @@ export const Pricing = memo(() => {
         <div className="relative z-10 container-custom px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="font-display font-black text-5xl md:text-6xl lg:text-7xl leading-tight mb-6">
-              Simple <span className="text-electric-sage">Pricing</span>
+              Medical Creator <span className="text-medical-blue">Pricing</span>
             </h1>
             <p className="text-xl md:text-2xl text-warm-gray leading-relaxed mb-8">
-              No hidden fees. No complex tiers. Just a simple 10% commission on
-              what you earn.
+              Transparent pricing for medical professionals. Keep 90% of your earnings
+              while we handle compliance, CME credits, and payments.
             </p>
 
             {/* Revenue Share Highlight */}
@@ -201,10 +201,10 @@ export const Pricing = memo(() => {
         <div className="container-custom px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="font-display font-bold text-4xl md:text-5xl mb-6">
-              How We <span className="text-electric-sage">Compare</span>
+              How We <span className="text-medical-blue">Compare</span>
             </h2>
             <p className="text-xl text-warm-gray max-w-2xl mx-auto">
-              See why creators are switching to The Blog Spot.
+              See why medical professionals choose MedCreator Hub.
             </p>
           </div>
 
@@ -214,52 +214,52 @@ export const Pricing = memo(() => {
                 <thead>
                   <tr className="border-b border-warm-gray/20">
                     <th className="text-left p-6 font-bold">Feature</th>
-                    <th className="text-center p-6 font-bold text-electric-sage">
-                      The Blog Spot
+                    <th className="text-center p-6 font-bold text-medical-blue">
+                      MedCreator Hub
                     </th>
                     <th className="text-center p-6 font-bold text-warm-gray">
-                      Substack
+                      Doximity
                     </th>
                     <th className="text-center p-6 font-bold text-warm-gray">
-                      Medium
+                      Figure 1
                     </th>
                     <th className="text-center p-6 font-bold text-warm-gray">
-                      Patreon
+                      General Platforms
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-b border-warm-gray/10">
                     <td className="p-6 text-warm-gray">Revenue Share</td>
-                    <td className="p-6 text-center text-electric-sage font-bold">
+                    <td className="p-6 text-center text-medical-blue font-bold">
                       90%
                     </td>
-                    <td className="p-6 text-center text-warm-gray">90%</td>
-                    <td className="p-6 text-center text-warm-gray">~50%</td>
-                    <td className="p-6 text-center text-warm-gray">90%</td>
+                    <td className="p-6 text-center text-warm-gray">N/A</td>
+                    <td className="p-6 text-center text-warm-gray">Sponsored</td>
+                    <td className="p-6 text-center text-warm-gray">87-92%</td>
                   </tr>
                   <tr className="border-b border-warm-gray/10">
-                    <td className="p-6 text-warm-gray">Payout Frequency</td>
-                    <td className="p-6 text-center text-electric-sage font-bold">
-                      Weekly
+                    <td className="p-6 text-warm-gray">CME Credits</td>
+                    <td className="p-6 text-center text-medical-blue font-bold">
+                      ✓ Integrated
                     </td>
-                    <td className="p-6 text-center text-warm-gray">Monthly</td>
-                    <td className="p-6 text-center text-warm-gray">Monthly</td>
-                    <td className="p-6 text-center text-warm-gray">Monthly</td>
+                    <td className="p-6 text-center text-warm-gray">✗</td>
+                    <td className="p-6 text-center text-warm-gray">✗</td>
+                    <td className="p-6 text-center text-warm-gray">✗</td>
                   </tr>
                   <tr className="border-b border-warm-gray/10">
-                    <td className="p-6 text-warm-gray">Setup Time</td>
-                    <td className="p-6 text-center text-electric-sage font-bold">
-                      5 minutes
+                    <td className="p-6 text-warm-gray">HIPAA Compliant</td>
+                    <td className="p-6 text-center text-medical-blue font-bold">
+                      ✓ Full
                     </td>
                     <td className="p-6 text-center text-warm-gray">
-                      15 minutes
+                      ✓ Limited
                     </td>
                     <td className="p-6 text-center text-warm-gray">
-                      2 minutes
+                      ✓ Yes
                     </td>
                     <td className="p-6 text-center text-warm-gray">
-                      30 minutes
+                      ✗
                     </td>
                   </tr>
                   <tr className="border-b border-warm-gray/10">

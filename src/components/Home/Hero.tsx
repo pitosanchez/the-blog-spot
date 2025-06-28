@@ -5,7 +5,7 @@ import heroImage from "../../assets/blgspt.webp";
 export const Hero = memo(() => {
   const [isVisible, setIsVisible] = useState(false);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const words = ["Stories", "Success", "Future"];
+  const words = ["Expertise", "Knowledge", "Practice"];
 
   useEffect(() => {
     setIsVisible(true);
@@ -38,24 +38,27 @@ export const Hero = memo(() => {
                 : "opacity-0 translate-y-10"
             }`}
           >
-            {/* Hero Image - Massive focal point */}
-            <div className="w-full max-w-7xl flex justify-center px-0">
-              <img
-                src={heroImage}
-                alt="The Blog Spot"
-                className="w-full h-auto max-h-[55vh] sm:max-h-[65vh] md:max-h-[70vh] lg:max-h-[75vh] xl:max-h-[80vh] object-contain rounded-lg shadow-2xl"
-                style={{
-                  filter: "drop-shadow(0 0 60px rgba(0, 255, 136, 0.2))",
-                }}
-              />
+            {/* Medical Platform Badge */}
+            <div className="flex items-center justify-center space-x-2 bg-medical-blue/10 border border-medical-blue/30 rounded-full px-6 py-2">
+              <svg className="w-5 h-5 text-medical-blue" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1zm0 3a1 1 0 000 2h4a1 1 0 100-2H8zm0 3a1 1 0 000 2h4a1 1 0 100-2H8z" clipRule="evenodd"/>
+              </svg>
+              <span className="text-medical-blue font-semibold text-sm">HIPAA Compliant Platform</span>
             </div>
 
-            {/* Tagline with animated words - centered and condensed */}
-            <div className="flex flex-col items-center justify-center space-y-2 mt-2">
-              <h2 className="font-display font-black text-responsive-xl sm:text-5xl lg:text-6xl xl:text-7xl leading-none tracking-tight">
-                <span className="text-crisp-white">
-                  Monetize Your{" "}
-                  <span className="text-electric-sage glow-sage inline-block">
+            {/* Main Heading */}
+            <h1 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-tight">
+              <span className="text-crisp-white">The Medical Creator</span>
+              <br />
+              <span className="text-medical-blue">Monetization Platform</span>
+            </h1>
+
+            {/* Tagline with animated words */}
+            <div className="flex flex-col items-center justify-center space-y-2">
+              <h2 className="font-display font-bold text-2xl sm:text-3xl lg:text-4xl">
+                <span className="text-warm-gray">
+                  Share Your Medical{" "}
+                  <span className="text-electric-sage inline-block">
                     {words[currentWordIndex]}
                   </span>
                 </span>
@@ -66,13 +69,13 @@ export const Hero = memo(() => {
             <div className="flex flex-col items-center text-center space-y-2 max-w-3xl">
               <p className="text-responsive-lg sm:text-2xl lg:text-3xl text-crisp-white font-bold">
                 Keep{" "}
-                <span className="text-electric-sage font-black glow-sage">
+                <span className="text-electric-sage font-black">
                   90% of your earnings
                 </span>
               </p>
               <p className="text-responsive-base sm:text-lg lg:text-xl text-warm-gray/90 max-w-2xl">
-                The creator platform that puts you first. Build your audience,
-                share your stories, turn passion into income.
+                Monetize your medical expertise through CME courses, case studies, and educational content.
+                Full HIPAA compliance. Weekly payouts. Built for healthcare professionals.
               </p>
             </div>
 
@@ -110,10 +113,10 @@ export const Hero = memo(() => {
                   </svg>
                 </div>
                 <span className="text-crisp-white font-bold text-sm sm:text-base">
-                  Free to Start
+                  HIPAA Compliant
                 </span>
                 <span className="text-warm-gray text-xs sm:text-sm">
-                  No credit card
+                  Full compliance
                 </span>
               </div>
               <div className="flex flex-col items-center text-center space-y-1 p-3">
@@ -132,10 +135,10 @@ export const Hero = memo(() => {
                   </svg>
                 </div>
                 <span className="text-crisp-white font-bold text-sm sm:text-base">
-                  $25 Minimum
+                  CME Credits
                 </span>
                 <span className="text-warm-gray text-xs sm:text-sm">
-                  Low payout threshold
+                  Accreditation ready
                 </span>
               </div>
               <div className="flex flex-col items-center text-center space-y-1 p-3">

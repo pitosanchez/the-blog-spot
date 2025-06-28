@@ -47,7 +47,7 @@ export const Logo = memo<LogoProps>(
               textColor === "light" ? "text-creative-teal" : "text-slate-ink"
             }`}
           >
-            THE BLOG SPOT
+            MEDCREATOR HUB
           </span>
         )}
       </Link>

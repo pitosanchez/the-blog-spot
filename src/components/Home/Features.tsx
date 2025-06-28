@@ -10,12 +10,12 @@ export const Features = memo(() => {
       <div className="container-custom">
         <div className="text-center mb-12 sm:mb-16 space-y-responsive-sm">
           <h2 className="font-display font-bold text-responsive-xl text-crisp-white">
-            Everything You Need,{" "}
-            <span className="text-electric-sage">Nothing You Don't</span>
+            Medical-Grade Features,{" "}
+            <span className="text-medical-blue">Built for Healthcare</span>
           </h2>
           <p className="text-responsive-base text-warm-gray max-w-3xl mx-auto">
-            Built by creators, for creators. Simple tools that actually help you
-            earn.
+            Purpose-built for medical professionals. HIPAA compliant, CME integrated,
+            and designed for clinical education.
           </p>
         </div>
 
@@ -39,7 +39,7 @@ export const Features = memo(() => {
         {/* Comparison table */}
         <div className="max-w-5xl mx-auto">
           <h3 className="font-display font-bold text-responsive-lg text-crisp-white text-center mb-8 sm:mb-12">
-            Why Creators <span className="text-electric-sage">Choose Us</span>
+            Why Physicians <span className="text-medical-blue">Choose MedCreator Hub</span>
           </h3>
 
           {/* Mobile-friendly table */}
@@ -50,8 +50,8 @@ export const Features = memo(() => {
                   <th className="px-4 sm:px-6 py-4 text-left font-bold text-crisp-white text-sm sm:text-base">
                     Feature
                   </th>
-                  <th className="px-4 sm:px-6 py-4 text-center font-bold text-electric-sage text-sm sm:text-base">
-                    The Blog Spot
+                  <th className="px-4 sm:px-6 py-4 text-center font-bold text-medical-blue text-sm sm:text-base">
+                    MedCreator Hub
                   </th>
                   <th className="px-4 sm:px-6 py-4 text-center font-bold text-warm-gray text-sm sm:text-base">
                     Others
@@ -63,7 +63,7 @@ export const Features = memo(() => {
                   <td className="px-4 sm:px-6 py-4 font-medium text-crisp-white text-sm sm:text-base">
                     Revenue Share
                   </td>
-                  <td className="px-4 sm:px-6 py-4 text-center text-electric-sage font-bold text-base sm:text-lg">
+                  <td className="px-4 sm:px-6 py-4 text-center text-medical-blue font-bold text-base sm:text-lg">
                     90%
                   </td>
                   <td className="px-4 sm:px-6 py-4 text-center text-warm-gray text-sm sm:text-base">
@@ -72,46 +72,46 @@ export const Features = memo(() => {
                 </tr>
                 <tr className="hover:bg-electric-sage/5 transition-colors">
                   <td className="px-4 sm:px-6 py-4 font-medium text-crisp-white text-sm sm:text-base">
-                    Payout Schedule
+                    HIPAA Compliance
                   </td>
-                  <td className="px-4 sm:px-6 py-4 text-center text-electric-sage font-bold text-base sm:text-lg">
-                    Weekly
-                  </td>
-                  <td className="px-4 sm:px-6 py-4 text-center text-warm-gray text-sm sm:text-base">
-                    Monthly
-                  </td>
-                </tr>
-                <tr className="hover:bg-electric-sage/5 transition-colors">
-                  <td className="px-4 sm:px-6 py-4 font-medium text-crisp-white text-sm sm:text-base">
-                    Minimum Payout
-                  </td>
-                  <td className="px-4 sm:px-6 py-4 text-center text-electric-sage font-bold text-base sm:text-lg">
-                    $25
+                  <td className="px-4 sm:px-6 py-4 text-center text-medical-blue font-bold text-base sm:text-lg">
+                    ✓ Full
                   </td>
                   <td className="px-4 sm:px-6 py-4 text-center text-warm-gray text-sm sm:text-base">
-                    $50-100
-                  </td>
-                </tr>
-                <tr className="hover:bg-electric-sage/5 transition-colors">
-                  <td className="px-4 sm:px-6 py-4 font-medium text-crisp-white text-sm sm:text-base">
-                    Export Subscribers
-                  </td>
-                  <td className="px-4 sm:px-6 py-4 text-center text-electric-sage font-bold text-base sm:text-lg">
-                    ✓ Anytime
-                  </td>
-                  <td className="px-4 sm:px-6 py-4 text-center text-warm-gray text-sm sm:text-base">
-                    Limited
-                  </td>
-                </tr>
-                <tr className="hover:bg-electric-sage/5 transition-colors">
-                  <td className="px-4 sm:px-6 py-4 font-medium text-crisp-white text-sm sm:text-base">
-                    Platform Fees
-                  </td>
-                  <td className="px-4 sm:px-6 py-4 text-center text-electric-sage font-bold text-base sm:text-lg">
                     None
                   </td>
+                </tr>
+                <tr className="hover:bg-electric-sage/5 transition-colors">
+                  <td className="px-4 sm:px-6 py-4 font-medium text-crisp-white text-sm sm:text-base">
+                    CME Credits
+                  </td>
+                  <td className="px-4 sm:px-6 py-4 text-center text-medical-blue font-bold text-base sm:text-lg">
+                    ✓ Integrated
+                  </td>
                   <td className="px-4 sm:px-6 py-4 text-center text-warm-gray text-sm sm:text-base">
-                    Various
+                    Not Available
+                  </td>
+                </tr>
+                <tr className="hover:bg-electric-sage/5 transition-colors">
+                  <td className="px-4 sm:px-6 py-4 font-medium text-crisp-white text-sm sm:text-base">
+                    License Verification
+                  </td>
+                  <td className="px-4 sm:px-6 py-4 text-center text-medical-blue font-bold text-base sm:text-lg">
+                    ✓ Automated
+                  </td>
+                  <td className="px-4 sm:px-6 py-4 text-center text-warm-gray text-sm sm:text-base">
+                    Not Available
+                  </td>
+                </tr>
+                <tr className="hover:bg-electric-sage/5 transition-colors">
+                  <td className="px-4 sm:px-6 py-4 font-medium text-crisp-white text-sm sm:text-base">
+                    Weekly Payouts
+                  </td>
+                  <td className="px-4 sm:px-6 py-4 text-center text-medical-blue font-bold text-base sm:text-lg">
+                    ✓ Yes
+                  </td>
+                  <td className="px-4 sm:px-6 py-4 text-center text-warm-gray text-sm sm:text-base">
+                    Monthly Only
                   </td>
                 </tr>
               </tbody>

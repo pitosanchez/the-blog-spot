@@ -3,74 +3,74 @@ import { Link } from "react-router-dom";
 
 const team = [
   {
-    name: "Alex Chen",
+    name: "Dr. Alex Chen, MD",
     role: "Co-Founder & CEO",
-    bio: "Former creator who got tired of platforms taking 50% cuts. Built The Blog Spot to give creators what they deserve.",
-    avatar: "👨‍💻",
-    twitter: "@alexchen",
+    bio: "Emergency physician who saw the need for better medical education platforms. Built MedCreator Hub to empower healthcare educators.",
+    avatar: "👨‍⚕️",
+    credentials: "Board Certified Emergency Medicine",
   },
   {
-    name: "Maria Rodriguez",
-    role: "Co-Founder & CTO",
-    bio: "Ex-Google engineer who believes technology should empower creators, not exploit them.",
-    avatar: "👩‍💻",
-    twitter: "@mariarodriguez",
+    name: "Dr. Maria Rodriguez, MD",
+    role: "Co-Founder & CMO",
+    bio: "Former residency director passionate about case-based learning and medical education innovation.",
+    avatar: "👩‍⚕️",
+    credentials: "Internal Medicine, Medical Education Fellow",
   },
   {
     name: "David Kim",
-    role: "Head of Creator Success",
-    bio: "Helps creators maximize their earnings and build sustainable businesses on our platform.",
-    avatar: "🚀",
-    twitter: "@davidkim",
+    role: "CTO & HIPAA Officer",
+    bio: "Healthcare tech expert ensuring our platform meets the highest standards of medical data security and compliance.",
+    avatar: "🔒",
+    credentials: "HIPAA Security Officer Certified",
   },
 ];
 
 const values = [
   {
-    title: "Creators First",
+    title: "Patient Privacy First",
     description:
-      "Every decision we make starts with asking: 'Does this help creators succeed?'",
-    icon: "👥",
+      "Full HIPAA compliance and patient privacy protection in every feature we build.",
+    icon: "🛡️",
   },
   {
-    title: "Radical Transparency",
+    title: "Evidence-Based Education",
     description:
-      "No hidden fees, no algorithm manipulation, no surprise policy changes.",
-    icon: "🔍",
+      "Supporting medical educators in creating content that improves patient outcomes.",
+    icon: "📊",
   },
   {
-    title: "Fair Revenue Share",
-    description: "90% to creators isn't just generous—it's what's right.",
+    title: "Fair Compensation",
+    description: "Medical educators deserve 90% of their earnings. Period.",
     icon: "⚖️",
   },
   {
-    title: "Build to Last",
+    title: "Clinical Excellence",
     description:
-      "We're building a sustainable platform that will be here for the long haul.",
-    icon: "🏗️",
+      "Peer review and quality standards ensure the highest level of medical education.",
+    icon: "⭐",
   },
 ];
 
 const stats = [
   {
-    number: "500+",
-    label: "Active Creators",
-    description: "Building their businesses",
+    number: "200+",
+    label: "Medical Creators",
+    description: "Board-certified physicians",
   },
   {
-    number: "$250K+",
-    label: "Creator Earnings",
-    description: "Paid out to date",
+    number: "10K+",
+    label: "CME Hours",
+    description: "Delivered to date",
   },
   {
-    number: "90%",
-    label: "Revenue Share",
-    description: "Industry leading",
+    number: "15+",
+    label: "Specialties",
+    description: "Represented on platform",
   },
   {
-    number: "5min",
-    label: "Setup Time",
-    description: "From signup to earning",
+    number: "100%",
+    label: "HIPAA Compliant",
+    description: "Full compliance guaranteed",
   },
 ];
 
@@ -84,20 +84,20 @@ export const About = memo(() => {
         <div className="relative z-10 container-custom px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="font-display font-black text-5xl md:text-6xl lg:text-7xl leading-tight mb-6">
-              Built by <span className="text-electric-sage">Creators</span>,
+              Built by <span className="text-medical-blue">Physicians</span>,
               <br />
-              for Creators
+              for Healthcare
             </h1>
             <p className="text-xl md:text-2xl text-warm-gray leading-relaxed mb-8">
-              We started The Blog Spot because we were tired of platforms that
-              treated creators like products to be monetized instead of partners
-              to be empowered.
+              We started MedCreator Hub because medical professionals deserve a platform
+              designed specifically for healthcare education—with full compliance,
+              fair compensation, and features that actually matter.
             </p>
 
             <div className="inline-flex items-center gap-2 bg-charcoal/50 backdrop-blur-xl border border-warm-gray/20 rounded-full px-6 py-3">
               <div className="w-2 h-2 bg-electric-sage rounded-full animate-pulse"></div>
               <span className="text-sm text-warm-gray">
-                Founded in 2024 by former creators
+                Founded in 2024 by practicing physicians
               </span>
             </div>
           </div>
@@ -202,11 +202,11 @@ export const About = memo(() => {
         <div className="container-custom px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="font-display font-bold text-4xl md:text-5xl mb-6">
-              Our <span className="text-electric-sage">Values</span>
+              Our <span className="text-medical-blue">Values</span>
             </h2>
             <p className="text-xl text-warm-gray max-w-2xl mx-auto">
-              These aren't just words on a wall. They guide every product
-              decision we make.
+              These principles guide how we build a platform that serves
+              the unique needs of medical professionals.
             </p>
           </div>
 
@@ -236,11 +236,11 @@ export const About = memo(() => {
         <div className="container-custom px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="font-display font-bold text-4xl md:text-5xl mb-6">
-              Meet the <span className="text-electric-sage">Team</span>
+              Meet the <span className="text-medical-blue">Team</span>
             </h2>
             <p className="text-xl text-warm-gray max-w-2xl mx-auto">
-              Former creators and engineers who understand both sides of the
-              equation.
+              Healthcare professionals and tech experts working together to
+              revolutionize medical education.
             </p>
           </div>
 
@@ -261,25 +261,11 @@ export const About = memo(() => {
                 <p className="text-warm-gray text-sm leading-relaxed mb-4">
                   {member.bio}
                 </p>
-
-                <a
-                  href={`https://twitter.com/${member.twitter.replace(
-                    "@",
-                    ""
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-electric-sage hover:text-electric-sage/80 transition-colors text-sm"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                  </svg>
-                  {member.twitter}
-                </a>
+                {member.credentials && (
+                  <p className="text-medical-blue text-xs font-medium">
+                    {member.credentials}
+                  </p>
+                )}
               </div>
             ))}
           </div>
@@ -291,12 +277,12 @@ export const About = memo(() => {
         <div className="container-custom px-4 sm:px-6 lg:px-8">
           <div className="glassmorphism rounded-2xl p-12 backdrop-blur-xl border border-warm-gray/20 text-center">
             <h2 className="font-display font-bold text-4xl md:text-5xl mb-6">
-              Our <span className="text-electric-sage">Mission</span>
+              Our <span className="text-medical-blue">Mission</span>
             </h2>
             <p className="text-2xl text-warm-gray leading-relaxed mb-8 max-w-3xl mx-auto">
-              To build the creator economy platform we wish existed when we were
-              starting out. Fair, transparent, and designed to help creators
-              succeed—not extract value from them.
+              To empower medical professionals to monetize their expertise while
+              advancing healthcare education globally. Built with compliance,
+              designed for impact, and committed to fair compensation.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
