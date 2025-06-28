@@ -1,6 +1,5 @@
 import { memo, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import heroImage from "../../assets/blgspt.webp";
 
 export const Hero = memo(() => {
   const [isVisible, setIsVisible] = useState(false);
@@ -40,10 +39,20 @@ export const Hero = memo(() => {
           >
             {/* Medical Platform Badge */}
             <div className="flex items-center justify-center space-x-2 bg-medical-blue/10 border border-medical-blue/30 rounded-full px-6 py-2">
-              <svg className="w-5 h-5 text-medical-blue" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1zm0 3a1 1 0 000 2h4a1 1 0 100-2H8zm0 3a1 1 0 000 2h4a1 1 0 100-2H8z" clipRule="evenodd"/>
+              <svg
+                className="w-5 h-5 text-medical-blue"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1zm0 3a1 1 0 000 2h4a1 1 0 100-2H8zm0 3a1 1 0 000 2h4a1 1 0 100-2H8z"
+                  clipRule="evenodd"
+                />
               </svg>
-              <span className="text-medical-blue font-semibold text-sm">HIPAA Compliant Platform</span>
+              <span className="text-medical-blue font-semibold text-sm">
+                HIPAA Compliant Platform
+              </span>
             </div>
 
             {/* Main Heading */}
@@ -74,8 +83,9 @@ export const Hero = memo(() => {
                 </span>
               </p>
               <p className="text-responsive-base sm:text-lg lg:text-xl text-warm-gray/90 max-w-2xl">
-                Monetize your medical expertise through CME courses, case studies, and educational content.
-                Full HIPAA compliance. Weekly payouts. Built for healthcare professionals.
+                Monetize your medical expertise through CME courses, case
+                studies, and educational content. Full HIPAA compliance. Weekly
+                payouts. Built for healthcare professionals.
               </p>
             </div>
 
