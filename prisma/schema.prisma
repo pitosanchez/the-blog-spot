@@ -1,0 +1,948 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum UserRole {
+  READER
+  CREATOR
+  ADMIN
+}
+
+enum VerificationStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+enum PublicationType {
+  ARTICLE
+  VIDEO
+  CASE_STUDY
+  CONFERENCE
+}
+
+enum AccessType {
+  FREE
+  PAID
+  CME
+}
+
+enum SubscriptionTier {
+  BASIC
+  PROFESSIONAL
+  INSTITUTIONAL
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  EXPIRED
+}
+
+enum ConferenceStatus {
+  UPCOMING
+  LIVE
+  COMPLETED
+}
+
+enum VideoStatus {
+  UPLOADING
+  PROCESSING
+  READY
+  FAILED
+}
+
+enum VideoType {
+  SURGICAL_RECORDING
+  LECTURE
+  CASE_PRESENTATION
+  LIVE_STREAM
+  CONFERENCE_RECORDING
+}
+
+enum VideoPrivacy {
+  PUBLIC
+  PRIVATE
+  UNLISTED
+}
+
+enum AnnotationType {
+  ARROW
+  LABEL
+  MEASUREMENT
+  ANATOMY
+  INSTRUMENT
+}
+
+// Models
+model Video {
+  id              String          @id @default(cuid())
+  title           String
+  description     String?
+  userId          String
+  publicationId   String?
+  conferenceId    String?
+  type            VideoType
+  status          VideoStatus     @default(UPLOADING)
+  privacy         VideoPrivacy    @default(PRIVATE)
+  
+  // Video file information
+  originalFileName String
+  originalFileSize Int
+  duration        Int?            // in seconds
+  thumbnailUrl    String?
+  hlsUrl          String?         // HLS streaming URL
+  s3Key           String          // S3 object key
+  
+  // Processing information
+  mediaConvertJobId String?
+  qualities       String[]        // Available quality levels
+  
+  // Medical specific fields
+  specialty       String?
+  tags            String[]
+  medicalCategory String?
+  
+  // Privacy and compliance
+  faceBlurred     Boolean         @default(false)
+  watermarked     Boolean         @default(false)
+  downloadRestricted Boolean      @default(true)
+  
+  // Analytics
+  viewCount       Int             @default(0)
+  likeCount       Int             @default(0)
+  shareCount      Int             @default(0)
+  
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  // Relations
+  user            User            @relation("UserVideos", fields: [userId], references: [id], onDelete: Cascade)
+  publication     Publication?    @relation("PublicationVideos", fields: [publicationId], references: [id], onDelete: SetNull)
+  conference      Conference?     @relation("ConferenceVideos", fields: [conferenceId], references: [id], onDelete: SetNull)
+  chapters        VideoChapter[]  @relation("VideoChapters")
+  annotations     VideoAnnotation[] @relation("VideoAnnotations")
+  views           VideoView[]     @relation("VideoViews")
+  interactions    VideoInteraction[] @relation("VideoInteractions")
+
+  @@map("videos")
+  @@index([userId])
+  @@index([publicationId])
+  @@index([conferenceId])
+  @@index([type])
+  @@index([status])
+  @@index([privacy])
+  @@index([specialty])
+  @@index([tags])
+  @@index([createdAt])
+}
+
+model VideoChapter {
+  id          String    @id @default(cuid())
+  videoId     String
+  title       String
+  description String?
+  startTime   Int       // in seconds
+  endTime     Int?      // in seconds
+  order       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relations
+  video       Video     @relation("VideoChapters", fields: [videoId], references: [id], onDelete: Cascade)
+
+  @@map("video_chapters")
+  @@index([videoId])
+  @@index([order])
+}
+
+model VideoAnnotation {
+  id          String         @id @default(cuid())
+  videoId     String
+  timestamp   Int            // in seconds
+  x           Float          // X coordinate (percentage)
+  y           Float          // Y coordinate (percentage)
+  width       Float?         // Width (percentage)
+  height      Float?         // Height (percentage)
+  text        String
+  type        AnnotationType
+  color       String?        @default("#FF0000")
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  // Relations
+  video       Video          @relation("VideoAnnotations", fields: [videoId], references: [id], onDelete: Cascade)
+
+  @@map("video_annotations")
+  @@index([videoId])
+  @@index([timestamp])
+  @@index([type])
+}
+
+model VideoView {
+  id              String    @id @default(cuid())
+  videoId         String
+  userId          String?   // Null for anonymous views
+  sessionId       String    // Browser session ID
+  firstViewedAt   DateTime  @default(now())
+  lastViewedAt    DateTime  @default(now())
+  watchTime       Int       @default(0) // Total watch time in seconds
+  completionRate  Float     @default(0.0) // Percentage watched
+  quality         String?   // Video quality watched
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relations
+  video           Video     @relation("VideoViews", fields: [videoId], references: [id], onDelete: Cascade)
+  user            User?     @relation("UserVideoViews", fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("video_views")
+  @@unique([videoId, sessionId])
+  @@index([videoId])
+  @@index([userId])
+  @@index([firstViewedAt])
+}
+
+model VideoInteraction {
+  id          String    @id @default(cuid())
+  videoId     String
+  userId      String
+  type        String    // LIKE, SHARE, BOOKMARK, COMMENT
+  timestamp   Int?      // Timestamp for comments/annotations
+  content     String?   // Comment content
+  createdAt   DateTime  @default(now())
+
+  // Relations
+  video       Video     @relation("VideoInteractions", fields: [videoId], references: [id], onDelete: Cascade)
+  user        User      @relation("UserVideoInteractions", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("video_interactions")
+  @@unique([videoId, userId, type])
+  @@index([videoId])
+  @@index([userId])
+  @@index([type])
+  @@index([createdAt])
+}
+
+model LiveStream {
+  id              String    @id @default(cuid())
+  title           String
+  description     String?
+  userId          String    // Host user
+  conferenceId    String?   @unique
+  roomName        String    @unique
+  roomUrl         String
+  isActive        Boolean   @default(false)
+  startedAt       DateTime?
+  endedAt         DateTime?
+  maxParticipants Int       @default(100)
+  recordingUrl    String?
+  
+  // Daily.co specific fields
+  dailyRoomId     String?
+  dailyToken      String?
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relations
+  host            User      @relation("UserLiveStreams", fields: [userId], references: [id], onDelete: Cascade)
+  conference      Conference? @relation("ConferenceLiveStream", fields: [conferenceId], references: [id], onDelete: SetNull)
+  participants    LiveStreamParticipant[] @relation("LiveStreamParticipants")
+
+  @@map("live_streams")
+  @@index([userId])
+  @@index([conferenceId])
+  @@index([isActive])
+  @@index([startedAt])
+}
+
+model LiveStreamParticipant {
+  id            String      @id @default(cuid())
+  liveStreamId  String
+  userId        String
+  joinedAt      DateTime    @default(now())
+  leftAt        DateTime?
+  duration      Int?        // in seconds
+  
+  // Relations
+  liveStream    LiveStream  @relation("LiveStreamParticipants", fields: [liveStreamId], references: [id], onDelete: Cascade)
+  user          User        @relation("UserLiveStreamParticipants", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("live_stream_participants")
+  @@unique([liveStreamId, userId])
+  @@index([liveStreamId])
+  @@index([userId])
+  @@index([joinedAt])
+}
+
+model User {
+  id                    String             @id @default(cuid())
+  email                 String             @unique
+  password              String
+  role                  UserRole           @default(READER)
+  verificationStatus    VerificationStatus @default(PENDING)
+  medicalCredentials    Json?              // Stores MD/DO/PhD info
+  specialties           String[]
+  licenseNumber         String?
+  institution           String?
+  profileImage          String?
+  bio                   String?
+  twoFactorEnabled      Boolean            @default(false)
+  twoFactorSecret       String?
+  emailVerified         DateTime?
+  resetToken            String?
+  resetTokenExpiry      DateTime?
+  lastLoginAt           DateTime?
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+
+  // Relations
+  publications          Publication[]      @relation("AuthorPublications")
+  cmeCompletions        CMECompletion[]
+  conferencesHosted     Conference[]       @relation("ConferenceHost")
+  conferenceAttendances ConferenceAttendance[]
+  auditLogs             AuditLog[]
+  accounts              Account[]
+  sessions              Session[]
+  verificationDocuments VerificationDocument[]
+  
+  // New analytics and subscription relations
+  publicationViews      PublicationView[]  @relation("UserPublicationViews")
+  subscriptions         Subscription[]     @relation("UserSubscriptions")
+  withdrawalRequests    WithdrawalRequest[] @relation("UserWithdrawals")
+  
+  // Communication relations
+  conversationParticipants ConversationParticipant[] @relation("UserConversations")
+  messages              Message[]          @relation("UserMessages")
+  messageReactions      MessageReaction[]  @relation("UserMessageReactions")
+  forumPosts            ForumPost[]        @relation("UserForumPosts")
+  forumReplies          ForumReply[]       @relation("UserForumReplies")
+  forumVotes            ForumVote[]        @relation("UserForumVotes")
+  notifications         Notification[]     @relation("UserNotifications")
+  
+  // Video relations
+  videos                Video[]            @relation("UserVideos")
+  videoViews            VideoView[]        @relation("UserVideoViews")
+  videoInteractions     VideoInteraction[] @relation("UserVideoInteractions")
+  liveStreams           LiveStream[]       @relation("UserLiveStreams")
+  liveStreamParticipants LiveStreamParticipant[] @relation("UserLiveStreamParticipants")
+  
+  // Stripe customer info
+  stripeCustomerId      String?
+  subscriptionStatus    String?            // ACTIVE, PAST_DUE, CANCELED, INACTIVE
+  subscriptionTier      String?            // INDIVIDUAL, PRACTICE, INSTITUTION
+  subscriptionInterval  String?            // MONTHLY, ANNUAL
+  stripeSubscriptionId  String?
+  subscriptionStartDate DateTime?
+
+  @@map("users")
+  @@index([email])
+  @@index([role])
+  @@index([verificationStatus])
+  @@index([specialties])
+}
+
+model Publication {
+  id              String          @id @default(cuid())
+  title           String
+  slug            String          @unique
+  content         String          // Rich text content
+  authorId        String
+  type            PublicationType
+  accessType      AccessType
+  price           Decimal?        @db.Decimal(10, 2)
+  cmeCredits      Int?
+  tags            String[]
+  publishedAt     DateTime?
+  viewCount       Int             @default(0)
+  metadata        Json?           // Medical images, references, etc.
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  // Relations
+  author          User            @relation("AuthorPublications", fields: [authorId], references: [id], onDelete: Cascade)
+  cmeCompletions  CMECompletion[]
+  videos          Video[]         @relation("PublicationVideos")
+
+  @@map("publications")
+  @@index([authorId])
+  @@index([type])
+  @@index([accessType])
+  @@index([publishedAt])
+  @@index([tags])
+  @@index([slug])
+}
+
+
+model CMECompletion {
+  id              String      @id @default(cuid())
+  userId          String
+  publicationId   String
+  creditsEarned   Int
+  completedAt     DateTime    @default(now())
+  certificateUrl  String?
+  createdAt       DateTime    @default(now())
+
+  // Relations
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  publication     Publication @relation(fields: [publicationId], references: [id], onDelete: Cascade)
+
+  @@map("cme_completions")
+  @@index([userId])
+  @@index([publicationId])
+  @@index([completedAt])
+  @@unique([userId, publicationId])
+}
+
+model Conference {
+  id              String               @id @default(cuid())
+  hostId          String
+  title           String
+  description     String
+  scheduledAt     DateTime
+  price           Decimal              @db.Decimal(10, 2)
+  maxAttendees    Int
+  recordingUrl    String?
+  status          ConferenceStatus     @default(UPCOMING)
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+
+  // Relations
+  host            User                 @relation("ConferenceHost", fields: [hostId], references: [id], onDelete: Cascade)
+  attendances     ConferenceAttendance[]
+  videos          Video[]              @relation("ConferenceVideos")
+  liveStream      LiveStream?          @relation("ConferenceLiveStream")
+
+  @@map("conferences")
+  @@index([hostId])
+  @@index([scheduledAt])
+  @@index([status])
+}
+
+model ConferenceAttendance {
+  id            String     @id @default(cuid())
+  conferenceId  String
+  userId        String
+  joinedAt      DateTime?
+  leftAt        DateTime?
+  createdAt     DateTime   @default(now())
+
+  // Relations
+  conference    Conference @relation(fields: [conferenceId], references: [id], onDelete: Cascade)
+  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("conference_attendances")
+  @@index([conferenceId])
+  @@index([userId])
+  @@unique([conferenceId, userId])
+}
+
+// NextAuth.js required models
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("accounts")
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@map("verification_tokens")
+  @@unique([identifier, token])
+}
+
+// HIPAA Compliance - Audit Logging
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  activity  String   // LOGIN_SUCCESS, LOGIN_FAILURE, DATA_ACCESS, etc.
+  metadata  Json?    // IP address, user agent, etc.
+  timestamp DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("audit_logs")
+  @@index([userId])
+  @@index([activity])
+  @@index([timestamp])
+}
+
+// Medical Credential Verification
+enum DocumentType {
+  MEDICAL_LICENSE
+  BOARD_CERTIFICATION
+  DEA_CERTIFICATE
+  HOSPITAL_PRIVILEGES
+  DIPLOMA
+  RESIDENCY_CERTIFICATE
+  FELLOWSHIP_CERTIFICATE
+  STATE_LICENSE
+}
+
+enum DocumentStatus {
+  PENDING_REVIEW
+  APPROVED
+  REJECTED
+  EXPIRED
+  REQUIRES_UPDATE
+}
+
+model VerificationDocument {
+  id          String         @id @default(cuid())
+  userId      String
+  type        DocumentType
+  status      DocumentStatus @default(PENDING_REVIEW)
+  fileName    String
+  fileUrl     String
+  fileSize    Int
+  mimeType    String
+  
+  // Document metadata
+  issuer      String?        // Issuing authority
+  licenseNumber String?      // License/certificate number
+  issueDate   DateTime?
+  expiryDate  DateTime?
+  state       String?        // For state licenses
+  specialty   String?        // For board certifications
+  
+  // Review information
+  reviewedBy  String?        // Admin user ID who reviewed
+  reviewedAt  DateTime?
+  reviewNotes String?        // Admin notes/reason for rejection
+  
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  // Relations
+  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("verification_documents")
+  @@index([userId])
+  @@index([type])
+  @@index([status])
+  @@index([expiryDate])
+}
+
+// Analytics and Engagement Models
+model AnalyticsEvent {
+  id          String    @id @default(cuid())
+  userId      String?
+  sessionId   String
+  eventType   String
+  eventData   Json
+  timestamp   DateTime  @default(now())
+  userAgent   String?
+  ipAddress   String?
+  referrer    String?
+  pageUrl     String?
+  createdAt   DateTime  @default(now())
+
+  @@map("analytics_events")
+  @@index([userId])
+  @@index([sessionId])
+  @@index([eventType])
+  @@index([timestamp])
+}
+
+model PublicationMetrics {
+  id              String      @id @default(cuid())
+  publicationId   String
+  date            DateTime    @db.Date
+  views           Int         @default(0)
+  uniqueViews     Int         @default(0)
+  likes           Int         @default(0)
+  shares          Int         @default(0)
+  bookmarks       Int         @default(0)
+  comments        Int         @default(0)
+  cmeCompletions  Int         @default(0)
+  avgTimeOnPage   Int         @default(0) // in seconds
+  bounceRate      Float       @default(0.0)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@map("publication_metrics")
+  @@unique([publicationId, date])
+  @@index([publicationId])
+  @@index([date])
+}
+
+model PublicationView {
+  id              String    @id @default(cuid())
+  userId          String
+  publicationId   String
+  firstViewedAt   DateTime  @default(now())
+  lastViewedAt    DateTime  @default(now())
+  viewCount       Int       @default(1)
+  timeSpent       Int       @default(0) // in seconds
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  user            User      @relation("UserPublicationViews", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("publication_views")
+  @@unique([userId, publicationId])
+  @@index([userId])
+  @@index([publicationId])
+  @@index([firstViewedAt])
+}
+
+model PageMetrics {
+  id          String    @id @default(cuid())
+  pagePath    String
+  date        DateTime  @db.Date
+  views       Int       @default(0)
+  uniqueViews Int       @default(0)
+  avgTimeOnPage Int     @default(0) // in seconds
+  bounceRate  Float     @default(0.0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("page_metrics")
+  @@unique([pagePath, date])
+  @@index([pagePath])
+  @@index([date])
+}
+
+model UserActivity {
+  id            String    @id @default(cuid())
+  userId        String
+  date          DateTime  @db.Date
+  sessionsCount Int       @default(0)
+  timeSpent     Int       @default(0) // in seconds
+  logins        Int       @default(0)
+  lastActiveAt  DateTime  @default(now())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("user_activities")
+  @@unique([userId, date])
+  @@index([userId])
+  @@index([date])
+}
+
+model SearchQuery {
+  id           String    @id @default(cuid())
+  userId       String?
+  query        String
+  resultsCount Int       @default(0)
+  timestamp    DateTime  @default(now())
+  createdAt    DateTime  @default(now())
+
+  @@map("search_queries")
+  @@index([userId])
+  @@index([query])
+  @@index([timestamp])
+}
+
+model SearchMetrics {
+  id           String    @id @default(cuid())
+  query        String
+  date         DateTime  @db.Date
+  searchCount  Int       @default(0)
+  totalResults Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@map("search_metrics")
+  @@unique([query, date])
+  @@index([query])
+  @@index([date])
+  @@index([searchCount])
+}
+
+// Subscription and Payment Models for Stripe Integration
+model Subscription {
+  id                    String    @id @default(cuid())
+  userId                String
+  stripeSubscriptionId  String    @unique
+  stripeCustomerId      String
+  status                String    // ACTIVE, PAST_DUE, CANCELED, etc.
+  tier                  String    // INDIVIDUAL, PRACTICE, INSTITUTION
+  interval              String    // MONTHLY, ANNUAL
+  startDate             DateTime
+  currentPeriodStart    DateTime?
+  currentPeriodEnd      DateTime?
+  cancelAtPeriodEnd     Boolean   @default(false)
+  canceledAt            DateTime?
+  lastPaymentDate       DateTime?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  user                  User      @relation("UserSubscriptions", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_subscriptions")
+  @@index([userId])
+  @@index([stripeSubscriptionId])
+  @@index([status])
+  @@index([tier])
+}
+
+model Payment {
+  id               String    @id @default(cuid())
+  stripeInvoiceId  String    @unique
+  stripeCustomerId String
+  amount           Float
+  currency         String    @default("USD")
+  status           String    // SUCCEEDED, FAILED, PENDING
+  type             String    // SUBSCRIPTION, CME, CONFERENCE
+  description      String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@map("payments")
+  @@index([stripeCustomerId])
+  @@index([status])
+  @@index([type])
+  @@index([createdAt])
+}
+
+model WithdrawalRequest {
+  id           String    @id @default(cuid())
+  userId       String
+  amount       Float
+  status       String    @default("PENDING") // PENDING, APPROVED, REJECTED, COMPLETED
+  requestedAt  DateTime  @default(now())
+  processedAt  DateTime?
+  notes        String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  user         User      @relation("UserWithdrawals", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("withdrawal_requests")
+  @@index([userId])
+  @@index([status])
+  @@index([requestedAt])
+}
+
+// Communication and Collaboration Models
+model Conversation {
+  id           String    @id @default(cuid())
+  type         String    // DIRECT_MESSAGE, GROUP_CHAT, CASE_DISCUSSION, etc.
+  title        String?
+  lastActivity DateTime  @default(now())
+  lastMessageId String?
+  isArchived   Boolean   @default(false)
+  isEncrypted  Boolean   @default(true)
+  metadata     Json?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  participants ConversationParticipant[]
+  messages     Message[]
+
+  @@map("conversations")
+  @@index([type])
+  @@index([lastActivity])
+}
+
+model ConversationParticipant {
+  id             String    @id @default(cuid())
+  conversationId String
+  userId         String
+  role           String    @default("MEMBER") // ADMIN, MODERATOR, MEMBER, etc.
+  joinedAt       DateTime  @default(now())
+  lastReadAt     DateTime?
+  isActive       Boolean   @default(true)
+  permissions    Json      // Stores permission settings
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  user          User         @relation("UserConversations", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("conversation_participants")
+  @@unique([conversationId, userId])
+  @@index([conversationId])
+  @@index([userId])
+}
+
+model Message {
+  id             String    @id @default(cuid())
+  senderId       String
+  conversationId String
+  content        String
+  messageType    String    @default("TEXT") // TEXT, IMAGE, FILE, URGENT, etc.
+  replyToId      String?
+  isEncrypted    Boolean   @default(true)
+  readAt         DateTime?
+  editedAt       DateTime?
+  timestamp      DateTime  @default(now())
+  metadata       Json?
+
+  sender         User         @relation("UserMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  replyTo        Message?     @relation("MessageReplies", fields: [replyToId], references: [id])
+  replies        Message[]    @relation("MessageReplies")
+  attachments    MessageAttachment[]
+  reactions      MessageReaction[]
+
+  @@map("messages")
+  @@index([senderId])
+  @@index([conversationId])
+  @@index([timestamp])
+  @@index([replyToId])
+}
+
+model MessageAttachment {
+  id             String    @id @default(cuid())
+  messageId      String
+  fileName       String
+  fileSize       Int
+  fileType       String
+  fileUrl        String
+  thumbnailUrl   String?
+  isHIPAASecure  Boolean   @default(true)
+  uploadedAt     DateTime  @default(now())
+
+  message        Message   @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@map("message_attachments")
+  @@index([messageId])
+}
+
+model MessageReaction {
+  id        String   @id @default(cuid())
+  messageId String
+  userId    String
+  emoji     String
+  timestamp DateTime @default(now())
+
+  message   Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  user      User     @relation("UserMessageReactions", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("message_reactions")
+  @@unique([messageId, userId, emoji])
+  @@index([messageId])
+  @@index([userId])
+}
+
+model ForumPost {
+  id           String    @id @default(cuid())
+  authorId     String
+  title        String
+  content      String
+  category     String    // CASE_DISCUSSION, CLINICAL_QUESTION, etc.
+  tags         String[]
+  isAnonymous  Boolean   @default(false)
+  isPinned     Boolean   @default(false)
+  isLocked     Boolean   @default(false)
+  upvotes      Int       @default(0)
+  downvotes    Int       @default(0)
+  views        Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  lastActivity DateTime  @default(now())
+
+  author       User        @relation("UserForumPosts", fields: [authorId], references: [id], onDelete: Cascade)
+  replies      ForumReply[]
+  votes        ForumVote[]
+
+  @@map("forum_posts")
+  @@index([authorId])
+  @@index([category])
+  @@index([tags])
+  @@index([lastActivity])
+  @@index([upvotes])
+}
+
+model ForumReply {
+  id                  String    @id @default(cuid())
+  postId              String
+  authorId            String
+  content             String
+  parentId            String?   // For nested replies
+  isAnonymous         Boolean   @default(false)
+  upvotes             Int       @default(0)
+  downvotes           Int       @default(0)
+  isBestAnswer        Boolean   @default(false)
+  isModeratorResponse Boolean   @default(false)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  post                ForumPost   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author              User        @relation("UserForumReplies", fields: [authorId], references: [id], onDelete: Cascade)
+  parent              ForumReply? @relation("ReplyThread", fields: [parentId], references: [id])
+  replies             ForumReply[] @relation("ReplyThread")
+
+  @@map("forum_replies")
+  @@index([postId])
+  @@index([authorId])
+  @@index([parentId])
+  @@index([createdAt])
+}
+
+model ForumVote {
+  id       String @id @default(cuid())
+  postId   String
+  userId   String
+  voteType String // up, down
+  createdAt DateTime @default(now())
+
+  post     ForumPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user     User      @relation("UserForumVotes", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("forum_votes")
+  @@unique([postId, userId])
+  @@index([postId])
+  @@index([userId])
+}
+
+model Notification {
+  id        String    @id @default(cuid())
+  userId    String
+  type      String    // NEW_MESSAGE, CONVERSATION_INVITE, etc.
+  title     String
+  content   String
+  data      Json?     // Additional notification data
+  isRead    Boolean   @default(false)
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  user      User      @relation("UserNotifications", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+  @@index([userId])
+  @@index([type])
+  @@index([isRead])
+  @@index([createdAt])
+}

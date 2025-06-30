@@ -14,7 +14,10 @@
       "Bash(npm run type-check:*)",
       "Bash(npx tsc:*)",
       "Bash(rg:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(npx create-next-app:*)",
+      "Bash(npm install:*)",
+      "Bash(find:*)"
     ],
     "deny": []
   }
